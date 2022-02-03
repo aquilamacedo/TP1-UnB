@@ -1,3 +1,9 @@
+/**
+ * @file dominios.cpp
+ *
+ * @brief This file contains validation methods and defines domain classes.
+ */
+
 #include <iostream>
 #include <iomanip>
 #include <math.h>
@@ -9,50 +15,90 @@
 
 #include "dominios.h"
 
-using namespace std;
-
 // ------------------------------------------------------------------------------------------
 //
 // ------------------------------------------------------------------------------------------
 
-const int Email::TAMANHO_MAX = 253;
+Email::Email() { }
 
-void Email::validar(string email){
-  // logica das regras e formatos do email
+Email::Email(string email) {
+  this->email=email;
 }
 
-void Email::setEmail(string email){
+void Email::validar(string email) throw (invalid_argument) {
+  if(email.size() > TAMANHO_MAX) {
+    throw invalid_argument("O tamanho limite maximo do email foi excedido.");
+    }
+}
+
+void Email::setEmail(string email) {
   validar(email);
-  this->email = email; // resolve as ambiguidades entre atributos 
+  this->email=email;
 }
-
 // ------------------------------------------------------------------------------------------
 //
 // ------------------------------------------------------------------------------------------
 
-const unsigned int Nome::TAMANHO_MIN = 5;
-const unsigned int Nome::TAMANHO_MAX = 20;
+Nome::Nome() { }
 
-void Nome::validar(string nome){
-  //logica das regras e formatos do nome
+Nome::Nome(string nome) {
+  this->nome=nome;
 }
 
-void Nome::setNome(string nome){
+void Nome::validar(string nome) throw (invalid_argument) {
+  if(nome.size() > TAMANHO_MAX) {
+    throw invalid_argument("Nome Invalido. O tamanho limite maximo do nome foi excedido.");
+    }
+  else if(nome.size() < TAMANHO_MIN) {
+    throw invalid_argument("Nome Invalido. O Tamanho limite minimo do nome nao foi satisfeito.");
+  }
+
+  for (int i = 0; i < nome.size(); i++) {
+    if(!(isalpha(nome[i])) && nome[i] != '.' && nome[i] != ' ') {
+      throw invalid_argument("Nome Invalido. Apenas os caracteres (A-Z ou a-z), ponto(.) ou espaço em branco devem ser utilizados");
+    }
+    if(nome[0] == '.') {
+      throw invalid_argument("Nome Invalido. O primeiro caractere nao pode ser um ponto");
+    }
+    if(nome[i] == '.' && !(isalpha(nome[i-1]))) {
+      throw invalid_argument("Nome Invalido. O Caractere precedente ao ponto nao pertence ao alfabeto(A-Z ou a-z)");
+    }
+    if(nome[i] == ' ' && (i != nome.size() - 1) && nome[i+1] == ' ') {
+      throw invalid_argument("Nome Invalido. Nao pode ter espaco consecutivo");
+    }
+    if(!(isupper(nome[0])) && isalpha(nome[0]) || nome[i] == ' ' && !(isupper(nome[i+1])) && isalpha(nome[i+1])){
+      throw invalid_argument("Nome Invalido. Todos os caracteres de um termo devem iniciar com letra maiscula");
+    }
+  }
+}
+
+void Nome::setNome(string nome) {
   validar(nome);
-  this->nome = nome;
+  this->nome=nome;
 }
 
 // ------------------------------------------------------------------------------------------
 //
 // ------------------------------------------------------------------------------------------
 
-const unsigned int Senha::TAMANHO = 6;
+Senha::Senha() { }
 
-void Senha::validar(string senha){
-  //logica das regras e formatos da senha
+Senha::Senha(string senha) {
+  this->senha=senha;
 }
 
-void Senha::setSenha(string senha){
+void Senha::validar(string senha) throw (invalid_argument) {
+  if(senha.size() > TAMANHO_MAX) {
+    throw invalid_argument("O tamanho limite maximo da senha foi excedido.");
+    }
+}
+
+void Senha::setSenha(string senha) {
   validar(senha);
-  this->senha = senha;
+  this->senha=senha;
 }
+
+// -------------------------------------------------------------------------------
+//
+// -------------------------------------------------------------------------------
+
