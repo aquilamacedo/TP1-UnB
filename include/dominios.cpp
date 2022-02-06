@@ -88,8 +88,41 @@ Senha::Senha(string senha) {
 }
 
 void Senha::validar(string senha) throw (invalid_argument) {
-  if(senha.size() > TAMANHO_MAX) {
-    throw invalid_argument("O tamanho limite maximo da senha foi excedido.");
+  string aux = " ";
+  int maiuscula = 0;
+  int minuscula = 0;
+  int digito = 0;
+
+  if (senha.size() != LIMITE) {
+    throw invalid_argument("Senha invalida. O tamanho da senha precisa ser de 6 caracteres.");
+     }
+
+  for ( int i = 0; i < senha.size(); i++ ) {
+    if (!(isalpha(senha[i])) && !(isdigit(senha[i]))) {
+      throw invalid_argument("Senha invalida. Precisa conter caracteres de A-Z ou dígitos de 0-9.");
+    }
+
+    for ( int y = 0; y < aux.size(); y++ ) {
+      char caracterAnalisado = tolower(senha[i]);
+      if (aux[y] == caracterAnalisado) {
+        throw invalid_argument("Senha invalida. A senha não pode conter caracteres repetidos.");
+      }
+    }
+
+    aux += senha[i];
+    if (isupper(senha[i])) {
+      maiuscula += 1;
+    }
+    if (isdigit(senha[i])) {
+      digito += 1;
+    }
+    if (islower(senha[i])) {
+      minuscula += 1;
+    }
+  }
+  
+  if ( maiuscula < 1 || minuscula < 1 || digito < 1 ) {
+      throw invalid_argument("Senha invalida. A senha precisa conter pelo menos uma letra maiúscula, uma letra minúscula e um número.");
     }
 }
 
