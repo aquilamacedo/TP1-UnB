@@ -16,3 +16,8 @@ void Usuario::setUsuario(string novoNome, string novoEmail, string novaSenha){
   senha.setSenha(novaSenha);
 }
 
+void Avaliacao::setAvaliacao(string novoCodigo, int novaNota, string novaDescricao){
+    codigo.setCodigo(novoCodigo);
+    nota.setNota(novaNota);
+    descricao.setDescricao(novaDescricao);
+}

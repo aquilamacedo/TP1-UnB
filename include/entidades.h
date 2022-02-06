@@ -25,5 +25,16 @@ class Usuario {
     void getUsuario(Nome *_Nome, Email *_Email, Senha *_Senha);
 };
 
+class Avaliacao {
+    private:
+    Codigo codigo;
+    Nota nota;
+    Descricao descricao;
+
+    public:
+    void setAvaliacao(string novoCodigo, int novaNota, string novaDescricao);
+    void getAvaliacao(Codigo *_Codigo, Nota *_Nota, Descricao *_Descricao);
+};
+
 #endif // ENTIDADES_H_INCLUDED
 

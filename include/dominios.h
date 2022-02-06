@@ -86,7 +86,65 @@ class Senha {
 //
 // ------------------------------------------------------------------------------------
 
+class Codigo {
+  private:
+    string codigo;
+    const static unsigned int TAMANHO_MAX = 6;
+    void validarCodigo(string) throw (invalid_argument);
 
+  public:
+    Codigo(); // default
+    Codigo(string);
+
+    void setCodigo(string);
+
+    string getCodigo() const {
+      return codigo;
+    }
+};
+
+// ------------------------------------------------------------------------------------
+//
+// ------------------------------------------------------------------------------------
+
+class Nota {
+  private:
+    int nota;
+    void validarNota(int) throw (invalid_argument);
+
+  public:
+    Nota(); // default
+    Nota(int);
+
+    void setNota(int);
+
+    int getNota() const {
+      return nota;
+    };
+};
+
+// ------------------------------------------------------------------------------------
+//
+// ------------------------------------------------------------------------------------
+
+class Descricao {
+  private:
+    string descricao;
+    const static unsigned int TAMANHO_MIN = 0;
+    const static unsigned int TAMANHO_MAX = 30;
+    void validarDescricao(string) throw (invalid_argument);
+
+  public:
+    Descricao(); // default
+    Descricao(string);
+
+    void setDescricao(string);
+
+    string getDescricao() const {
+      return descricao;
+    }
+};
 
 #endif // DOMINIOS_H_INCLUDED
+
 

@@ -102,3 +102,88 @@ void Senha::setSenha(string senha) {
 //
 // -------------------------------------------------------------------------------
 
+Codigo::Codigo() { };
+
+Codigo::Codigo(string codigo) {
+  this->codigo=codigo;
+};
+
+void Codigo::setCodigo(string codigo) {
+    validarCodigo(codigo);
+    this->codigo=codigo + "X";
+};
+
+void Codigo::validarCodigo(string codigo) throw (invalid_argument) {
+  if (codigo == "0000000"){
+  throw invalid_argument("Não existe esse codigo.");
+  }
+  if (codigo.size() != TAMANHO_MAX) {
+    throw invalid_argument("O codigo tem que estar no padrão DDDDDD.");
+    }else{
+          for (int i = 0; i < codigo.size(); i++) {
+            if (!isdigit(codigo[i])){
+                throw invalid_argument("O codigo tem que possuir apenas numeros.");
+            }
+        }
+    }
+    };
+
+// -------------------------------------------------------------------------------
+// 
+// -------------------------------------------------------------------------------
+
+
+Nota::Nota(int nota) {
+  this->nota=nota;
+};
+
+void Nota::setNota(int nota) {
+    validarNota(nota);
+    this->nota=nota;
+};
+
+void Nota::validarNota(int nota) throw (invalid_argument) {
+  if (!isdigit(nota)){
+  throw invalid_argument("Nota não é número.");
+  }
+  if (nota != 0 || nota != 1 ||nota != 2 ||nota != 3 ||nota != 4 ||nota != 5) {
+    throw invalid_argument("O codigo tem que estar no intervalo de 0-5.");
+    }
+};
+// -------------------------------------------------------------------------------
+// 
+// -------------------------------------------------------------------------------
+
+Descricao::Descricao() { };
+
+Descricao::Descricao(string descricao) {
+  this->descricao=descricao;
+};
+
+void Descricao::setDescricao(string nota) {
+    validarDescricao(descricao);
+    this->descricao=descricao;
+};
+
+void Descricao::validarDescricao(string descricao) throw (invalid_argument) {
+  if(descricao.size() > TAMANHO_MAX) {
+    throw invalid_argument("Descricao Invalido. O tamanho limite maximo do nome foi excedido.");
+    };
+  if(descricao.size() < TAMANHO_MIN) {
+    throw invalid_argument("Descricao Invalido. O Tamanho limite minimo do nome nao foi satisfeito.");
+  };
+  for (int i = 0; i < descricao.size(); i++) {
+    if(descricao[i] == ' ' && (i != descricao.size() - 1) && descricao[i+1] == ' '){
+     throw invalid_argument("Há espaços em branco em sequência");
+    };
+    if(descricao[i] == '.' && (i != descricao.size() - 1) && descricao[i+1] == '.'){
+     throw invalid_argument("Há pontos em sequência");
+    };
+  }
+};
+
+// -------------------------------------------------------------------------------
+//
+// -------------------------------------------------------------------------------
+
+
