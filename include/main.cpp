@@ -4,6 +4,7 @@
 #include <string>
 #include <bits/stdc++.h>
 #include "dominios.h"
+#include "dominios.cpp"
 
 using namespace std;
 

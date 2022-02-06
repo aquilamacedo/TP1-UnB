@@ -68,7 +68,7 @@ class Nome {
 class Senha {
   private:
     string senha;
-    const static unsigned int TAMANHO_MAX = 6;
+    const static unsigned int LIMITE = 6;
     void validar(string) throw (invalid_argument);
 
   public:
