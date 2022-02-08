@@ -25,7 +25,8 @@ using namespace std;
 class Email {
   private:
     string email;
-    const static int TAMANHO_MAX = 253;
+    const static int TAMANHO_MAX_LOCAL = 64;
+    const static int TAMANHO_MAX_DOMINIO = 253;
     void validar(string) throw (invalid_argument);
   
   public:
@@ -36,6 +37,26 @@ class Email {
 
     string getEmail() const {
       return email;
+    }
+};
+
+// -------------------------------------------------------------------------------------------
+//
+// -------------------------------------------------------------------------------------------
+
+class Nota {
+  private:
+    int nota;
+    void validar(int) throw (invalid_argument);
+
+  public:
+    Nota(); // default
+    Nota(int);
+
+    void setNota(int);
+
+    int getNota() const {
+      return nota;
     }
 };
 
@@ -82,15 +103,161 @@ class Senha {
     }
 };
 
-// ------------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------
 //
-// ------------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------
+
+class Data {
+  private:
+    string data;
+    const static unsigned int TAMANHO_MAX = 11;
+    void validar(string) throw (invalid_argument);
+
+  public:
+    Data(); // default
+    Data(string);
+
+    void setData(string);
+
+    string getData() const {
+      return data;
+    }
+};
+
+// -------------------------------------------------------------------------------------------
+//
+// -------------------------------------------------------------------------------------------
+
+class Horario {
+  private:
+    string horario;
+    const static unsigned int TAMANHO_MAX = 5;
+    void validar(string) throw (invalid_argument);
+
+  public:
+    Horario(); // default
+    Horario(string);
+
+    void setHorario(string);
+
+    string getHorario() const {
+      return horario;
+    }
+};
+
+// -------------------------------------------------------------------------------------------
+//
+// -------------------------------------------------------------------------------------------
+
+class Idioma {
+  private:
+    string idioma;
+    void validar(string) throw (invalid_argument);
+
+  public:
+    Idioma(); // default
+    Idioma(string);
+
+    void setIdioma(string);
+
+    string getIdioma() const {
+      return idioma;
+    }
+};
+
+// -------------------------------------------------------------------------------------------
+//
+// -------------------------------------------------------------------------------------------
+
+class Titulo {
+  private:
+    string titulo;
+    const static int TAMANHO_MIN = 5;
+    const static int TAMANHO_MAX = 20;
+    void validar(string) throw (invalid_argument);
+
+  public:
+    Titulo(); // default
+    Titulo(string);
+
+    void setTitulo(string);
+
+    string getTitulo() const {
+      return titulo;
+    }
+};
+
+// -------------------------------------------------------------------------------------------
+//
+// -------------------------------------------------------------------------------------------
+
+class Cidade {
+  private:
+    string cidade;
+    void validar(string) throw (invalid_argument);
+
+  public:
+    Cidade(); // default
+    Cidade(string);
+
+    void setCidade(string);
+
+    string getCidade() const {
+      return cidade;
+    }
+};
+
+// -------------------------------------------------------------------------------------------
+//
+// -------------------------------------------------------------------------------------------
+
+class Duracao {
+  private:
+    string duracao;
+    void validar(string) throw (invalid_argument);
+
+  public:
+    Duracao(); // default
+    Duracao(string);
+
+    void setDuracao(string);
+
+    string getDuracao() const {
+      return duracao;
+    }
+};
+
+// -------------------------------------------------------------------------------------------
+//
+// -------------------------------------------------------------------------------------------
+
+class Descricao {
+  private:
+    string descricao;
+    const static int TAMANHO_MIN = 0;
+    const static int TAMANHO_MAX = 30;
+    void validar(string) throw (invalid_argument);
+
+  public:
+    Descricao(); // default
+    Descricao(string);
+
+    void setDescricao(string);
+
+    string getDescricao() const {
+      return descricao;
+    }
+};
+
+// -------------------------------------------------------------------------------------------
+//
+// -------------------------------------------------------------------------------------------
 
 class Codigo {
   private:
     string codigo;
     const static unsigned int TAMANHO_MAX = 6;
-    void validarCodigo(string) throw (invalid_argument);
+    void validar(string) throw (invalid_argument);
 
   public:
     Codigo(); // default
@@ -103,45 +270,25 @@ class Codigo {
     }
 };
 
-// ------------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------
 //
-// ------------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------
 
-class Nota {
+class Endereco {
   private:
-    int nota;
-    void validarNota(int) throw (invalid_argument);
+    string endereco;
+    const static int TAMANHO_MIN = 0;
+    const static int TAMANHO_MAX = 20;
+    void validar(string) throw (invalid_argument);
 
   public:
-    Nota(); // default
-    Nota(int);
+    Endereco(); // default
+    Endereco(string);
 
-    void setNota(int);
+    void setEndereco(string);
 
-    int getNota() const {
-      return nota;
-    };
-};
-
-// ------------------------------------------------------------------------------------
-//
-// ------------------------------------------------------------------------------------
-
-class Descricao {
-  private:
-    string descricao;
-    const static unsigned int TAMANHO_MIN = 0;
-    const static unsigned int TAMANHO_MAX = 30;
-    void validarDescricao(string) throw (invalid_argument);
-
-  public:
-    Descricao(); // default
-    Descricao(string);
-
-    void setDescricao(string);
-
-    string getDescricao() const {
-      return descricao;
+    string getEndereco() const {
+      return endereco;
     }
 };
 

@@ -4,7 +4,6 @@
 #include <string>
 #include <bits/stdc++.h>
 #include "dominios.h"
-#include "dominios.cpp"
 
 using namespace std;
 
@@ -18,7 +17,7 @@ int main() {
   // -------------------------------------------------------------------------------
 
   string x;
-  string emailEntrada ("aquilamacedo@riseup.net");
+  string emailEntrada ("Aq$u1l4{m#ce$+=do@r1sE-upnet");
 
   Email email1;
   email1.setEmail(emailEntrada);
@@ -44,13 +43,147 @@ int main() {
   // -------------------------------------------------------------------------------
 
   string z;
-  string senhaEntrada("r4nD0m");
+  string senhaEntrada("r4213M");
 
   Senha senha1;
   senha1.setSenha(senhaEntrada);
   z = senha1.getSenha();
 
   cout << "Your password: " << z << endl;
+
+  // -------------------------------------------------------------------------------
+  //
+  // -------------------------------------------------------------------------------
+
+  string p;
+  string dataEntrada ("29-Fev-2020");
+
+  Data data1;
+  data1.setData(dataEntrada);
+  p = data1.getData();
+
+  cout << "Date: " << p << endl;
+
+  // -------------------------------------------------------------------------------
+  //
+  // -------------------------------------------------------------------------------
+
+  string q;
+  string horarioEntrada ("23:00");
+
+  Horario horario1;
+  horario1.setHorario(horarioEntrada);
+  q = horario1.getHorario();
+
+  cout << "Time: " << q << endl;
+
+  // -------------------------------------------------------------------------------
+  //
+  // -------------------------------------------------------------------------------
+
+  string r;
+  string idiomaEntrada ("Portugues");
+
+  Idioma idioma1;
+  idioma1.setIdioma(idiomaEntrada);
+  r = idioma1.getIdioma();
+
+  cout << "Language: " << r << endl;
+
+  // -------------------------------------------------------------------------------
+  //
+  // -------------------------------------------------------------------------------
+
+  string s;
+  string tituloEntrada ("Git Workflow");
+
+  Titulo titulo1;
+  titulo1.setTitulo(tituloEntrada);
+  s = titulo1.getTitulo();
+
+  cout << "Title: " << s << endl;
+
+  // -------------------------------------------------------------------------------
+  //
+  // -------------------------------------------------------------------------------
+
+  int t;
+  int notaEntrada (4);
+
+  Nota nota1;
+  nota1.setNota(notaEntrada);
+  t = nota1.getNota();
+
+  cout << "Note: " << t << endl;
+
+  // -------------------------------------------------------------------------------
+  //
+  // -------------------------------------------------------------------------------
+
+  string u;
+  string cidadeEntrada ("Macau");
+
+  Cidade cidade1;
+  cidade1.setCidade(cidadeEntrada);
+  u = cidade1.getCidade();
+
+  cout << "City: " << u << endl;
+
+  // ------------------------------------------------------------------------------
+  //
+  // -------------------------------------------------------------------------------
+
+  string v;
+  string duracaoEntrada ("120");
+
+  Duracao duracao1;
+  duracao1.setDuracao(duracaoEntrada);
+  v = duracao1.getDuracao();
+
+  cout << "Duracao: " << v << endl;
+
+  // -------------------------------------------------------------------------------
+  //
+  // -------------------------------------------------------------------------------
+
+  string w;
+  string descricaoEntrada ("aaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+
+  Descricao descricao1;
+  descricao1.setDescricao(descricaoEntrada);
+  w = descricao1.getDescricao();
+
+  cout << "Description: " << w << endl;
+
+  // -------------------------------------------------------------------------------
+  //
+  // -------------------------------------------------------------------------------
+
+  string g;
+  string enderecoEntrada ("Toronto, Canada");
+
+  Endereco endereco1;
+  endereco1.setEndereco(enderecoEntrada);
+  g = endereco1.getEndereco();
+
+  cout << "Address: " << g << endl;
+
+  // -------------------------------------------------------------------------------
+  //
+  // -------------------------------------------------------------------------------
+
+  string h;
+  string codigoEntrada ("123111");
+
+  Codigo codigo1;
+  codigo1.setCodigo(codigoEntrada);
+  h = codigo1.getCodigo();
+
+  cout << "Code: " << h << endl;
+
+  // -------------------------------------------------------------------------------
+  //
+  // -------------------------------------------------------------------------------
 
   return 0;
 }
