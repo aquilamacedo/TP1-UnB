@@ -2,6 +2,212 @@
 
 using namespace std;
 
+// --------------------------------------------------------------------------
+// Implementações de métodos de classe de teste de unidade do domínio código. matricula:200060295
+// --------------------------------------------------------------------------
+
+void TUCodigo::setUp()
+{
+    codigo = new Codigo();
+    estado = SUCESSO;
+}
+
+void TUCodigo::tearDown()
+{
+    delete codigo;
+}
+
+void TUCodigo::testarCenarioSucesso()
+{
+    try
+    {
+        codigo->setCodigo(VALOR_VALIDO);
+        if (codigo->getCodigo() != VALOR_VALIDO)
+            estado = FALHA;
+    }
+    catch (invalid_argument &excecao)
+    {
+        estado = FALHA;
+    }
+}
+
+void TUCodigo::testarCenarioFalha()
+{
+    try
+    {
+        codigo->setCodigo(VALOR_INVALIDO);
+        estado = FALHA;
+    }
+    catch (invalid_argument &excecao)
+    {
+        if (codigo->getCodigo() == VALOR_INVALIDO)
+            estado = FALHA;
+    }
+}
+
+int TUCodigo::run()
+{
+    setUp();
+    testarCenarioSucesso();
+    testarCenarioFalha();
+    tearDown();
+    return estado;
+}
+
+// --------------------------------------------------------------------------
+// Implementações de métodos de classe de teste de unidade do domínio Horario. matricula:200060295
+
+void TUHorario::setUp()
+{
+    horario = new Horario();
+    estado = SUCESSO;
+}
+
+void TUHorario::tearDown()
+{
+    delete horario;
+}
+
+void TUHorario::testarCenarioSucesso()
+{
+    try
+    {
+        horario->setHorario(VALOR_VALIDO);
+        if (horario->getHorario() != VALOR_VALIDO)
+            estado = FALHA;
+    }
+    catch (invalid_argument &excecao)
+    {
+        estado = FALHA;
+    }
+}
+
+void TUHorario::testarCenarioFalha()
+{
+    try
+    {
+        horario->setHorario(VALOR_INVALIDO);
+        estado = FALHA;
+    }
+    catch (invalid_argument &excecao)
+    {
+        if (horario->getHorario() == VALOR_INVALIDO)
+            estado = FALHA;
+    }
+}
+
+int TUHorario::run()
+{
+    setUp();
+    testarCenarioSucesso();
+    testarCenarioFalha();
+    tearDown();
+    return estado;
+}
+
+// --------------------------------------------------------------------------
+// Implementações de métodos de classe de teste de unidade do domínio Nota. matricula:200060295
+
+void TUNota::setUp()
+{
+    nota = new Nota();
+    estado = SUCESSO;
+}
+
+void TUNota::tearDown()
+{
+    delete nota;
+}
+
+void TUNota::testarCenarioSucesso()
+{
+    try
+    {
+        nota->setNota(VALOR_VALIDO);
+        if (nota->getNota() != VALOR_VALIDO)
+            estado = FALHA;
+    }
+    catch (invalid_argument &excecao)
+    {
+        estado = FALHA;
+    }
+}
+
+void TUNota::testarCenarioFalha()
+{
+    try
+    {
+        nota->setNota(VALOR_INVALIDO);
+        estado = FALHA;
+    }
+    catch (invalid_argument &excecao)
+    {
+        if (nota->getNota() == VALOR_INVALIDO)
+            estado = FALHA;
+    }
+}
+
+int TUNota::run()
+{
+    setUp();
+    testarCenarioSucesso();
+    testarCenarioFalha();
+    tearDown();
+    return estado;
+}
+
+
+// --------------------------------------------------------------------------
+// Implementações de métodos de classe de teste de unidade do domínio Titulo. matricula:200060295
+
+void TUTitulo::setUp()
+{
+    titulo = new Titulo();
+    estado = SUCESSO;
+}
+
+void TUTitulo::tearDown()
+{
+    delete titulo;
+}
+
+void TUTitulo::testarCenarioSucesso()
+{
+    try
+    {
+        titulo->setTitulo(VALOR_VALIDO);
+        if (titulo->getTitulo() != VALOR_VALIDO)
+            estado = FALHA;
+    }
+    catch (invalid_argument &excecao)
+    {
+        estado = FALHA;
+    }
+}
+
+void TUTitulo::testarCenarioFalha()
+{
+    try
+    {
+        titulo->setTitulo(VALOR_INVALIDO);
+        estado = FALHA;
+    }
+    catch (invalid_argument &excecao)
+    {
+        if (titulo->getTitulo() == VALOR_INVALIDO)
+            estado = FALHA;
+    }
+}
+
+int TUTitulo::run()
+{
+    setUp();
+    testarCenarioSucesso();
+    testarCenarioFalha();
+    tearDown();
+    return estado;
+}
+
 // -------------------------------------------------------------------------------
 //
 // -------------------------------------------------------------------------------

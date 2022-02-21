@@ -22,19 +22,35 @@ using namespace std;
 //
 // -------------------------------------------------------------------------------------------
 
+///Dominio Email quer permite instanciar um email.
 class Email {
   private:
+///@param string email
     string email;
-    const static int TAMANHO_MAX_LOCAL = 64;
-    const static int TAMANHO_MAX_DOMINIO = 253;
+    const static int TAMANHO_MAX_LOCAL = 64; //constante
+    const static int TAMANHO_MAX_DOMINIO = 253; //constante
+
+///Funcao validar que valida uma string que sera usada como email
+///@param string
+///@throw invalid_argument
+///@return void
     void validar(string) throw (invalid_argument);
-  
+
   public:
+///Construtor Email vazio
     Email(); // default
+
+///Construtor Email que recebe string para inicilizar um objeto
+///@param string
     Email(string);
 
+///Funcao setEmail, que instancia o objeto com uma string
+///@param string
+///return void
     void setEmail(string);
 
+///Funcao getEmail
+///@return string email
     string getEmail() const {
       return email;
     }
@@ -44,17 +60,32 @@ class Email {
 //
 // -------------------------------------------------------------------------------------------
 
+///Dominio Nota quer permite instanciar uma nota.
 class Nota {
   private:
+///@param int nota
     int nota;
+    
+///Funcao validar que valida um inteiro
+///@throw invalid_argument
+///@return void
     void validar(int) throw (invalid_argument);
 
   public:
+///Construtor Nota vazio
     Nota(); // default
+
+///Construtor Nota que recebe int para inicilizar um objeto
+///@param int
     Nota(int);
 
+///Funcao setNota, que instancia o objeto com um int
+///@param int
+///return void
     void setNota(int);
 
+///Funcao getNota
+///@return int nota
     int getNota() const {
       return nota;
     }
@@ -64,19 +95,34 @@ class Nota {
 //
 // -------------------------------------------------------------------------------------------
 
+///Dominio Nome quer permite instanciar um nome.
 class Nome {
   private:
+///@param string nome
     string nome;
-    const static unsigned int TAMANHO_MIN = 5;
-    const static unsigned int TAMANHO_MAX = 20;
+    const static unsigned int TAMANHO_MIN = 5; //constante
+    const static unsigned int TAMANHO_MAX = 20; //constante
+    
+///Funcao validar que valida uma string
+///@throw invalid_argument
+///@return void
     void validar(string) throw (invalid_argument);
 
   public:
+///Construtor Nome vazio
     Nome(); // default
+    
+///Construtor Nome que recebe uma string para inicilizar um objeto
+///@param string
     Nome(string);
 
+///Funcao setNota, que instancia o objeto com uma string
+///@param string
+///return void
     void setNome(string);
 
+///Funcao getNome
+///@return string nome
     string getNome() const {
       return nome;
     }
@@ -86,18 +132,33 @@ class Nome {
 //
 // -------------------------------------------------------------------------------------------
 
+///Dominio Senha quer permite instanciar uma senha.
 class Senha {
   private:
+///@param string senha
     string senha;
-    const static unsigned int LIMITE = 6;
+    const static unsigned int LIMITE = 6; //constante
+    
+///Funcao validar que valida uma string
+///@throw invalid_argument
+///@return void
     void validar(string) throw (invalid_argument);
 
   public:
+///Construtor Senha vazio
     Senha(); // default
+    
+///Construtor Senha que recebe uma string para inicilizar um objeto
+///@param string
     Senha(string);
 
+///Funcao setSenha, que instancia o objeto com uma string
+///@param string
+///return void
     void setSenha(string);
 
+///Funcao getSenha
+///@return string senha
     string getSenha() const {
       return senha;
     }
@@ -107,18 +168,33 @@ class Senha {
 //
 // -------------------------------------------------------------------------------------------
 
+///Dominio Data quer permite instanciar uma data.
 class Data {
   private:
+///@param string data
     string data;
-    const static unsigned int TAMANHO_MAX = 11;
+    const static unsigned int TAMANHO_MAX = 11; //constante
+    
+///Funcao validar que valida uma string
+///@throw invalid_argument
+///@return void
     void validar(string) throw (invalid_argument);
 
   public:
+///Construtor Data vazio
     Data(); // default
+    
+///Construtor Data que recebe uma string para inicilizar um objeto
+///@param string
     Data(string);
 
+///Funcao setData, que instancia o objeto com uma string
+///@param string
+///return void
     void setData(string);
 
+///Funcao getData
+///@return string data
     string getData() const {
       return data;
     }
@@ -293,5 +369,3 @@ class Endereco {
 };
 
 #endif // DOMINIOS_H_INCLUDED
-
-
