@@ -473,33 +473,54 @@ void Descricao::setDescricao(string descricao) {
 //
 // ------------------------------------------------------------------------------------------
 
-Codigo::Codigo() { }
+Codigo::Codigo() { };
 
 Codigo::Codigo(string codigo) {
   this->codigo=codigo;
-}
+};
 
 void Codigo::setCodigo(string codigo) {
-    validar(codigo);
-    this->codigo=codigo + "X";
-}
+    string codigo_int = validar(codigo);
+    this->codigo=codigo_int;
+};
 
-void Codigo::validar(string codigo) throw (invalid_argument) {
-  if (codigo == "0000000") {
-    throw invalid_argument("Codigo Invalido. Não existe esse codigo.");
+string Codigo::validar(string codigo) throw (invalid_argument) {
+  if (codigo == "0000000"){
+  throw invalid_argument("Não existe esse codigo.");
   }
-  if (codigo.size() != TAMANHO_MAX) {
-    throw invalid_argument("Codigo Invalido. O codigo tem que estar no padrão DDDDDD.");
-  }
-  else {
-    for (int i = 0; i < codigo.size(); i++) {
-      if (!isdigit(codigo[i])) {
-        throw invalid_argument("Codigo Invalido. O codigo tem que possuir apenas numeros.");
-      }
+  if (codigo.size() > TAMANHO_MAX) {
+    throw invalid_argument("O codigo tem que estar no padrão DDDDDD.");
+    }else{
+
+
+        const int N = codigo.size();
+        string input = codigo;
+        int card[N];
+        int sum = 0;
+        int evenSum = 0;
+        int oddSum = 0;
+        for (int i = 0; i < N; i++){
+            card[i] = input[i];
+        }
+        for (int i = N - 1; i >=0;i--){
+            int p;
+            int num = card[i];
+            if (i % 2 == 0){
+                p = num * 2;
+                if (p>9) p = p - 9;
+                evenSum +=p;
+            }else {
+                p = num;
+                oddSum += p;
+            }
+        }
+        sum = evenSum + oddSum;
+        string digito = std::to_string(sum);
+        codigo = codigo + digito.back();
+        return codigo;
+
     }
-  }
 }
-
 // -------------------------------------------------------------------------------
 // 
 // -------------------------------------------------------------------------------

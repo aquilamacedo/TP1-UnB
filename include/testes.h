@@ -3,6 +3,182 @@
 
 #include "dominios.h"
 
+// --------------------------------------------------------------------------
+// Declaração de classe para teste Código. matricula:200060295
+// --------------------------------------------------------------------------
+
+class TUCodigo
+{
+private:
+    string VALOR_VALIDO = "0000026";   
+    string VALOR_INVALIDO = "0000020"; 
+    Codigo *codigo;                    
+    int estado;                        
+    void setUp();                      
+    void tearDown();                   
+    void testarCenarioSucesso();       
+    void testarCenarioFalha();         
+
+public:
+    const static int SUCESSO = 0; 
+    const static int FALHA = -1;  
+    int run();        
+                
+// --------------------------------------------------------------------------
+// Declaração de classe para teste Código. matricula:200060295
+// --------------------------------------------------------------------------
+
+class TUCodigo
+{
+private:
+    string VALOR_VALIDO = "0000026";   
+    string VALOR_INVALIDO = "0000020"; 
+    Codigo *codigo;                    
+    int estado;                        
+    void setUp();                      
+    void tearDown();                   
+    void testarCenarioSucesso();       
+    void testarCenarioFalha();         
+
+public:
+    const static int SUCESSO = 0; 
+    const static int FALHA = -1;  
+    int run();                    
+};
+
+// --------------------------------------------------------------------------
+// Declaração de classe para teste Titulo. matricula:200060295
+// --------------------------------------------------------------------------
+
+class TUTitulo
+{
+private:
+    string VALOR_VALIDO = "Ex. de Titulo valido";      
+    string VALOR_INVALIDO = "Ex.. de Titulo invalido"; 
+    Titulo *titulo;                                    
+    int estado;                                        
+    void setUp();                           
+    void tearDown();                        
+    void testarCenarioSucesso();            
+    void testarCenarioFalha();              
+
+public:
+    const static int SUCESSO = 0; 
+    const static int FALHA = -1;  
+    int run();                    
+};
+
+// --------------------------------------------------------------------------
+// Declaração de classe para teste Horario. matricula:200060295
+// --------------------------------------------------------------------------
+
+class TUHorario
+{
+private:
+    string VALOR_VALIDO = "04:58";   
+    string VALOR_INVALIDO = "04:65"; 
+    Horario *horario;                
+    int estado;                      
+    void setUp();                    
+    void tearDown();                 
+    void testarCenarioSucesso();     
+    void testarCenarioFalha();       
+
+public:
+    const static int SUCESSO = 0; 
+    const static int FALHA = -1;  
+    int run();                    
+};
+
+// --------------------------------------------------------------------------
+// Declaração de classe da classe Nota. matricula:200060295
+// --------------------------------------------------------------------------
+
+class TUNota
+{
+private:
+    int VALOR_VALIDO = 5;   
+    int VALOR_INVALIDO = 9; 
+    Nota *nota;             
+    int estado;             
+    void setUp();           
+    void tearDown();        
+    void testarCenarioSucesso();
+    void testarCenarioFalha();  
+
+public:
+    const static int SUCESSO = 0;
+    const static int FALHA = -1; 
+    int run();                   
+};
+
+
+// --------------------------------------------------------------------------
+// Declaração de classe para teste Titulo. matricula:200060295
+// --------------------------------------------------------------------------
+
+class TUTitulo
+{
+private:
+    string VALOR_VALIDO = "Ex. de Titulo valido";     
+    string VALOR_INVALIDO = "Ex.. de Titulo invalido";
+    Titulo *titulo;                        
+    int estado;                            
+    void setUp();                          
+    void tearDown();                       
+    void testarCenarioSucesso();           
+    void testarCenarioFalha();              
+
+public:
+    const static int SUCESSO = 0; 
+    const static int FALHA = -1;  
+    int run();                   
+};
+
+// --------------------------------------------------------------------------
+// Declaração de classe para teste Horario. matricula:200060295
+// --------------------------------------------------------------------------
+
+class TUHorario
+{
+private:
+    string VALOR_VALIDO = "04:58";   
+    string VALOR_INVALIDO = "04:65"; 
+    Horario *horario;                    
+    int estado;                           
+    void setUp();                           
+    void tearDown();                        
+    void testarCenarioSucesso();           
+    void testarCenarioFalha();             
+
+public:
+    const static int SUCESSO = 0; 
+    const static int FALHA = -1;  
+    int run();                    
+};
+
+// --------------------------------------------------------------------------
+// Declaração de classe da classe Nota. matricula:200060295
+// --------------------------------------------------------------------------
+
+class TUNota
+{
+private:
+    int VALOR_VALIDO = 5;   
+    int VALOR_INVALIDO = 9; 
+    Nota *nota;                     
+    int estado;                        
+    void setUp();                          
+    void tearDown();                        
+    void testarCenarioSucesso();           
+    void testarCenarioFalha();             
+
+public:
+    const static int SUCESSO = 0; 
+    const static int FALHA = -1;  
+    int run();                    
+};
+
 class TUEmail {
   private:
     const string EMAIL_VALIDO = "aquilamacedo@riseup.net";
@@ -156,4 +332,4 @@ class TUDuracao {
     int estado;
     int run();
 };
-#endif // !TESTES_H_INCLUDED
+#endif 

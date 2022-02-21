@@ -12,8 +12,112 @@
 using namespace std;
 
 /// -----------------------------------------------------------------------------
+/// Declaracao da entidade Usuario. Matricula: 200060295
+/// -----------------------------------------------------------------------------
+
+class Usuario {
+  private:
+
+///@param Nome nome
+///@param Email email
+///@param Senha senha
+
+    Nome nome;
+    Email email;
+    Senha senha;
+
+  public:
+    void setNome(const Nome&);
+    Nome getNome() const;
+    void setEmail(const Email&);
+    Email getEmail() const;
+    void setSenha(const Senha&);
+    Senha getSenha() const;
+};
+
+/// -----------------------------------------------------------------------------
+/// Implementacao Metodos inline set da entidade Usuario. Matricula: 200060295
+/// -----------------------------------------------------------------------------
+
+inline void Usuario::setNome(const Nome& nome){
+    this->nome = nome;
+}
+inline void Usuario::setEmail(const Email& email){
+    this->email = email;
+}
+inline void Usuario::setSenha(const Senha& senha){
+    this->senha = senha;
+}
+
+/// -----------------------------------------------------------------------------
+/// Implementacao Metodos inline get da entidade Usuario. Matricula: 200060295
+/// -----------------------------------------------------------------------------
+	
+inline Nome Usuario::getNome() const {
+    return nome;
+}
+inline Email Usuario::getEmail() const {
+    return email;
+}
+inline Senha Usuario::getSenha() const {
+    return senha;
+}
+
+/// -----------------------------------------------------------------------------
+/// Declaracao da entidade Avaliacao. Matricula: 200060295
+/// -----------------------------------------------------------------------------
+
+class Avaliacao {
+    private:
+
+///@param Codigo codigo
+///@param Nota nota
+///@param Descricao descricao
+
+    Codigo codigo;
+    Nota nota;
+    Descricao descricao;
+
+    public:
+    void setCodigo(const Codigo&);
+    Codigo getCodigo() const;
+    void setNota(const Nota&);
+    Nota getNota() const;
+    void setDescricao(const Descricao&);
+    Descricao getDescricao() const;
+};
+
+/// -----------------------------------------------------------------------------
+/// Implementacao Metodos inline set da entidade Avaliacao. Matricula: 200060295
+/// -----------------------------------------------------------------------------
+
+inline void Avaliacao::setCodigo(const Codigo& codigo){
+    this->codigo = codigo;
+}
+inline void Avaliacao::setDescricao(const Descricao& descricao){
+    this->descricao = descricao;
+}
+inline void Avaliacao::setNota(const Nota& nota){
+    this->nota = nota;
+}
+
+/// -----------------------------------------------------------------------------
+/// Implementacao Metodos inline get da entidade Avaliacao. Matricula: 200060295
+/// -----------------------------------------------------------------------------
+
+inline Codigo Avaliacao::getCodigo() const {
+    return codigo;
+}
+inline Nota Avaliacao::getNota() const {
+    return nota;
+}
+inline Descricao Avaliacao::getDescricao() const {
+    return descricao;
+
+/// -----------------------------------------------------------------------------
 /// Declaracao da entidade Excursao. Matricula: 202021767
 /// -----------------------------------------------------------------------------
+
 class Excursao {
 
     private:
