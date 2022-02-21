@@ -15,6 +15,10 @@ int main() {
   TUDescricao testeDescricao;
   TUEndereco testeEndereco;
   TUIdioma testeIdioma;
+  TUNome testeNome;
+  TUSenha testeSenha;
+  TUCidade testeCidade;
+  TUDuracao testeDuracao;
 
   switch(testeEmail.run()) {
     case TUEmail::SUCESSO:
@@ -66,182 +70,50 @@ int main() {
       break;
   }
 
-  // Here we'll check the tests for now.
+/// -------------------------------------------------------------------------------
+/// Invocação dos testes de unidade de nome, senha, cidade e duracao
+/// Matricula: 202021767
+/// -------------------------------------------------------------------------------
 
-  cout << "Hi, There" << endl;
+  switch(testeNome.run()){
+      case TUNome::SUCESSO: 
+        cout << "SUCESSO - NOME" << endl;
+        break;
+        
+      case TUNome::FALHA: 
+        cout << "FALHA - NOME" << endl;
+        break;
+    }
 
-  // -------------------------------------------------------------------------------
-  //
-  // -------------------------------------------------------------------------------
+    switch(testeSenha.run()){
+        case TUSenha::SUCESSO: 
+          cout << "SUCESSO - SENHA" << endl;
+          break;
 
-  string x;
-  string emailEntrada ("Aq$u1l4{m#ce$+=do@r1sE-upnet");
+        case TUSenha::FALHA: 
+          cout << "FALHA - SENHA" << endl;
+          break;
+    }
 
-  Email email1;
-  email1.setEmail(emailEntrada);
-  x = email1.getEmail();
+    switch(testeCidade.run()){
+        case TUCidade::SUCESSO: 
+          cout << "SUCESSO - CIDADE" << endl;
+          break;
 
-  cout << "Your email: " << x << endl;
+        case TUCidade::FALHA: 
+          cout << "FALHA - CIDADE" << endl;
+          break;
+    }
 
-  // -------------------------------------------------------------------------------
-  //
-  // -------------------------------------------------------------------------------
-
-  string y;
-  string nomeEntrada ("Aquila Macedo");
-
-  Nome nome1;
-  nome1.setNome(nomeEntrada);
-  y = nome1.getNome();
-
-  cout << "Your name: " << y << endl;
-
-  // -------------------------------------------------------------------------------
-  //
-  // -------------------------------------------------------------------------------
-
-  string z;
-  string senhaEntrada("r4213M");
-
-  Senha senha1;
-  senha1.setSenha(senhaEntrada);
-  z = senha1.getSenha();
-
-  cout << "Your password: " << z << endl;
-
-  // -------------------------------------------------------------------------------
-  //
-  // -------------------------------------------------------------------------------
-
-  string p;
-  string dataEntrada ("29-Fev-2020");
-
-  Data data1;
-  data1.setData(dataEntrada);
-  p = data1.getData();
-
-  cout << "Date: " << p << endl;
-
-  // -------------------------------------------------------------------------------
-  //
-  // -------------------------------------------------------------------------------
-
-  string q;
-  string horarioEntrada ("23:00");
-
-  Horario horario1;
-  horario1.setHorario(horarioEntrada);
-  q = horario1.getHorario();
-
-  cout << "Time: " << q << endl;
-
-  // -------------------------------------------------------------------------------
-  //
-  // -------------------------------------------------------------------------------
-
-  string r;
-  string idiomaEntrada ("Portugues");
-
-  Idioma idioma1;
-  idioma1.setIdioma(idiomaEntrada);
-  r = idioma1.getIdioma();
-
-  cout << "Language: " << r << endl;
-
-  // -------------------------------------------------------------------------------
-  //
-  // -------------------------------------------------------------------------------
-
-  string s;
-  string tituloEntrada ("Git Workflow");
-
-  Titulo titulo1;
-  titulo1.setTitulo(tituloEntrada);
-  s = titulo1.getTitulo();
-
-  cout << "Title: " << s << endl;
-
-  // -------------------------------------------------------------------------------
-  //
-  // -------------------------------------------------------------------------------
-
-  int t;
-  int notaEntrada (4);
-
-  Nota nota1;
-  nota1.setNota(notaEntrada);
-  t = nota1.getNota();
-
-  cout << "Note: " << t << endl;
-
-  // -------------------------------------------------------------------------------
-  //
-  // -------------------------------------------------------------------------------
-
-  string u;
-  string cidadeEntrada ("Macau");
-
-  Cidade cidade1;
-  cidade1.setCidade(cidadeEntrada);
-  u = cidade1.getCidade();
-
-  cout << "City: " << u << endl;
-
-  // ------------------------------------------------------------------------------
-  //
-  // -------------------------------------------------------------------------------
-
-  string v;
-  string duracaoEntrada ("120");
-
-  Duracao duracao1;
-  duracao1.setDuracao(duracaoEntrada);
-  v = duracao1.getDuracao();
-
-  cout << "Duracao: " << v << endl;
-
-  // -------------------------------------------------------------------------------
-  //
-  // -------------------------------------------------------------------------------
-
-  string w;
-  string descricaoEntrada ("aaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-
-  Descricao descricao1;
-  descricao1.setDescricao(descricaoEntrada);
-  w = descricao1.getDescricao();
-
-  cout << "Description: " << w << endl;
-
-  // -------------------------------------------------------------------------------
-  //
-  // -------------------------------------------------------------------------------
-
-  string g;
-  string enderecoEntrada ("Toronto, Canada");
-
-  Endereco endereco1;
-  endereco1.setEndereco(enderecoEntrada);
-  g = endereco1.getEndereco();
-
-  cout << "Address: " << g << endl;
-
-  // -------------------------------------------------------------------------------
-  //
-  // -------------------------------------------------------------------------------
-
-  string h;
-  string codigoEntrada ("123111");
-
-  Codigo codigo1;
-  codigo1.setCodigo(codigoEntrada);
-  h = codigo1.getCodigo();
-
-  cout << "Code: " << h << endl;
-
-  // -------------------------------------------------------------------------------
-  //
-  // -------------------------------------------------------------------------------
+    switch(testeDuracao.run()){
+        case TUDuracao::SUCESSO: 
+          cout << "SUCESSO - DURACAO" << endl;
+          break;
+          
+        case TUDuracao::FALHA: 
+          cout << "FALHA - DURACAO" << endl;
+          break;
+    }
 
   return 0;
 }
