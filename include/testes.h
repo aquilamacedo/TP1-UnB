@@ -87,4 +87,73 @@ class TUIdioma {
     int estado;
     int run();
 };
+
+/// ------------------------------------------------------------------------------------------
+/// Implementacao classes de teste de unidade de dominios(nome, senha, cidade, duracao).
+/// Matricula: 202021767
+/// ------------------------------------------------------------------------------------------
+
+class TUNome {
+  private:
+    string NOME_VALIDO = "Felipe";
+    string NOME_INVALIDO = ".fel";
+    Nome *nome;
+    void setUp();
+    void tearDown();
+    void testarCenarioSucesso();
+    void testarCenarioFalha();
+  public:
+    const static int SUCESSO = 0;
+    const static int FALHA = 1;
+    int estado;
+    int run();
+};
+
+class TUSenha {
+  private:
+    string SENHA_VALIDA = "F3lipe";
+    string SENHA_INVALIDA = "FELPPP";
+    Senha *senha;
+    void setUp();
+    void tearDown();
+    void testarCenarioSucesso();
+    void testarCenarioFalha();
+  public:
+    const static int SUCESSO = 0;
+    const static int FALHA = 1;
+    int estado;
+    int run();
+};
+
+class TUCidade {
+  private:
+    string CIDADE_VALIDA = "Bangkok";
+    string CIDADE_INVALIDA = "Asa Norte";
+    Cidade *cidade;
+    void setUp();
+    void tearDown();
+    void testarCenarioSucesso();
+    void testarCenarioFalha();
+  public:
+    const static int SUCESSO = 0;
+    const static int FALHA = 1;
+    int estado;
+    int run();
+};
+
+class TUDuracao {
+  private:
+    string DURACAO_VALIDA = "180";
+    string DURACAO_INVALIDA = "200";
+    Duracao *duracao;
+    void setUp();
+    void tearDown();
+    void testarCenarioSucesso();
+    void testarCenarioFalha();
+  public:
+    const static int SUCESSO = 0;
+    const static int FALHA = 1;
+    int estado;
+    int run();
+};
 #endif // !TESTES_H_INCLUDED
