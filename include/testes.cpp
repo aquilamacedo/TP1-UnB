@@ -608,3 +608,220 @@ int TUDuracao::run(){
     tearDown();
     return estado;
 }
+
+// -------------------------------------------------------------------------------------------------
+// Implementacoes de metodos de classe de teste de unidade da classe Avaliacao. matricula:200060295
+// -------------------------------------------------------------------------------------------------
+
+void TUUsuario::setUp(){
+    usuario = new Usuario();
+    estado = SUCESSO;
+}
+
+void TUUsuario::tearDown(){
+    delete usuario;
+}
+
+void TUUsuario::testar() {
+  try {
+    usuario->setNome(VALOR_VALIDO_NOME);
+    if(usuario->getNome().getNome() != VALOR_VALIDO_NOME) {
+        estado = FALHA;
+    }
+
+    usuario->setEmail(VALOR_VALIDO_EMAIL);
+    if(usuario->getEmail().getEmail() != VALOR_VALIDO_EMAIL) {
+        estado = FALHA;
+    }
+
+    usuario->setSenha(VALOR_VALIDO_SENHA);
+    if(usuario->getSenha().getSenha() != VALOR_VALIDO_SENHA) {
+        estado = FALHA;
+    }
+  }
+
+  // ----------------------------------------------------------------------------------------------------
+  // Tratamendo de catch nos metodos da classe de teste de unidade da classe Usuario e chamada de run().
+  // Matricula: 202021800
+  // ----------------------------------------------------------------------------------------------------
+
+  catch(...) {
+    cout << "TUUsuario teste falhou! CATCH" << endl;
+    estado = FALHA;
+  }
+}
+
+int TUUsuario::run(){
+    setUp();
+    testar();
+    tearDown();
+    return estado;
+}
+
+// -------------------------------------------------------------------------------------------------
+// Implementacoes de metodos de classe de teste de unidade da classe Avaliacao. matricula:200060295
+// -------------------------------------------------------------------------------------------------
+
+void TUAvaliacao::setUp() {
+    avaliacao = new Avaliacao();
+    estado = SUCESSO;
+}
+
+void TUAvaliacao::tearDown() {
+    delete avaliacao;
+}
+
+void TUAvaliacao::testar() {
+  try {
+
+    avaliacao->setCodigo(VALOR_VALIDO_CODIGO);
+    if(avaliacao->getCodigo().getCodigo() != VALOR_VALIDO_CODIGO) {
+        estado = FALHA;
+    }
+
+    avaliacao->setNota(VALOR_VALIDO_NOTA);
+    if(avaliacao->getNota().getNota() != VALOR_VALIDO_NOTA) {
+        estado = FALHA;
+    }
+
+    avaliacao->setDescricao(VALOR_VALIDO_DESCRICAO);
+    if(avaliacao->getDescricao().getDescricao() != VALOR_VALIDO_DESCRICAO) {
+        estado = FALHA;
+    }
+  }
+
+  // -----------------------------------------------------------------------------------------------------
+  // Tratamendo de catch nos metodos da classe de teste de unidade da classe Avaliacao e chamada de run().
+  // Matricula: 202021800
+  // -----------------------------------------------------------------------------------------------------
+
+  catch (...) {
+    cout << "TUAvaliacao teste falhou! CATCH" << endl;
+    estado = FALHA;
+  }
+}
+
+int TUAvaliacao::run() {
+    setUp();
+    testar();
+    tearDown();
+    return estado;
+}
+
+/// -----------------------------------------------------------------------------------------------------
+///  Implementação dos metodos da classe de Teste de Unidade da classe TUExcursao.
+///  Matricula: 202021800
+/// -----------------------------------------------------------------------------------------------------
+
+void TUExcursao::setUp() {
+    excursao = new Excursao();
+    estado = SUCESSO;
+}
+
+void TUExcursao::tearDown() {
+    delete excursao;
+}
+
+void TUExcursao::testar() {
+  try {
+
+    excursao->setCodigo(VALOR_VALIDO_CODIGO);
+    if(excursao->getCodigo().getCodigo() != VALOR_VALIDO_CODIGO) {
+        estado = FALHA;
+    }
+
+    excursao->setTitulo(VALOR_VALIDO_TITULO);
+    if(excursao->getTitulo().getTitulo() != VALOR_VALIDO_TITULO) {
+        estado = FALHA;
+    }
+
+    excursao->setNota(VALOR_VALIDO_NOTA);
+    if(excursao->getNota().getNota() != VALOR_VALIDO_NOTA) {
+        estado = FALHA;
+    }
+
+    excursao->setCidade(VALOR_VALIDO_CIDADE);
+    if(excursao->getCidade().getCidade() != VALOR_VALIDO_CIDADE) {
+        estado = FALHA;
+    }
+
+    excursao->setDuracao(VALOR_VALIDO_DURACAO);
+    if(excursao->getDuracao().getDuracao() != VALOR_VALIDO_DURACAO) {
+        estado = FALHA;
+    }
+
+    excursao->setDescricao(VALOR_VALIDO_DESCRICAO);
+    if(excursao->getDescricao().getDescricao() != VALOR_VALIDO_DESCRICAO) {
+        estado = FALHA;
+    }
+
+    excursao->setEndereco(VALOR_VALIDO_ENDERECO);
+    if(excursao->getEndereco().getEndereco() != VALOR_VALIDO_ENDERECO) {
+      estado = FALHA;
+    }
+  }
+
+  catch (...) {
+    cout << "TUExcursao teste falhou! CATCH" << endl;
+    estado = FALHA;
+  }
+}
+
+int TUExcursao::run() {
+    setUp();
+    testar();
+    tearDown();
+    return estado;
+}
+
+/// -----------------------------------------------------------------------------------------------------
+///  Implementação dos metodos da classe de Teste de Unidade da classe TUSessao.
+///  Matricula: 202021800
+/// -----------------------------------------------------------------------------------------------------
+
+void TUSessao::setUp() {
+    sessao = new Sessao();
+    estado = SUCESSO;
+}
+
+void TUSessao::tearDown() {
+    delete sessao;
+}
+
+void TUSessao::testar() {
+  try {
+
+    sessao->setCodigo(VALOR_VALIDO_CODIGO);
+    if(sessao->getCodigo().getCodigo() != VALOR_VALIDO_CODIGO) {
+        estado = FALHA;
+    }
+
+    sessao->setData(VALOR_VALIDO_DATA);
+    if(sessao->getData().getData() != VALOR_VALIDO_DATA) {
+        estado = FALHA;
+    }
+
+    sessao->setHorario(VALOR_VALIDO_HORARIO);
+    if(sessao->getHorario().getHorario() != VALOR_VALIDO_HORARIO) {
+        estado = FALHA;
+    }
+
+    sessao->setIdioma(VALOR_VALIDO_IDIOMA);
+    if(sessao->getIdioma().getIdioma() != VALOR_VALIDO_IDIOMA) {
+        estado = FALHA;
+    }
+  }
+
+  catch (...) {
+    cout << "TUSessao teste falhou! CATCH" << endl;
+    estado = FALHA;
+  }
+}
+
+int TUSessao::run() {
+    setUp();
+    testar();
+    tearDown();
+    return estado;
+}
+
