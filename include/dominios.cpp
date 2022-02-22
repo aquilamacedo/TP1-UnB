@@ -15,9 +15,10 @@
 
 #include "dominios.h"
 
-// ------------------------------------------------------------------------------------------
-//
-// ------------------------------------------------------------------------------------------
+/// ------------------------------------------------------------------------------------------
+/// Implementacoes de dominios e validacoes das classes Email e Senha.
+/// Matricula: 202021800
+/// ------------------------------------------------------------------------------------------
 
 Email::Email() { }
 
@@ -82,6 +83,7 @@ void Email::setEmail(string email) {
   validar(email);
   this->email=email;
 }
+
 // ------------------------------------------------------------------------------------------
 //
 // ------------------------------------------------------------------------------------------
@@ -177,9 +179,10 @@ void Senha::setSenha(string senha) {
   this->senha=senha;
 }
 
-// ------------------------------------------------------------------------------------------
-//
-// ------------------------------------------------------------------------------------------
+/// ------------------------------------------------------------------------------------------
+/// Implementacoes de dominios e validacoes das classes Data, Horario e Idioma.
+/// Matricula: 202021800
+/// ------------------------------------------------------------------------------------------
 
 Data::Data() { }
 
@@ -317,9 +320,10 @@ void Idioma::setIdioma(string idioma) {
   this->idioma=idioma;
 }
 
-// ------------------------------------------------------------------------------------------
-//
-// ------------------------------------------------------------------------------------------
+/// ----------------------------------------------------------------------------------------------------------------
+/// Implementacoes de dominios e validacoes das classes Titulo, Nota, Cidade, Duracao, Descricao, Codigo e Endereco
+/// Matricula: 202021800
+/// ----------------------------------------------------------------------------------------------------------------
 
 Titulo::Titulo() { }
 
@@ -473,57 +477,52 @@ void Descricao::setDescricao(string descricao) {
 //
 // ------------------------------------------------------------------------------------------
 
-Codigo::Codigo() { };
+Codigo::Codigo() { }
 
 Codigo::Codigo(string codigo) {
-  this->codigo=codigo;
-};
+  this->codigo = codigo;
+}
 
-void Codigo::setCodigo(string codigo) {
-    string codigo_int = validar(codigo);
-    this->codigo=codigo_int;
-};
-
-string Codigo::validar(string codigo) throw (invalid_argument) {
-  if (codigo == "0000000"){
-  throw invalid_argument("Não existe esse codigo.");
+void Codigo::validar(string codigo) throw (invalid_argument) {
+  if (codigo == "000000"){
+    throw invalid_argument("Codigo Invalido. Nao existe esse codigo.");
   }
   if (codigo.size() > TAMANHO_MAX) {
-    throw invalid_argument("O codigo tem que estar no padrão DDDDDD.");
-    }else{
+    throw invalid_argument("Codigo Invalido. O codigo tem que estar no padrao DDDDDDX.");
+  }
 
-
-        const int N = codigo.size();
-        string input = codigo;
-        int card[N];
-        int sum = 0;
-        int evenSum = 0;
-        int oddSum = 0;
-        for (int i = 0; i < N; i++){
-            card[i] = input[i];
-        }
-        for (int i = N - 1; i >=0;i--){
-            int p;
-            int num = card[i];
-            if (i % 2 == 0){
-                p = num * 2;
-                if (p>9) p = p - 9;
-                evenSum +=p;
-            }else {
-                p = num;
-                oddSum += p;
-            }
-        }
-        sum = evenSum + oddSum;
-        string digito = std::to_string(sum);
-        codigo = codigo + digito.back();
-        return codigo;
-
+  int tamanhoCodigo = codigo.size();
+  int somaPar=0, somaImpar=0;
+  for (int i = tamanhoCodigo-1; i >= 0; i--) {
+    if (i%2!=0) {
+      int valorA = codigo[i] - '0';
+      valorA *= 2;
+      if (valorA > 9) {
+        valorA = valorA - 9;
+      }
+      somaPar+=valorA;
     }
+    else {
+      int valorB = codigo[i] - '0';
+      somaImpar+=valorB;
+    }
+  }
+
+  int somaTotal = somaImpar+somaPar;
+
+  if (somaTotal%10!=0) {
+    throw invalid_argument("Codigo Invalido.");
+  }
 }
-// -------------------------------------------------------------------------------
-// 
-// -------------------------------------------------------------------------------
+
+void Codigo::setCodigo(string codigo) {
+    validar(codigo);
+    this->codigo = codigo;
+};
+
+// ------------------------------------------------------------------------------------------
+//
+// ------------------------------------------------------------------------------------------
 
 Endereco::Endereco() { }
 

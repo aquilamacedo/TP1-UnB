@@ -113,7 +113,7 @@ inline Nota Avaliacao::getNota() const {
 }
 inline Descricao Avaliacao::getDescricao() const {
     return descricao;
-
+}
 /// -----------------------------------------------------------------------------
 /// Declaracao da entidade Excursao. Matricula: 202021767
 /// -----------------------------------------------------------------------------

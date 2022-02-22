@@ -332,7 +332,7 @@ class Descricao {
 class Codigo {
   private:
     string codigo;
-    const static unsigned int TAMANHO_MAX = 6;
+    const static unsigned int TAMANHO_MAX = 7;
     void validar(string) throw (invalid_argument);
 
   public:
