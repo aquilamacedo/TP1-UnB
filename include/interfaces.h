@@ -3,6 +3,7 @@
 
 #include "dominios.h"
 #include "entidades.h"
+#include "list"
 
 // -------------------------------------------
 // Forward declarations of services.
@@ -78,29 +79,30 @@ public:
 
 class IServicoExcursao{
 public:
-        virtual bool cadastrar(Excursao) = 0;
-        virtual bool descadastar(Codigo) = 0;
-        virtual bool editar(Excursao) = 0;
-        virtual Excursao recuperar(Codigo) = 0;
-        // virtual vector listarExcursoes() = 0;
-        virtual ~IServicoExcursao(){}
-};
+        // abstract service methods of Excursion
+        virtual bool cadastrarExcursao(Excursao) = 0;
+        virtual bool descadastrarExcursao(Codigo) = 0;
+        virtual bool editarExcursao(Excursao) = 0;
+        virtual Excursao recuperarExcursao(Codigo) = 0;
+        virtual list<Excursao> listarExcursoes() = 0;
 
-class IServicoAvaliacao{
-public:
+         // abstract service methods of Avaliation
         virtual bool cadastrarAvaliacao(Avaliacao) = 0;
-        virtual bool descadastrar(Codigo) = 0;
-        virtual bool editar(Avaliacao) = 0;
+        virtual bool descadastrarAvaliacao(Codigo) = 0;
+        virtual bool editarAvaliacao(Avaliacao) = 0;
         virtual Avaliacao recuperar(Codigo) = 0;
-        virtual ~IServicoAvaliacao(){}
-};
+        virtual list<Avaliacao> listarAvaliacoes() = 0;
+        virtual list<Avaliacao> listarAvaliacoes(Excursao) = 0;
+        virtual list<Avaliacao> listarAvaliacoes(Usuario) = 0;
 
-class IServicoSessao{
-public:
+        // abstract service methods of Session
         virtual bool cadastrarSessao(Sessao) = 0;
-        virtual bool descadastrar(Codigo) = 0;
-        virtual bool editar(Sessao) = 0;
-        virtual Avaliacao recuperar(Codigo) = 0;
-        virtual ~IServicoSessao(){}
+        virtual bool descadastrarSessao(Codigo) = 0;
+        virtual bool editarSessao(Sessao) = 0;
+        virtual Sessao recuperarSessao(Codigo) = 0;
+        virtual list<Sessao> listarSessoes() = 0;
+        virtual list<Sessao> listarSessoes(Excursao) = 0;
+
+        virtual ~IServicoExcursao(){}
 };
 #endif
