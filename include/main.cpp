@@ -5,6 +5,7 @@
 #include <bits/stdc++.h>
 #include "dominios.h"
 #include "testes.h"
+#include <regex>
 
 using namespace std;
 

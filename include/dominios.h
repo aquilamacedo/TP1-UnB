@@ -27,8 +27,6 @@ class Email {
   private:
 ///@param string email
     string email;
-    const static int TAMANHO_MAX_LOCAL = 64; //constante
-    const static int TAMANHO_MAX_DOMINIO = 253; //constante
 
 ///Funcao validar que valida uma string que sera usada como email
 ///@param string

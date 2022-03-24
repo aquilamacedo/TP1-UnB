@@ -12,7 +12,7 @@
 #include <stdlib.h>
 #include <ctype.h>
 #include <string.h>
-
+#include <regex>
 #include "dominios.h"
 
 /// ------------------------------------------------------------------------------------------
@@ -27,57 +27,12 @@ Email::Email(string email) {
 }
 
 void Email::validar(string email) throw (invalid_argument) {
-  string parteLocal, parteDominio, delimiter, especialChar;
-  int tamanhoLocal, tamanhoDominio;
-  int flag = 0;
-
-  delimiter = "@";
-
-  parteLocal = email.substr(0, email.find(delimiter));
-  parteDominio = email.erase(0, email.find(delimiter) + delimiter.size());
-
-  tamanhoLocal = parteLocal.size();
-  tamanhoDominio = parteDominio.size();
-
-  if(tamanhoLocal > TAMANHO_MAX_LOCAL) {
-    throw invalid_argument("Email Invalido. A parte local do email nao pode passar de 64 caracteres.");
+    regex str_expr("^((?!\\.)(?!.*?\\.\\.)(?!.*?\\.\\@)[A-Za-z0-9\\.\\!\\#\\$\\%\\&\'\\*\\+\\-\\/\\=\?\\^\\_\\`\\{\\|\\}\\~]{1,64})@((?!\\.)(?!.*?\\.\\.)[A-Za-z0-9\\.\\-]{1,253})$");
+    if (!regex_match(email, str_expr))
+    {
+        throw invalid_argument("Informe um email valido");
     }
-  else if (tamanhoDominio > TAMANHO_MAX_DOMINIO) {
-    throw invalid_argument("Email Invalido. A parte dominio do email nao pode passar de 253 caracteres.");
-  }
-
-  for (int i = 0; i < tamanhoLocal; i++) {
-    if(!(isalpha(parteLocal[i])) && !(isdigit(parteLocal[i]))) {
-        especialChar+=parteLocal[i];
-    }
-    if((parteLocal[0] == '.' || parteLocal[tamanhoLocal-1] == '.') || (parteLocal[i] == '.' && i != tamanhoLocal-1 && parteLocal[i+1] == '.')) {
-      throw invalid_argument("Email Invalido. A parte local nao pode conter ponto(.) no primeiro e no ultimo caractere, tambem nao eh possivel pontos consecutivos.");
-    }
-  }
-
-  string stringEspecial = "!#$%&'*+-/=?^_`{|}~";
-
-  for(int i = 0; i < especialChar.size(); i++) {
-    for(int j = 0; j < stringEspecial.size(); j++) {
-      if(especialChar[i] == stringEspecial[j]) {
-        flag+=1;
-      }
-    }
-  }
-
-  if(especialChar.size() != flag) {
-    throw invalid_argument ("Email Invalido. A parte local pode ter apenas os seguintes caracteres especiais !#$%&'*+-/=?^_`{|}~ sao validos");
-  }
-
-  for (int i = 0; i < tamanhoDominio; i++) {
-    if(!(isalpha(parteDominio[i])) && !(isdigit(parteDominio[i])) && parteDominio[i] != '-' && parteDominio[i] != '.') {
-      throw invalid_argument("Email Invalido. Na parte dominio apenas os caracteres (A-Z ou a-z), hifen(-), ponto(.) e digitos(0-9) podem ser utilizados.");
-    }
-    if((parteDominio[0] == '.') || (i != tamanhoDominio-1 && parteDominio[i] == '.' && parteDominio[i+1] == '.')) {
-      throw invalid_argument("Email Invalido. Na parte dominio o primeiro caractere nao pode ser um ponto(.) e tambem nao eh possivel pontos consecutivos.");
-    }
-  }
-}
+}  
 
 void Email::setEmail(string email) {
   validar(email);
@@ -95,30 +50,11 @@ Nome::Nome(string nome) {
 }
 
 void Nome::validar(string nome) throw (invalid_argument) {
-  if(nome.size() > TAMANHO_MAX) {
-    throw invalid_argument("Nome Invalido. O tamanho limite maximo do nome foi excedido.");
+    regex str_expr("(?=^.{5,20}$)^[A-Z](?:\\.|[a-z]+)(?: [A-Z](?:\\.|[a-z]+))*$");
+    if (!regex_match(nome, str_expr))
+    {
+        throw invalid_argument("Informe um nome valido");
     }
-  else if(nome.size() < TAMANHO_MIN) {
-    throw invalid_argument("Nome Invalido. O Tamanho limite minimo do nome nao foi satisfeito.");
-  }
-
-  for (int i = 0; i < nome.size(); i++) {
-    if(!(isalpha(nome[i])) && nome[i] != '.' && nome[i] != ' ') {
-      throw invalid_argument("Nome Invalido. Apenas os caracteres (A-Z ou a-z), ponto(.) ou espaço em branco devem ser utilizados");
-    }
-    if(nome[0] == '.') {
-      throw invalid_argument("Nome Invalido. O primeiro caractere nao pode ser um ponto");
-    }
-    if(nome[i] == '.' && !(isalpha(nome[i-1]))) {
-      throw invalid_argument("Nome Invalido. O Caractere precedente ao ponto nao pertence ao alfabeto(A-Z ou a-z)");
-    }
-    if(nome[i] == ' ' && (i != nome.size() - 1) && nome[i+1] == ' ') {
-      throw invalid_argument("Nome Invalido. Nao pode ter espaco consecutivo");
-    }
-    if(!(isupper(nome[0])) && isalpha(nome[0]) || nome[i] == ' ' && !(isupper(nome[i+1])) && isalpha(nome[i+1])) {
-      throw invalid_argument("Nome Invalido. Todos os caracteres de um termo devem iniciar com letra maiscula");
-    }
-  }
 }
 
 void Nome::setNome(string nome) {
