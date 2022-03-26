@@ -1,51 +1,62 @@
 #ifndef CONTROLADORASAPRESENTACAO_H_INCLUDED
 #define CONTROLADORASAPRESENTACAO_H_INCLUDED
 
+#include <conio.h>
+#include <iostream>
 #include <string.h>
+
+#include "curses.h"
 #include "dominios.h"
 #include "entidades.h"
 #include "interfaces.h"
 
+#define CLR_SCR system("cls");
 // -------------------------------------------
 // Declaration of controllers of control
 // -------------------------------------------
 
-class CntrApresentacaoControle{
-    private:
-        Email email;
-        IApresentacaoAutenticacao *cntrApresentacaoAutenticacao;
-        IApresentacaoUsuario *cntrApresentacaoUsuario;
-        IApresentacaoExcursao *cntrApresentacaoExcursao;
-        IApresentacaoAvaliacao *cntrApresentacaoAvaliacao;
-        IApresentacaoSessao *cntrApresentacaoSessao;
+class CntrApresentacaoControle
+{
+private:
+    Email email;
+    IApresentacaoAutenticacao *cntrApresentacaoAutenticacao;
+    IApresentacaoUsuario *cntrApresentacaoUsuario;
+    IApresentacaoExcursao *cntrApresentacaoExcursao;
+    IApresentacaoAvaliacao *cntrApresentacaoAvaliacao;
+    IApresentacaoSessao *cntrApresentacaoSessao;
 
-    public:
-        void executar();
-        void executar(Email);
-        void setCntrApresentacaoAutenticacao(IApresentacaoAutenticacao*);
-        void setCntrApresentacaoUsuario(IApresentacaoUsuario*);
-        void setCntrApresentacaoExcursao(IApresentacaoExcursao*);
-        void setCntrApresentacaoAvaliacao(IApresentacaoAvaliacao*);
-        void setCntrApresentacaoSessao(IApresentacaoSessao*);
+public:
+    void executar();
+    void executar(Email);
+    void setCntrApresentacaoAutenticacao(IApresentacaoAutenticacao *);
+    void setCntrApresentacaoUsuario(IApresentacaoUsuario *);
+    void setCntrApresentacaoExcursao(IApresentacaoExcursao *);
+    void setCntrApresentacaoAvaliacao(IApresentacaoAvaliacao *);
+    void setCntrApresentacaoSessao(IApresentacaoSessao *);
 };
 
-inline void CntrApresentacaoControle::setCntrApresentacaoAutenticacao(IApresentacaoAutenticacao *cntrApresentacaoAutenticacao){
+inline void CntrApresentacaoControle::setCntrApresentacaoAutenticacao(IApresentacaoAutenticacao *cntrApresentacaoAutenticacao)
+{
     this->cntrApresentacaoAutenticacao = cntrApresentacaoAutenticacao;
 }
 
-inline void CntrApresentacaoControle::setCntrApresentacaoUsuario(IApresentacaoUsuario *cntrApresentacaoUsuario){
-            this->cntrApresentacaoUsuario = cntrApresentacaoUsuario;
+inline void CntrApresentacaoControle::setCntrApresentacaoUsuario(IApresentacaoUsuario *cntrApresentacaoUsuario)
+{
+    this->cntrApresentacaoUsuario = cntrApresentacaoUsuario;
 }
 
-inline void CntrApresentacaoControle::setCntrApresentacaoExcursao(IApresentacaoExcursao *cntrApresentacaoExcursao){
+inline void CntrApresentacaoControle::setCntrApresentacaoExcursao(IApresentacaoExcursao *cntrApresentacaoExcursao)
+{
     this->cntrApresentacaoExcursao = cntrApresentacaoExcursao;
 }
 
-inline void CntrApresentacaoControle::setCntrApresentacaoAvaliacao(IApresentacaoAvaliacao *cntrApresentacaoAvaliacao){
+inline void CntrApresentacaoControle::setCntrApresentacaoAvaliacao(IApresentacaoAvaliacao *cntrApresentacaoAvaliacao)
+{
     this->cntrApresentacaoAvaliacao = cntrApresentacaoAvaliacao;
 }
 
-inline void CntrApresentacaoControle::setCntrApresentacaoSessao(IApresentacaoSessao *cntrApresentacaoSessao){
+inline void CntrApresentacaoControle::setCntrApresentacaoSessao(IApresentacaoSessao *cntrApresentacaoSessao)
+{
     this->cntrApresentacaoSessao = cntrApresentacaoSessao;
 }
 
@@ -53,15 +64,18 @@ inline void CntrApresentacaoControle::setCntrApresentacaoSessao(IApresentacaoSes
 // Declaration of controller of authentication
 // -------------------------------------------
 
-class CntrApresentacaoAutenticacao:public IApresentacaoAutenticacao{
-    private:
-        IServicoAutenticacao *cntr;
-    public:
-        bool autenticar(Email*);
-        void setCntrServicoAutenticacao(IServicoAutenticacao*);
+class CntrApresentacaoAutenticacao : public IApresentacaoAutenticacao
+{
+private:
+    IServicoAutenticacao *cntr;
+
+public:
+    bool autenticar(Email *);
+    void setCntrServicoAutenticacao(IServicoAutenticacao *);
 };
 
-inline void CntrApresentacaoAutenticacao::setCntrServicoAutenticacao(IServicoAutenticacao *cntr){
+inline void CntrApresentacaoAutenticacao::setCntrServicoAutenticacao(IServicoAutenticacao *cntr)
+{
     this->cntr = cntr;
 }
 
@@ -69,16 +83,20 @@ inline void CntrApresentacaoAutenticacao::setCntrServicoAutenticacao(IServicoAut
 // Declaration of controller of User
 // -------------------------------------------
 
-class CntrApresentacaoUsuario:public IApresentacaoUsuario{
-    private:
-        IServicoUsuario *cntrServicoUsuario;
-    public:
-        void executar(Email);
-        void executar();
-        void setCntrServicoUsuario(IServicoUsuario*);
+class CntrApresentacaoUsuario : public IApresentacaoUsuario
+{
+private:
+    IServicoUsuario *cntrServicoUsuario;
+    void consultarDadosUsuario();
+
+public:
+    void executar(Email);
+    void cadastrar();
+    void setCntrServicoUsuario(IServicoUsuario *);
 };
 
-inline void CntrApresentacaoUsuario::setCntrServicoUsuario(IServicoUsuario *cntrServicoUsuario){
+inline void CntrApresentacaoUsuario::setCntrServicoUsuario(IServicoUsuario *cntrServicoUsuario)
+{
     this->cntrServicoUsuario = cntrServicoUsuario;
 }
 
@@ -86,16 +104,39 @@ inline void CntrApresentacaoUsuario::setCntrServicoUsuario(IServicoUsuario *cntr
 // Declaration of controller of Excursion
 // -------------------------------------------
 
-class CntrApresentacaoExcursao:public IApresentacaoExcursao{
-    private:
-        IServicoExcursao *cntrServicoExcursao;
-    public:
-        void executar();
-        void executar(Email);
-        void setCntrServicoExcursao(IServicoExcursao*);
+class CntrApresentacaoExcursao : public IApresentacaoExcursao
+{
+private:
+    IServicoExcursao *cntrServicoExcursao;
+
+public:
+    void executar();
+    void executar(Email);
+    void setCntrServicoExcursao(IServicoExcursao *);
 };
 
-inline void CntrApresentacaoExcursao::setCntrServicoExcursao(IServicoExcursao *cntrServicoExcursao){
+inline void CntrApresentacaoExcursao::setCntrServicoExcursao(IServicoExcursao *cntrServicoExcursao)
+{
+    this->cntrServicoExcursao = cntrServicoExcursao;
+}
+
+// -------------------------------------------
+// Declaration of controller of Session
+// -------------------------------------------
+
+class CntrApresentacaoSessao : public IApresentacaoSessao
+{
+private:
+    IServicoExcursao *cntrServicoExcursao;
+
+public:
+    void executar();
+    void executar(Email);
+    void setCntrServicoExcursao(IServicoExcursao *);
+};
+
+inline void CntrApresentacaoSessao::setCntrServicoExcursao(IServicoExcursao *cntrServicoExcursao)
+{
     this->cntrServicoExcursao = cntrServicoExcursao;
 }
 
@@ -103,33 +144,20 @@ inline void CntrApresentacaoExcursao::setCntrServicoExcursao(IServicoExcursao *c
 // Declaration of controller of Avaliation
 // -------------------------------------------
 
-class CntrApresentacaoAvaliacao:public IApresentacaoAvaliacao{
-    private:
-        IServicoAvaliacao *cntrServicoAvaliacao;
-    public:
-        void executar();
-        void executar(Email);
-        void setCntrServicoAvaliacao(IServicoAvaliacao*);
+class CntrApresentacaoAvaliacao : public IApresentacaoAvaliacao
+{
+private:
+    IServicoExcursao *cntrServicoExcursao;
+
+public:
+    void executar();
+    void executar(Email);
+    void setCntrServicoExcursao(IServicoExcursao *);
 };
 
-inline void CntrApresentacaoAvaliacao::setCntrServicoAvaliacao(IServicoAvaliacao *cntrServicoAvaliacao){
-    this->cntrServicoAvaliacao = cntrServicoAvaliacao;
+inline void CntrApresentacaoAvaliacao::setCntrServicoExcursao(IServicoExcursao *cntrServicoExcursao)
+{
+    this->cntrServicoExcursao = cntrServicoExcursao;
 }
 
-// -------------------------------------------
-// Declaration of controller of Session
-// -------------------------------------------
-
-class CntrApresentacaoSessao:public IApresentacaoSessao{
-    private:
-        IServicoSessao *cntrServicoSessao;
-    public:
-        void executar();
-        void executar(Email);
-        void setCntrServicoSessao(IServicoSessao*);
-};
-
-inline void CntrApresentacaoSessao::setCntrServicoSessao(IServicoSessao *cntrServicoSessao){
-    this->cntrServicoSessao = cntrServicoSessao;
-}
 #endif
