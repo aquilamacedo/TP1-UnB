@@ -221,8 +221,7 @@ void CntrApresentacaoUsuario::executar(Email email)
 
 //--------------------------------------------------------------------------------------------
 
-void CntrApresentacaoUsuario::cadastrar()
-{
+void CntrApresentacaoUsuario::cadastrar() {
 
   // Mensagens a serem apresentadas na tela de cadastramento.
 

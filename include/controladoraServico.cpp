@@ -4,19 +4,28 @@
 using namespace std;
 
 //--------------------------------------------------------------------------------------
-//|                                       Usuário                                      |
+//|                                       Usuario                                      |
 //--------------------------------------------------------------------------------------
 
-bool CntrServicoAutenticacao::autenticar(Email email, Senha senha)
-{ // Armazena os dados em servidor ou lista
-  ContainerUsuario *container;
-
-  container = ContainerUsuario::getInstancia();
-
-  return container->autenticarUsuario(email, senha); // Retorna um bool
+bool CntrServicoAutenticacao::autenticar(Email email, Senha senha) {
+  // Armazena os dados em servidor ou lista
+  return true;
 }
 
-//--------------------------------------------------------------------------------------------
+bool CntrServicoUsuario::cadastrarUsuario(Usuario usuario) {
+  ComandoCadastrarUsuario registerUser(usuario);
+
+  try {
+    registerUser.executar();
+    return true;
+  }
+
+  catch(EErroPersistencia) {
+    return false;
+  }
+}
+
+/*
 
 bool CntrServicoUsuario::cadastrarUsuario(Usuario usuario)
 { // Armazena os dados em servidor ou lista
@@ -179,4 +188,6 @@ Avaliacao CntrServicoExcursao::recuperarAvaliacao(Codigo codigo)
   container = ContainerExcursao::getInstancia();
 
   return container->recuperarAvaliacao(codigo); // Retorna um bool
-}
+
+
+*/

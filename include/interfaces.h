@@ -78,9 +78,9 @@ class IServicoUsuario
 {
 public:
     virtual bool cadastrarUsuario(Usuario) = 0;
-    virtual bool descadastrarUsuario(Email) = 0;
-    virtual bool editar(Usuario) = 0;
-    virtual Usuario recuperar(Email) = 0;
+    //virtual bool descadastrarUsuario(Email) = 0;
+    //virtual bool editar(Usuario) = 0;
+    //virtual Usuario recuperar(Email) = 0;
     virtual ~IServicoUsuario() {}
 };
 

@@ -1,11 +1,10 @@
 #ifndef CONTROLADORASAPRESENTACAO_H_INCLUDED
 #define CONTROLADORASAPRESENTACAO_H_INCLUDED
 
-#include <conio.h>
 #include <iostream>
 #include <string.h>
 
-#include "curses.h"
+#include "ncurses.h"
 #include "dominios.h"
 #include "entidades.h"
 #include "interfaces.h"

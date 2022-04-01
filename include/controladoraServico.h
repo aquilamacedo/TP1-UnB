@@ -5,7 +5,7 @@
 #include "dominios.h"
 #include "entidades.h"
 #include "interfaces.h"
-#include "conteiner.h"
+#include "database.h"
 
 class CntrServicoAutenticacao : public IServicoAutenticacao
 {
@@ -14,16 +14,16 @@ public:
     bool autenticar(Email, Senha);
 };
 
-class CntrServicoUsuario : public IServicoUsuario
-{
-public:
+class CntrServicoUsuario : public IServicoUsuario {
+  public:
     // abstract services methods of Users
     bool cadastrarUsuario(Usuario);
-    bool descadastrarUsuario(Email);
-    bool editar(Usuario);
-    Usuario recuperarUsuario(Email);
+    //bool descadastrarUsuario(Email);
+    //bool editar(Usuario);
+    //Usuario recuperarUsuario(Email);
 };
 
+/*
 class CntrServicoExcursao : public IServicoExcursao
 {
 public:
@@ -51,5 +51,5 @@ public:
     // list<Sessao> listarSessoes();
     // list<Sessao> listarSessoes(Excursao);
 };
-
+*/
 #endif
