@@ -96,6 +96,9 @@ string ComandoSenha::getResultado() {
 }
 */
 
+// ---------------------------------------------
+// Implementação do comando Cadastrar Usuario
+// ---------------------------------------------
 ComandoCadastrarUsuario::ComandoCadastrarUsuario(Usuario usuario) {
         comandoSQL = "INSERT INTO usuario VALUES (";
         comandoSQL += "'" + usuario.getEmail().getEmail() + "', ";
@@ -103,8 +106,25 @@ ComandoCadastrarUsuario::ComandoCadastrarUsuario(Usuario usuario) {
         comandoSQL += "'" + usuario.getSenha().getSenha() + "')";
 }
 
+
+// ---------------------------------------------
+// Implementação do comando Descadastrar Usuario
+// ---------------------------------------------
 ComandoDescadastrarUsuario::ComandoDescadastrarUsuario(Email email){
     comandoSQL = "DELETE FROM usuario WHERE email = '";
     comandoSQL += email.getEmail();
     comandoSQL += "'";
 }
+
+// ---------------------------------------------
+// Implementação do comando Editar Usuário
+// ---------------------------------------------
+
+ComandoEditarUsuario::ComandoEditarUsuario(Usuario usuario) {
+        comandoSQL = "UPDATE usuarios ";
+        comandoSQL += "SET nome = '" + usuario.getNome().getNome();
+        comandoSQL += "', senha = '" + usuario.getSenha().getSenha();
+        comandoSQL += "' WHERE email = " + usuario.getEmail().getEmail();
+}
+
+//ComandoPesquisarUsuario::ComandoPesquisarUsuario(Email email) {}

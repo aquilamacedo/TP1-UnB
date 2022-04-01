@@ -7,7 +7,7 @@
 
 #include <stdio.h>
 #include <iostream>
-#include <ncurses.h>
+// #include <ncurses.h>
 #include <string>
 
 #include "sqlite3.h"
@@ -80,5 +80,16 @@ class ComandoDescadastrarUsuario:public ComandoSQL {
   public:
     ComandoDescadastrarUsuario(Email);
 };
+
+class ComandoEditarUsuario:public ComandoSQL {
+  public:
+    ComandoEditarUsuario(Usuario);
+};
+
+//class ComandoPesquisarUsuario:public ComandoSQL {
+//  public:
+//    ComandoPesquisarUsuario(Email);
+//    Usuario getResultado();
+//};
 
 #endif // DATABASE_H
