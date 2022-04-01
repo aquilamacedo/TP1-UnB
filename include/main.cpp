@@ -2,215 +2,64 @@
 #include <iomanip>
 #include <math.h>
 #include <string>
-#include <bits/stdc++.h>
 #include "dominios.h"
-#include "testes.h"
+#include "entidades.h"
+#include "interfaces.h"
+#include "controladoraApresentacao.h"
+#include "controladoraServico.h"
+
+#include <regex>
 
 using namespace std;
 
-int main() {
+using namespace std;
 
-  TUEmail testeEmail;
-  TUData testeData;
-  TUDescricao testeDescricao;
-  TUEndereco testeEndereco; 
-  TUIdioma testeIdioma;
-  TUNome testeNome;
-  TUSenha testeSenha;
-  TUCidade testeCidade;
-  TUDuracao testeDuracao;
-  TUCodigo testeCodigo;
-  TUTitulo testeTitulo;
-  TUHorario testeHorario;
-  TUNota testeNota;
-  TUUsuario testeUsuario;
-  TUAvaliacao testeAvaliacao;
-  TUExcursao testeExcursao;
-  TUSessao testeSessao;
+int main()
+{
+  // Declarar poteiros e instanciar controladoras.
 
-  /// -------------------------------------------------------------------------------------------------------------
-  /// Invocacao dos testes de unidade de Email, Data, Descricao, Endereco, Idioma, Codigo, Titulo, Horario e Nota. 
-  /// Matricula: 202021800
-  /// -------------------------------------------------------------------------------------------------------------
+  CntrApresentacaoControle *cntrApresentacaoControle;
+  IApresentacaoAutenticacao *cntrApresentacaoAutenticacao;
+  IApresentacaoUsuario *cntrApresentacaoUsuario;
+  IApresentacaoExcursao *cntrApresentacaoExcursao;
+  IApresentacaoSessao *cntrApresentacaoSessao;
+  IApresentacaoAvaliacao *cntrApresentacaoAvaliacao;
 
-  switch(testeEmail.run()) {
-    case TUEmail::SUCESSO:
-      cout << "[*] SUCESSO - EMAIL" << endl;
-      break;
+  cntrApresentacaoControle = new CntrApresentacaoControle();
+  cntrApresentacaoAutenticacao = new CntrApresentacaoAutenticacao();
+  cntrApresentacaoUsuario = new CntrApresentacaoUsuario();
+  cntrApresentacaoExcursao = new CntrApresentacaoExcursao();
+  cntrApresentacaoSessao = new CntrApresentacaoSessao();
+  cntrApresentacaoAvaliacao = new CntrApresentacaoAvaliacao();
 
-    case TUEmail::FALHA:
-      cout << "[*] FALHA - EMAIL" << endl;
-      break;
-  }
+  // Instanciar serviços.
 
-  switch(testeData.run()) {
-    case TUData::SUCESSO:
-      cout << "[*] SUCESSO - DATA" << endl;
-      break;
+  IServicoAutenticacao *cntrServicoAutenticacao;
+  IServicoUsuario *cntrServicoUsuario;
+  IServicoExcursao *cntrServicoExcursao;
+  IServicoAvaliacao *cntrServicoAvaliacao;
+  IServicoSessao *cntrServicoSessao;
 
-    case TUData::FALHA:
-      cout << "[*] FALHA - DATA" << endl;
-      break;
-  }
 
-  switch(testeDescricao.run()) {
-    case TUDescricao::SUCESSO:
-      cout << "[*] SUCESSO - DESCRICAO" << endl;
-      break;
+  cntrServicoUsuario = new CntrServicoUsuario();
+  cntrServicoAutenticacao = new CntrServicoAutenticacao();
+  //cntrServicoExcursao = new CntrServicoExcursao();
 
-    case TUDescricao::FALHA:
-      cout << "[*] FALHA - DESCRICAO" << endl;
-      break;
-  }
+  // Interligar controladoras e stubs.
 
-  switch(testeEndereco.run()) {
-    case TUEndereco::SUCESSO:
-      cout << "[*] SUCESSO - ENDERECO" << endl;
-      break;
+  cntrApresentacaoControle->setCntrApresentacaoAutenticacao(cntrApresentacaoAutenticacao);
+  cntrApresentacaoControle->setCntrApresentacaoUsuario(cntrApresentacaoUsuario);
+  cntrApresentacaoControle->setCntrApresentacaoExcursao(cntrApresentacaoExcursao);
+  cntrApresentacaoControle->setCntrApresentacaoSessao(cntrApresentacaoSessao);
+  cntrApresentacaoControle->setCntrApresentacaoAvaliacao(cntrApresentacaoAvaliacao);
 
-    case TUEndereco::FALHA:
-      cout << "[*] FALHA - ENDERECO" << endl;
-      break;
-  }
+  cntrApresentacaoAutenticacao->setCntrServicoAutenticacao(cntrServicoAutenticacao);
+  cntrApresentacaoUsuario->setCntrServicoUsuario(cntrServicoUsuario);
+  cntrApresentacaoExcursao->setCntrServicoExcursao(cntrServicoExcursao);
 
-  switch(testeIdioma.run()) {
-    case TUIdioma::SUCESSO:
-      cout << "[*] SUCESSO - IDIOMA" << endl;
-      break;
+  initscr();
+  cntrApresentacaoControle->executar(); // Solicitar servi�o apresentacao.
+  endwin();
 
-    case TUIdioma::FALHA:
-      cout << "[*] FALHA - IDIOMA" << endl;
-      break;
-  }
-
-  switch(testeCodigo.run()) {
-    case TUCodigo::SUCESSO:
-      cout << "[*] SUCESSO - CODIGO" << endl;
-      break;
-
-    case TUCodigo::FALHA:
-      cout << "[*] FALHA - CODIGO" << endl;
-      break;
-  }
-
-  switch(testeTitulo.run()) {
-    case TUTitulo::SUCESSO:
-      cout << "[*] SUCESSO - TITULO" << endl;
-      break;
-
-    case TUTitulo::FALHA:
-      cout << "[*] FALHA - TITULO" << endl;
-      break;
-  }
-
-  switch(testeHorario.run()) {
-    case TUHorario::SUCESSO:
-      cout << "[*] SUCESSO - HORARIO" << endl;
-      break;
-
-    case TUHorario::FALHA:
-      cout << "[*] FALHA - HORARIO" << endl;
-      break;
-  }
-
-  switch(testeDuracao.run()) {
-    case TUDuracao::SUCESSO:
-      cout << "[*] SUCESSO - DURACAO" << endl;
-      break;
-
-    case TUDuracao::FALHA:
-      cout << "[*] FALHA - DURACAO" << endl;
-      break;
-  }
-
-  /// -------------------------------------------------------------------------------
-  /// Invocacao dos testes de unidade de nome, senha, cidade e duracao
-  /// Matricula: 202021767
-  /// -------------------------------------------------------------------------------
-
-  switch(testeNome.run()) {
-    case TUNome::SUCESSO: 
-      cout << "[*] SUCESSO - NOME" << endl;
-      break;
-      
-    case TUNome::FALHA: 
-      cout << "[*] FALHA - NOME" << endl;
-      break;
-  }
-
-  switch(testeSenha.run()) {
-    case TUSenha::SUCESSO: 
-      cout << "[*] SUCESSO - SENHA" << endl;
-      break;
-
-    case TUSenha::FALHA: 
-      cout << "[*] FALHA - SENHA" << endl;
-      break;
-  }
-
-  switch(testeCidade.run()) {
-    case TUCidade::SUCESSO:
-      cout << "[*] SUCESSO - CIDADE" << endl;
-      break;
-
-    case TUCidade::FALHA:
-      cout << "[*] FALHA - CIDADE" << endl;
-      break;
-  }
-
-  switch(testeDuracao.run()) {
-    case TUDuracao::SUCESSO: 
-      cout << "[*] SUCESSO - DURACAO" << endl;
-      break;
-      
-    case TUDuracao::FALHA: 
-      cout << "[*] FALHA - DURACAO" << endl;
-      break;
-  }
-  
-  /// -------------------------------------------------------------------------------------
-  /// Invocacao dos testes de unidade das entidades Usuario, Avaliacao, Excursao e Sessao.
-  /// Matricula: 202021800
-  /// -------------------------------------------------------------------------------------
-
-  switch(testeUsuario.run()) {
-    case TUUsuario::SUCESSO:
-      cout << "[*] SUCESSO - USUARIO" << endl;
-      break;
-
-    case TUUsuario::FALHA:
-      cout << "[*] FALHA - USUARIO" << endl;
-      break;
-  }
-
-  switch(testeAvaliacao.run()) {
-    case TUAvaliacao::SUCESSO:
-      cout << "[*] SUCESSO - AVALIACAO" << endl;
-      break;
-
-    case TUAvaliacao::FALHA:
-      cout << "[*] FALHA - AVALIACAO" << endl;
-      break;
-  }
-
-  switch(testeExcursao.run()) {
-    case TUExcursao::SUCESSO:
-      cout << "[*] SUCESSO - EXCURSAO" << endl;
-      break;
-
-    case TUExcursao::FALHA:
-      cout << "[*] FALHA - EXCURSAO" << endl;
-      break;
-  }
-
-  switch(testeSessao.run()) {
-    case TUSessao::SUCESSO:
-      cout << "[*] SUCESSO - SESSAO" << endl;
-      break;
-
-    case TUSessao::FALHA:
-      cout << "[*] FALHA - SESSAO" << endl;
-      break;
-  }
   return 0;
 }

@@ -23,37 +23,37 @@ using namespace std;
 // -------------------------------------------------------------------------------------------
 
 ///Dominio Email quer permite instanciar um email.
-class Email {
-  private:
-///@param string email
-    string email;
-    const static int TAMANHO_MAX_LOCAL = 64; //constante
-    const static int TAMANHO_MAX_DOMINIO = 253; //constante
+class Email
+{
+private:
+  ///@param string email
+  string email;
 
-///Funcao validar que valida uma string que sera usada como email
-///@param string
-///@throw invalid_argument
-///@return void
-    void validar(string) throw (invalid_argument);
+  ///Funcao validar que valida uma string que sera usada como email
+  ///@param string
+  ///@throw invalid_argument
+  ///@return void
+  void validar(string);
 
-  public:
-///Construtor Email vazio
-    Email(); // default
+public:
+  ///Construtor Email vazio
+  Email(); // default
 
-///Construtor Email que recebe string para inicilizar um objeto
-///@param string
-    Email(string);
+  ///Construtor Email que recebe string para inicilizar um objeto
+  ///@param string
+  Email(string);
 
-///Funcao setEmail, que instancia o objeto com uma string
-///@param string
-///return void
-    void setEmail(string);
+  ///Funcao setEmail, que instancia o objeto com uma string
+  ///@param string
+  ///return void
+  void setEmail(string);
 
-///Funcao getEmail
-///@return string email
-    string getEmail() const {
-      return email;
-    }
+  ///Funcao getEmail
+  ///@return string email
+  string getEmail() const
+  {
+    return email;
+  }
 };
 
 // -------------------------------------------------------------------------------------------
@@ -61,34 +61,36 @@ class Email {
 // -------------------------------------------------------------------------------------------
 
 ///Dominio Nota quer permite instanciar uma nota.
-class Nota {
-  private:
-///@param int nota
-    int nota;
-    
-///Funcao validar que valida um inteiro
-///@throw invalid_argument
-///@return void
-    void validar(int) throw (invalid_argument);
+class Nota
+{
+private:
+  ///@param int nota
+  int nota;
 
-  public:
-///Construtor Nota vazio
-    Nota(); // default
+  ///Funcao validar que valida um inteiro
+  ///@throw invalid_argument
+  ///@return void
+  void validar(int);
 
-///Construtor Nota que recebe int para inicilizar um objeto
-///@param int
-    Nota(int);
+public:
+  ///Construtor Nota vazio
+  Nota(); // default
 
-///Funcao setNota, que instancia o objeto com um int
-///@param int
-///return void
-    void setNota(int);
+  ///Construtor Nota que recebe int para inicilizar um objeto
+  ///@param int
+  Nota(int);
 
-///Funcao getNota
-///@return int nota
-    int getNota() const {
-      return nota;
-    }
+  ///Funcao setNota, que instancia o objeto com um int
+  ///@param int
+  ///return void
+  void setNota(int);
+
+  ///Funcao getNota
+  ///@return int nota
+  int getNota() const
+  {
+    return nota;
+  }
 };
 
 // -------------------------------------------------------------------------------------------
@@ -96,36 +98,38 @@ class Nota {
 // -------------------------------------------------------------------------------------------
 
 ///Dominio Nome quer permite instanciar um nome.
-class Nome {
-  private:
-///@param string nome
-    string nome;
-    const static unsigned int TAMANHO_MIN = 5; //constante
-    const static unsigned int TAMANHO_MAX = 20; //constante
-    
-///Funcao validar que valida uma string
-///@throw invalid_argument
-///@return void
-    void validar(string) throw (invalid_argument);
+class Nome
+{
+private:
+  ///@param string nome
+  string nome;
+  const static unsigned int TAMANHO_MIN = 5;  //constante
+  const static unsigned int TAMANHO_MAX = 20; //constante
 
-  public:
-///Construtor Nome vazio
-    Nome(); // default
-    
-///Construtor Nome que recebe uma string para inicilizar um objeto
-///@param string
-    Nome(string);
+  ///Funcao validar que valida uma string
+  ///@throw invalid_argument
+  ///@return void
+  void validar(string);
 
-///Funcao setNota, que instancia o objeto com uma string
-///@param string
-///return void
-    void setNome(string);
+public:
+  ///Construtor Nome vazio
+  Nome(); // default
 
-///Funcao getNome
-///@return string nome
-    string getNome() const {
-      return nome;
-    }
+  ///Construtor Nome que recebe uma string para inicilizar um objeto
+  ///@param string
+  Nome(string);
+
+  ///Funcao setNota, que instancia o objeto com uma string
+  ///@param string
+  ///return void
+  void setNome(string);
+
+  ///Funcao getNome
+  ///@return string nome
+  string getNome() const
+  {
+    return nome;
+  }
 };
 
 // -------------------------------------------------------------------------------------------
@@ -133,35 +137,37 @@ class Nome {
 // -------------------------------------------------------------------------------------------
 
 ///Dominio Senha quer permite instanciar uma senha.
-class Senha {
-  private:
-///@param string senha
-    string senha;
-    const static unsigned int LIMITE = 6; //constante
-    
-///Funcao validar que valida uma string
-///@throw invalid_argument
-///@return void
-    void validar(string) throw (invalid_argument);
+class Senha
+{
+private:
+  ///@param string senha
+  string senha;
+  const static unsigned int LIMITE = 6; //constante
 
-  public:
-///Construtor Senha vazio
-    Senha(); // default
-    
-///Construtor Senha que recebe uma string para inicilizar um objeto
-///@param string
-    Senha(string);
+  ///Funcao validar que valida uma string
+  ///@throw invalid_argument
+  ///@return void
+  void validar(string);
 
-///Funcao setSenha, que instancia o objeto com uma string
-///@param string
-///return void
-    void setSenha(string);
+public:
+  ///Construtor Senha vazio
+  Senha(); // default
 
-///Funcao getSenha
-///@return string senha
-    string getSenha() const {
-      return senha;
-    }
+  ///Construtor Senha que recebe uma string para inicilizar um objeto
+  ///@param string
+  Senha(string);
+
+  ///Funcao setSenha, que instancia o objeto com uma string
+  ///@param string
+  ///return void
+  void setSenha(string);
+
+  ///Funcao getSenha
+  ///@return string senha
+  string getSenha() const
+  {
+    return senha;
+  }
 };
 
 // -------------------------------------------------------------------------------------------
@@ -169,203 +175,221 @@ class Senha {
 // -------------------------------------------------------------------------------------------
 
 ///Dominio Data quer permite instanciar uma data.
-class Data {
-  private:
-///@param string data
-    string data;
-    const static unsigned int TAMANHO_MAX = 11; //constante
-    
-///Funcao validar que valida uma string
-///@throw invalid_argument
-///@return void
-    void validar(string) throw (invalid_argument);
+class Data
+{
+private:
+  ///@param string data
+  string data;
+  const static unsigned int TAMANHO_MAX = 11; //constante
 
-  public:
-///Construtor Data vazio
-    Data(); // default
-    
-///Construtor Data que recebe uma string para inicilizar um objeto
-///@param string
-    Data(string);
+  ///Funcao validar que valida uma string
+  ///@throw invalid_argument
+  ///@return void
+  void validar(string);
 
-///Funcao setData, que instancia o objeto com uma string
-///@param string
-///return void
-    void setData(string);
+public:
+  ///Construtor Data vazio
+  Data(); // default
 
-///Funcao getData
-///@return string data
-    string getData() const {
-      return data;
-    }
+  ///Construtor Data que recebe uma string para inicilizar um objeto
+  ///@param string
+  Data(string);
+
+  ///Funcao setData, que instancia o objeto com uma string
+  ///@param string
+  ///return void
+  void setData(string);
+
+  ///Funcao getData
+  ///@return string data
+  string getData() const
+  {
+    return data;
+  }
 };
 
 // -------------------------------------------------------------------------------------------
 //
 // -------------------------------------------------------------------------------------------
 
-class Horario {
-  private:
-    string horario;
-    const static unsigned int TAMANHO_MAX = 5;
-    void validar(string) throw (invalid_argument);
+class Horario
+{
+private:
+  string horario;
+  const static unsigned int TAMANHO_MAX = 5;
+  void validar(string);
 
-  public:
-    Horario(); // default
-    Horario(string);
+public:
+  Horario(); // default
+  Horario(string);
 
-    void setHorario(string);
+  void setHorario(string);
 
-    string getHorario() const {
-      return horario;
-    }
+  string getHorario() const
+  {
+    return horario;
+  }
 };
 
 // -------------------------------------------------------------------------------------------
 //
 // -------------------------------------------------------------------------------------------
 
-class Idioma {
-  private:
-    string idioma;
-    void validar(string) throw (invalid_argument);
+class Idioma
+{
+private:
+  string idioma;
+  void validar(string);
 
-  public:
-    Idioma(); // default
-    Idioma(string);
+public:
+  Idioma(); // default
+  Idioma(string);
 
-    void setIdioma(string);
+  void setIdioma(string);
 
-    string getIdioma() const {
-      return idioma;
-    }
+  string getIdioma() const
+  {
+    return idioma;
+  }
 };
 
 // -------------------------------------------------------------------------------------------
 //
 // -------------------------------------------------------------------------------------------
 
-class Titulo {
-  private:
-    string titulo;
-    const static int TAMANHO_MIN = 5;
-    const static int TAMANHO_MAX = 20;
-    void validar(string) throw (invalid_argument);
+class Titulo
+{
+private:
+  string titulo;
+  const static int TAMANHO_MIN = 5;
+  const static int TAMANHO_MAX = 20;
+  void validar(string);
 
-  public:
-    Titulo(); // default
-    Titulo(string);
+public:
+  Titulo(); // default
+  Titulo(string);
 
-    void setTitulo(string);
+  void setTitulo(string);
 
-    string getTitulo() const {
-      return titulo;
-    }
+  string getTitulo() const
+  {
+    return titulo;
+  }
 };
 
 // -------------------------------------------------------------------------------------------
 //
 // -------------------------------------------------------------------------------------------
 
-class Cidade {
-  private:
-    string cidade;
-    void validar(string) throw (invalid_argument);
+class Cidade
+{
+private:
+  string cidade;
+  void validar(string);
 
-  public:
-    Cidade(); // default
-    Cidade(string);
+public:
+  Cidade(); // default
+  Cidade(string);
 
-    void setCidade(string);
+  void setCidade(string);
 
-    string getCidade() const {
-      return cidade;
-    }
+  string getCidade() const
+  {
+    return cidade;
+  }
 };
 
 // -------------------------------------------------------------------------------------------
 //
 // -------------------------------------------------------------------------------------------
 
-class Duracao {
-  private:
-    string duracao;
-    void validar(string) throw (invalid_argument);
+class Duracao
+{
+private:
+  string duracao;
+  void validar(string);
 
-  public:
-    Duracao(); // default
-    Duracao(string);
+public:
+  Duracao(); // default
+  Duracao(string);
 
-    void setDuracao(string);
+  void setDuracao(string);
 
-    string getDuracao() const {
-      return duracao;
-    }
+  string getDuracao() const
+  {
+    return duracao;
+  }
 };
 
 // -------------------------------------------------------------------------------------------
 //
 // -------------------------------------------------------------------------------------------
 
-class Descricao {
-  private:
-    string descricao;
-    const static int TAMANHO_MIN = 0;
-    const static int TAMANHO_MAX = 30;
-    void validar(string) throw (invalid_argument);
+class Descricao
+{
+private:
+  string descricao;
+  const static int TAMANHO_MIN = 0;
+  const static int TAMANHO_MAX = 30;
+  void validar(string);
 
-  public:
-    Descricao(); // default
-    Descricao(string);
+public:
+  Descricao(); // default
+  Descricao(string);
 
-    void setDescricao(string);
+  void setDescricao(string);
 
-    string getDescricao() const {
-      return descricao;
-    }
+  string getDescricao() const
+  {
+    return descricao;
+  }
 };
 
 // -------------------------------------------------------------------------------------------
 //
 // -------------------------------------------------------------------------------------------
 
-class Codigo {
-  private:
-    string codigo;
-    const static unsigned int TAMANHO_MAX = 7;
-    void validar(string) throw (invalid_argument);
+class Codigo
+{
+private:
+  string codigo;
+  const static unsigned int TAMANHO_MAX = 7;
+  void validar(string);
 
-  public:
-    Codigo(); // default
-    Codigo(string);
+public:
+  Codigo(); // default
+  Codigo(string);
 
-    void setCodigo(string);
+  void setCodigo(string);
 
-    string getCodigo() const {
-      return codigo;
-    }
+  string getCodigo() const
+  {
+    return codigo;
+  }
 };
 
 // -------------------------------------------------------------------------------------------
 //
 // -------------------------------------------------------------------------------------------
 
-class Endereco {
-  private:
-    string endereco;
-    const static int TAMANHO_MIN = 0;
-    const static int TAMANHO_MAX = 20;
-    void validar(string) throw (invalid_argument);
+class Endereco
+{
+private:
+  string endereco;
+  const static int TAMANHO_MIN = 0;
+  const static int TAMANHO_MAX = 20;
+  void validar(string);
 
-  public:
-    Endereco(); // default
-    Endereco(string);
+public:
+  Endereco(); // default
+  Endereco(string);
 
-    void setEndereco(string);
+  void setEndereco(string);
 
-    string getEndereco() const {
-      return endereco;
-    }
+  string getEndereco() const
+  {
+    return endereco;
+  }
 };
 
 #endif // DOMINIOS_H_INCLUDED
