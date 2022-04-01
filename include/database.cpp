@@ -5,7 +5,7 @@
 #include <string>
 #include <sstream>
 
-//Atributo est�tico container List.
+//Atributo estatico container List.
 
 list<ElementoResultado> ComandoSQL::listaResultado;
 
@@ -72,9 +72,9 @@ int ComandoSQL::callback(void *NotUsed, int argc, char **valorColuna, char **nom
       return 0;
 }
 
-/*
 ComandoSenha::ComandoSenha(Email email){
-  comandoSQL = "SELECT senha FROM usuarios WHERE email = ''";
+  comandoSQL = "SELECT senha FROM usuario WHERE email = '";
+  // senha da tabela usuario onde email eh o getemail
   comandoSQL += email.getEmail();
   comandoSQL += "'";
 }
@@ -88,13 +88,12 @@ string ComandoSenha::getResultado() {
   }
 
   resultado = listaResultado.back();
-  listaResultado.pop_back();
+  listaResultado.pop_back(); // dado que a gente vai excluir
 
   senha = resultado.getValorColuna();
 
   return senha;
 }
-*/
 
 // ---------------------------------------------
 // Implementação do comando Cadastrar Usuario

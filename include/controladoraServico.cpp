@@ -9,7 +9,24 @@ using namespace std;
 
 bool CntrServicoAutenticacao::autenticar(Email email, Senha senha) {
   // Armazena os dados em servidor ou lista
-  return true;
+
+  ComandoSenha passwd(email);
+
+  try {
+    passwd.executar();
+
+    string resultado;
+    resultado = passwd.getResultado();
+
+    if(resultado == senha.getSenha()) {
+      return true;
+    }
+    return false;
+  }
+
+  catch(EErroPersistencia) {
+    return false;
+  }
 }
 
 bool CntrServicoUsuario::cadastrarUsuario(Usuario usuario) {

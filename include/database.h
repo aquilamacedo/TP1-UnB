@@ -40,6 +40,14 @@ public:
         string getValorColuna() const;
 };
 
+inline string ElementoResultado::getNomeColuna() const {
+  return nomeColuna;
+}
+
+inline string ElementoResultado::getValorColuna() const {
+  return valorColuna;
+}
+
 //---------------------------------------------------------------------------
 //Classe ComandoSQL.
 
@@ -63,13 +71,12 @@ class ComandoSQL {
     }
     void executar();
 };
-/*
+
 class ComandoSenha:public ComandoSQL {
   public:
     ComandoSenha(Email);
     string getResultado();
 };
-*/
 
 class ComandoCadastrarUsuario:public ComandoSQL {
   public:
