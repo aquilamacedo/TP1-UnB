@@ -362,6 +362,8 @@ public:
 
   void setCodigo(string);
 
+  string getDigitoVerificador(int);
+
   string getCodigo() const
   {
     return codigo;

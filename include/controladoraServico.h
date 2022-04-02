@@ -14,42 +14,43 @@ public:
     bool autenticar(Email, Senha);
 };
 
-class CntrServicoUsuario : public IServicoUsuario {
-  public:
+class CntrServicoUsuario : public IServicoUsuario
+{
+public:
     // abstract services methods of Users
     bool cadastrarUsuario(Usuario);
+    bool editarUsuario(Usuario);
     //bool descadastrarUsuario(Email);
-    //bool editar(Usuario);
     //Usuario recuperarUsuario(Email);
 };
 
-/*
 class CntrServicoExcursao : public IServicoExcursao
 {
 public:
     // abstract service methods of Excursion
+    int getNextId();
     bool cadastrarExcursao(Excursao);
     bool descadastrarExcursao(Codigo);
     bool editarExcursao(Excursao);
-    Excursao recuperarExcursao(Codigo);
+    // Excursao recuperarExcursao(Codigo);
     // list<Excursao> listarExcursoes();
 
-    // abstract service methods of Avaliation
-    bool cadastrarAvaliacao(Avaliacao);
-    bool descadastrarAvaliacao(Codigo);
-    bool editarAvaliacao(Avaliacao);
-    Avaliacao recuperarAvaliacao(Codigo);
+    // // abstract service methods of Avaliation
+    // bool cadastrarAvaliacao(Avaliacao);
+    // bool descadastrarAvaliacao(Codigo);
+    // bool editarAvaliacao(Avaliacao);
+    // Avaliacao recuperarAvaliacao(Codigo);
     // list<Avaliacao> listarAvaliacoes();
     // list<Avaliacao> listarAvaliacoes(Excursao);
     // list<Avaliacao> listarAvaliacoes(Usuario);
 
-    // abstract service methods of Session
-    bool cadastrarSessao(Sessao);
-    bool descadastrarSessao(Codigo);
-    bool editarSessao(Sessao);
-    Sessao recuperarSessao(Codigo);
+    // // abstract service methods of Session
+    // bool cadastrarSessao(Sessao);
+    // bool descadastrarSessao(Codigo);
+    // bool editarSessao(Sessao);
+    // Sessao recuperarSessao(Codigo);
     // list<Sessao> listarSessoes();
     // list<Sessao> listarSessoes(Excursao);
 };
-*/
+
 #endif
