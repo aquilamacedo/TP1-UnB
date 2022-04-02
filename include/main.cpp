@@ -40,10 +40,9 @@ int main()
   IServicoAvaliacao *cntrServicoAvaliacao;
   IServicoSessao *cntrServicoSessao;
 
-
   cntrServicoUsuario = new CntrServicoUsuario();
   cntrServicoAutenticacao = new CntrServicoAutenticacao();
-  //cntrServicoExcursao = new CntrServicoExcursao();
+  cntrServicoExcursao = new CntrServicoExcursao();
 
   // Interligar controladoras e stubs.
 

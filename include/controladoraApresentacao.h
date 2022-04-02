@@ -87,6 +87,7 @@ class CntrApresentacaoUsuario : public IApresentacaoUsuario
 private:
     IServicoUsuario *cntrServicoUsuario;
     void consultarDadosUsuario();
+    void editarUsuario();
 
 public:
     void executar(Email);
@@ -107,6 +108,11 @@ class CntrApresentacaoExcursao : public IApresentacaoExcursao
 {
 private:
     IServicoExcursao *cntrServicoExcursao;
+    void consultarExcursao();
+    void cadastrarExcursao();
+    void editarExcursao();
+    void descadastrarExcursao();
+    void listarExcursoes();
 
 public:
     void executar();
@@ -127,6 +133,11 @@ class CntrApresentacaoSessao : public IApresentacaoSessao
 {
 private:
     IServicoExcursao *cntrServicoExcursao;
+    void consultarSessao();
+    void cadastrarSessao();
+    void editarSessao();
+    void descadastrarSessao();
+    void listarSessoes();
 
 public:
     void executar();
@@ -147,6 +158,11 @@ class CntrApresentacaoAvaliacao : public IApresentacaoAvaliacao
 {
 private:
     IServicoExcursao *cntrServicoExcursao;
+    void consultarAvaliacao();
+    void cadastrarAvaliacao();
+    void editarAvaliacao();
+    void descadastrarAvaliacao();
+    void listarAvaliacoes();
 
 public:
     void executar();

@@ -7,37 +7,60 @@ using namespace std;
 //|                                       Usuario                                      |
 //--------------------------------------------------------------------------------------
 
-bool CntrServicoAutenticacao::autenticar(Email email, Senha senha) {
+bool CntrServicoAutenticacao::autenticar(Email email, Senha senha)
+{
   // Armazena os dados em servidor ou lista
 
   ComandoSenha passwd(email);
 
-  try {
+  try
+  {
     passwd.executar();
 
     string resultado;
     resultado = passwd.getResultado();
 
-    if(resultado == senha.getSenha()) {
+    if (resultado == senha.getSenha())
+    {
       return true;
     }
     return false;
   }
 
-  catch(EErroPersistencia) {
+  catch (EErroPersistencia)
+  {
     return false;
   }
 }
 
-bool CntrServicoUsuario::cadastrarUsuario(Usuario usuario) {
+bool CntrServicoUsuario::cadastrarUsuario(Usuario usuario)
+{
   ComandoCadastrarUsuario registerUser(usuario);
 
-  try {
+  try
+  {
     registerUser.executar();
     return true;
   }
 
-  catch(EErroPersistencia) {
+  catch (EErroPersistencia)
+  {
+    return false;
+  }
+}
+
+bool CntrServicoUsuario::editarUsuario(Usuario usuario)
+{
+  ComandoEditarUsuario editingUser(usuario);
+
+  try
+  {
+    editingUser.executar();
+    return true;
+  }
+
+  catch (EErroPersistencia)
+  {
     return false;
   }
 }
@@ -74,20 +97,57 @@ bool CntrServicoUsuario::editar(Usuario usuario)
 
   return container->editarUsuario(usuario); // Retorna um bool
 }
-
+*/
 //--------------------------------------------------------------------------------------
-//|                                 Excursão                                           |
+//|                                     Excursão                                       |
 //--------------------------------------------------------------------------------------
 
-bool CntrServicoExcursao::cadastrarExcursao(Excursao excursao)
-{ // Armazena os dados em servidor ou lista
-  ContainerExcursao *container;
-
-  container = ContainerExcursao::getInstancia();
-
-  return container->cadastrarExcursao(excursao); // Retorna um bool
+int CntrServicoExcursao::getNextId()
+{
+  NextIdExcursao nextIdExcursao;
+  try
+  {
+    nextIdExcursao.executar();
+    int result;
+    result = nextIdExcursao.getResultado();
+    return result;
+  }
+  catch (EErroPersistencia)
+  {
+  }
 }
 
+bool CntrServicoExcursao::cadastrarExcursao(Excursao excursao)
+{
+
+  ComandoCadastrarExcursao registerExcursion(excursao);
+  try
+  {
+    registerExcursion.executar();
+    return true;
+  }
+
+  catch (EErroPersistencia)
+  {
+    return false;
+  }
+}
+
+bool CntrServicoExcursao::descadastrarExcursao(Codigo codigo)
+{
+  ComandoDescadastrarExcursao deregisterExcursion(codigo);
+
+  try
+  {
+    deregisterExcursion.executar();
+    return true;
+  }
+  catch (EErroPersistencia)
+  {
+    return false;
+  }
+}
+/*
 //--------------------------------------------------------------------------------------------
 
 bool CntrServicoExcursao::descadastrarExcursao(Codigo codigo)
@@ -98,18 +158,25 @@ bool CntrServicoExcursao::descadastrarExcursao(Codigo codigo)
 
   return container->excluirExcursao(codigo); // Retorna um bool
 }
-
+*/
 //--------------------------------------------------------------------------------------------
 
 bool CntrServicoExcursao::editarExcursao(Excursao excursao)
-{ // Armazena os dados em servidor ou lista
-  ContainerExcursao *container;
+{
+  // Armazena os dados em servidor ou lista
+  ComandoEditarExcursao editingExcursion(excursao);
+  try
+  {
+    editingExcursion.executar();
+    return true;
+  }
 
-  // container = ContainerExcursao::getInstancia();
-
-  return container->editarExcursao(excursao); // Retorna um bool
+  catch (EErroPersistencia)
+  {
+    return false;
+  }
 }
-
+/*
 Excursao CntrServicoExcursao::recuperarExcursao(Codigo codigo)
 { // Armazena os dados em servidor ou lista
   ContainerExcursao *container;
@@ -205,6 +272,5 @@ Avaliacao CntrServicoExcursao::recuperarAvaliacao(Codigo codigo)
   container = ContainerExcursao::getInstancia();
 
   return container->recuperarAvaliacao(codigo); // Retorna um bool
-
 
 */

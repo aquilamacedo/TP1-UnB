@@ -78,8 +78,8 @@ class IServicoUsuario
 {
 public:
     virtual bool cadastrarUsuario(Usuario) = 0;
+    virtual bool editarUsuario(Usuario) = 0;
     //virtual bool descadastrarUsuario(Email) = 0;
-    //virtual bool editar(Usuario) = 0;
     //virtual Usuario recuperar(Email) = 0;
     virtual ~IServicoUsuario() {}
 };
@@ -88,29 +88,30 @@ class IServicoExcursao
 {
 public:
     // abstract service methods of Excursion
+    virtual int getNextId() = 0;
     virtual bool cadastrarExcursao(Excursao) = 0;
     virtual bool descadastrarExcursao(Codigo) = 0;
     virtual bool editarExcursao(Excursao) = 0;
-    virtual Excursao recuperarExcursao(Codigo) = 0;
-    // virtual list<Excursao> listarExcursoes() = 0;
+    // virtual Excursao recuperarExcursao(Codigo) = 0;
+    // // virtual list<Excursao> listarExcursoes() = 0;
 
-    // abstract service methods of Avaliation
-    virtual bool cadastrarAvaliacao(Avaliacao) = 0;
-    virtual bool descadastrarAvaliacao(Codigo) = 0;
-    virtual bool editarAvaliacao(Avaliacao) = 0;
-    virtual Avaliacao recuperarAvaliacao(Codigo) = 0;
-    // virtual list<Avaliacao> listarAvaliacoes() = 0;
-    // virtual list<Avaliacao> listarAvaliacoes(Excursao) = 0;
-    // virtual list<Avaliacao> listarAvaliacoes(Usuario) = 0;
+    // // abstract service methods of Avaliation
+    // virtual bool cadastrarAvaliacao(Avaliacao) = 0;
+    // virtual bool descadastrarAvaliacao(Codigo) = 0;
+    // virtual bool editarAvaliacao(Avaliacao) = 0;
+    // virtual Avaliacao recuperarAvaliacao(Codigo) = 0;
+    // // virtual list<Avaliacao> listarAvaliacoes() = 0;
+    // // virtual list<Avaliacao> listarAvaliacoes(Excursao) = 0;
+    // // virtual list<Avaliacao> listarAvaliacoes(Usuario) = 0;
 
-    // abstract service methods of Session
-    virtual bool cadastrarSessao(Sessao) = 0;
-    virtual bool descadastrarSessao(Codigo) = 0;
-    virtual bool editarSessao(Sessao) = 0;
-    virtual Sessao recuperarSessao(Codigo) = 0;
-    // virtual list<Sessao> listarSessoes() = 0;
-    // virtual list<Sessao> listarSessoes(Excursao) = 0;
+    // // abstract service methods of Session
+    // virtual bool cadastrarSessao(Sessao) = 0;
+    // virtual bool descadastrarSessao(Codigo) = 0;
+    // virtual bool editarSessao(Sessao) = 0;
+    // virtual Sessao recuperarSessao(Codigo) = 0;
+    // // virtual list<Sessao> listarSessoes() = 0;
+    // // virtual list<Sessao> listarSessoes(Excursao) = 0;
 
-    virtual ~IServicoExcursao() {}
+    // virtual ~IServicoExcursao() {}
 };
 #endif
