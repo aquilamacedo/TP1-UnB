@@ -122,19 +122,19 @@ public:
 class ComandoCadastrarExcursao : public ComandoSQL
 {
 public:
-  ComandoCadastrarExcursao(Excursao);
+  ComandoCadastrarExcursao(Excursao, Email);
 };
 
 class ComandoDescadastrarExcursao : public ComandoSQL
 {
 public:
-  ComandoDescadastrarExcursao(Codigo);
+  ComandoDescadastrarExcursao(Codigo, Email);
 };
 
 class ComandoEditarExcursao : public ComandoSQL
 {
 public:
-  ComandoEditarExcursao(Excursao);
+  ComandoEditarExcursao(Excursao, Email);
 };
 
 class ComandoListarExcursoes : public ComandoSQL

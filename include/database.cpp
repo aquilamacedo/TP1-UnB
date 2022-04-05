@@ -149,7 +149,7 @@ ComandoEditarUsuario::ComandoEditarUsuario(Usuario usuario)
 // ------------------------------------------------
 // Implementação do comando Cadastrar Excursão
 // ------------------------------------------------
-ComandoCadastrarExcursao::ComandoCadastrarExcursao(Excursao excursao)
+ComandoCadastrarExcursao::ComandoCadastrarExcursao(Excursao excursao, Email email)
 {
         comandoSQL = "INSERT INTO Excursao VALUES (";
         comandoSQL += "'" + excursao.getCodigo().getCodigo() + "', ";
@@ -158,7 +158,8 @@ ComandoCadastrarExcursao::ComandoCadastrarExcursao(Excursao excursao)
         comandoSQL += "'" + excursao.getCidade().getCidade() + "', ";
         comandoSQL += "'" + excursao.getDuracao().getDuracao() + "', ";
         comandoSQL += "'" + excursao.getEndereco().getEndereco() + "', ";
-        comandoSQL += "'" + excursao.getDescricao().getDescricao() + "')";
+        comandoSQL += "'" + excursao.getDescricao().getDescricao() + "', ";
+        comandoSQL += "'" + email.getEmail() + "')";
 }
 
 NextIdExcursao::NextIdExcursao()
@@ -184,12 +185,12 @@ int NextIdExcursao::getResultado()
 // ------------------------------------------------
 // Implementação do comando Descadastrar Excursão
 // ------------------------------------------------
-ComandoDescadastrarExcursao::ComandoDescadastrarExcursao(Codigo codigo)
+ComandoDescadastrarExcursao::ComandoDescadastrarExcursao(Codigo codigo, Email email)
 {
         comandoSQL = "DELETE FROM Excursao WHERE (Codigo = '";
         comandoSQL += codigo.getCodigo();
         comandoSQL += "') AND (Guia = '";
-        comandoSQL += "lucasbbs@live.fr"; //email.getEmail();
+        comandoSQL += email.getEmail();
         comandoSQL += "')";
 }
 
@@ -197,7 +198,7 @@ ComandoDescadastrarExcursao::ComandoDescadastrarExcursao(Codigo codigo)
 // Implementação do comando Editar Excursão
 // ------------------------------------------------
 
-ComandoEditarExcursao::ComandoEditarExcursao(Excursao excursao)
+ComandoEditarExcursao::ComandoEditarExcursao(Excursao excursao, Email email)
 {
         comandoSQL = "UPDATE Excursao ";
         comandoSQL += "SET Titulo = '" + excursao.getTitulo().getTitulo();
@@ -207,7 +208,7 @@ ComandoEditarExcursao::ComandoEditarExcursao(Excursao excursao)
         comandoSQL += ", Descricao = '" + excursao.getDescricao().getDescricao();
         comandoSQL += "', Endereco = '" + excursao.getEndereco().getEndereco();
         comandoSQL += "' WHERE (Codigo = '" + excursao.getCodigo().getCodigo();
-        comandoSQL += "') AND (Guia = 'lucasbbs@live.fr')";
+        comandoSQL += "') AND (Guia = '" + email.getEmail() + "')";
 }
 
 // ------------------------------------------------

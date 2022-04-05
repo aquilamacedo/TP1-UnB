@@ -29,9 +29,9 @@ class CntrServicoExcursao : public IServicoExcursao
 public:
     // abstract service methods of Excursion
     int getNextId();
-    bool cadastrarExcursao(Excursao);
-    bool descadastrarExcursao(Codigo);
-    bool editarExcursao(Excursao);
+    bool cadastrarExcursao(Excursao, Email);
+    bool descadastrarExcursao(Codigo, Email);
+    bool editarExcursao(Excursao, Email);
     // Excursao recuperarExcursao(Codigo);
     // list<Excursao> listarExcursoes();
 
