@@ -65,39 +65,23 @@ bool CntrServicoUsuario::editarUsuario(Usuario usuario)
   }
 }
 
-/*
-
-bool CntrServicoUsuario::cadastrarUsuario(Usuario usuario)
-{ // Armazena os dados em servidor ou lista
-  ContainerUsuario *container;
-
-  container = ContainerUsuario::getInstancia();
-
-  return container->cadastrarUsuario(usuario); // Retorna um bool
-}
-
 //--------------------------------------------------------------------------------------------
 
 bool CntrServicoUsuario::descadastrarUsuario(Email email)
 { // Armazena os dados em servidor ou lista
-  ContainerUsuario *container;
-
-  container = ContainerUsuario::getInstancia();
-
-  return container->excluirUsuario(email); // Retorna um bool
+  ComandoDescadastrarUsuario deleteUser(email);
+  try
+  {
+    deleteUser.executar();
+    return true;
+  }
+  catch(EErroPersistencia)
+  {
+    return false;
+  }
 }
 
-//--------------------------------------------------------------------------------------------
 
-bool CntrServicoUsuario::editar(Usuario usuario)
-{ // Armazena os dados em servidor ou lista
-  ContainerUsuario *container;
-
-  container = ContainerUsuario::getInstancia();
-
-  return container->editarUsuario(usuario); // Retorna um bool
-}
-*/
 //--------------------------------------------------------------------------------------
 //|                                     Excursão                                       |
 //--------------------------------------------------------------------------------------
@@ -207,72 +191,120 @@ bool CntrServicoExcursao::cadastrarSessao(Sessao sessao, Email email, Codigo cod
     return false;
   }
 }
+
+//--------------------------------------------------------------------------------------------
+
+bool CntrServicoExcursao::descadastrarSessao(Codigo codigo, Email email)
+{
+  ComandoDescadastrarSessao deleteSession(codigo, email);
+  try
+  {
+    deleteSession.executar();
+    return true;
+  }
+  catch(EErroPersistencia)
+  {
+    return false;
+  }
+  
+
+}
+//--------------------------------------------------------------------------------------------
+
 /*
-//--------------------------------------------------------------------------------------------
+bool CntrServicoExcursao::editarSessao(Sessao sessao, Email email) {
+  ComandoEditarSessao editSession(sessao, email);
+  try {
+    editSession.executar();
+    return true;
+  }
+  catch(EErroPersistencia) {
+    return false;
+  }
+  
+}
+*/
 
-bool CntrServicoExcursao::descadastrarSessao(Codigo codigo)
-{ // Armazena os dados em servidor ou lista
-  ContainerExcursao *container;
-
-  container = ContainerExcursao::getInstancia();
-
-  return container->excluirSessao(codigo); // Retorna um bool
+Sessao CntrServicoExcursao::recuperarSessao(Codigo codigo) { 
+  ComandoRecuperarSessao getSession(codigo);
+  try {
+    getSession.executar();
+    return getSession.getResultado();
+    
+  }
+  catch(EErroPersistencia) {
+    throw EErroPersistencia("Erro na execução do comando!");
+  }
 }
 
-//--------------------------------------------------------------------------------------------
-
-bool CntrServicoExcursao::editarSessao(Sessao avaliacao)
-{ // Armazena os dados em servidor ou lista
-  ContainerExcursao *container;
-
-  // container = ContainerExcursao::getInstancia();
-
-  return container->editarSessao(avaliacao); // Retorna um bool
+list<Sessao> CntrServicoExcursao::listarSessoes() {
+  ComandoListarSessoes getSessions;
+  try {
+    getSessions.executar();
+    return getSessions.getResultado();
+  }
+  catch(EErroPersistencia) {
+    throw EErroPersistencia("Erro na execução do comando!");
+  }
 }
 
-Sessao CntrServicoExcursao::recuperarSessao(Codigo codigo)
-{ // Armazena os dados em servidor ou lista
-  ContainerExcursao *container;
-
-  container = ContainerExcursao::getInstancia();
-
-  return container->recuperarSessao(codigo); // Retorna a sessão
+list<Sessao> CntrServicoExcursao::listarSessoes(Excursao excursao) {
+  ComandoListarSessoes getSessions(excursao);
+  try {
+    getSessions.executar();
+    return getSessions.getResultado();
+  }
+  catch(EErroPersistencia) {
+    throw EErroPersistencia("Erro na execução do comando!");
+  }
 }
+
+
 
 //--------------------------------------------------------------------------------------
 //|                                 Avaliação                                          |
 //--------------------------------------------------------------------------------------
-
-bool CntrServicoExcursao::cadastrarAvaliacao(Avaliacao avaliacao)
-{ // Armazena os dados em servidor ou lista
-  ContainerExcursao *container;
-
-  container = ContainerExcursao::getInstancia();
-
-  return container->cadastrarAvaliacao(avaliacao); // Retorna um bool
+/*
+bool CntrServicoExcursao::cadastrarAvaliacao(Avaliacao avaliacao, Email email, Codigo codigo) {
+  ComandoCadastrarAvaliacao registerAvaliation(avaliacao, email, codigo);
+  try {
+    registerAvaliation.executar();
+    return true;
+  }
+  catch (EErroPersistencia) {
+    return false;
+  }
 }
 
+*/
 //--------------------------------------------------------------------------------------------
 
-bool CntrServicoExcursao::descadastrarAvaliacao(Codigo codigo)
-{ // Armazena os dados em servidor ou lista
-  ContainerExcursao *container;
-
-  container = ContainerExcursao::getInstancia();
-
-  return container->excluirAvaliacao(codigo); // Retorna um bool
+/*
+bool CntrServicoExcursao::descadastrarAvaliacao(Codigo codigo){
+  ComandoDescadastrarAvaliacao deleteAvaliation(codigo);
+  try {
+    deleteAvaliation.executar();
+    return true;
+} catch(EErroPersistencia) {
+    return false;
 }
+}
+
 
 //--------------------------------------------------------------------------------------------
+/*
+bool CntrServicoExcursao::editarAvaliacao(Avaliacao avaliacao, Email email) {
+  ComandoEditarAvaliacao  editAvaliation(avaliacao, email);
+  try {
+    editAvaliation.executar();
+    return true
+  }
+  catch(EErroPersistencia) {
+    return false;
+  }
 
-bool CntrServicoExcursao::editarAvaliacao(Avaliacao avaliacao)
-{ // Armazena os dados em servidor ou lista
-  ContainerExcursao *container;
-
-  // container = ContainerExcursao::getInstancia();
-
-  return container->editarAvaliacao(avaliacao); // Retorna um bool
 }
+
 
 Avaliacao CntrServicoExcursao::recuperarAvaliacao(Codigo codigo)
 { // Armazena os dados em servidor ou lista

@@ -287,7 +287,118 @@ ComandoEditarSessao::ComandoEditarSessao(Sessao sessao, Email email)
 // Implementação do comando Listar Sessões
 // ------------------------------------------------
 
-ComandoListarSessoes::ComandoListarSessoes(Email)
+ComandoListarSessoes::ComandoListarSessoes() {
+        comandoSQL = "SELECT * FROM Sessao";
+}
+
+list<Sessao> ComandoListarSessoes::getResultado() {
+        list<Sessao> sessoes;
+        Codigo codigo;
+        Data data;
+        Horario horario;
+        Idioma idioma;
+        ElementoResultado resultado;
+        
+        while (!listaResultado.empty()) {
+                Sessao sessao;
+                // Adicionando valores pesquisados dentro dos domínios.
+                if (listaResultado.empty()) {
+                        throw EErroPersistencia("Lista de resultados vazia!");
+                }
+                listaResultado.pop_back();
+                if (listaResultado.empty()) {
+                        throw EErroPersistencia("Lista de resultados vazia!");
+                }
+                resultado = listaResultado.back();
+                idioma.setIdioma(resultado.getValorColuna());
+                listaResultado.pop_back();
+                if (listaResultado.empty()) {
+                        throw EErroPersistencia("Lista de resultados vazia!");
+                }
+                resultado = listaResultado.back();
+                horario.setHorario(resultado.getValorColuna());
+                listaResultado.pop_back();
+                if (listaResultado.empty()) {
+                        throw EErroPersistencia("Lista de resultados vazia!");
+                }
+                resultado = listaResultado.back();
+                data.setData(resultado.getValorColuna());
+                listaResultado.pop_back();
+                if (listaResultado.empty()) {
+                        throw EErroPersistencia("Lista de resultados vazia!");
+                }
+                resultado = listaResultado.back();
+                codigo.setCodigo(resultado.getValorColuna());
+                listaResultado.pop_back();
+
+                // Adicionando os domínios adicionados dentro da Sessão
+                sessao.setCodigo(codigo);
+                sessao.setData(data);
+                sessao.setHorario(horario);
+                sessao.setIdioma(idioma);
+                sessoes.push_back(sessao);
+        }
+        return sessoes;
+}
+
+ComandoListarSessoes::ComandoListarSessoes(Excursao excursao){
+        comandoSQL = "SELECT * FROM Sessao WHERE Excursao = ";
+        comandoSQL += excursao.getCodigo().getCodigo();
+
+}
+
+// ------------------------------------------------
+// Implementação do comando Recuperar Sessao
+// ------------------------------------------------
+ComandoRecuperarSessao::ComandoRecuperarSessao(Codigo codigo)
 {
-        comandoSQL = "SELECT * FROM Excursao";
+        comandoSQL = "SELECT * FROM Sessao WHERE Codigo = ";
+        comandoSQL += codigo.getCodigo();
+}
+
+Sessao ComandoRecuperarSessao::getResultado() {
+        Sessao sessao;
+        Codigo codigo;
+        Data data;
+        Horario horario;
+        Idioma idioma;
+        ElementoResultado resultado;
+
+        // Adicionando valores pesquisados dentro dos domínios.
+        if (listaResultado.empty()) {
+                throw EErroPersistencia("Lista de resultados vazia!");
+        }
+        listaResultado.pop_back();
+        if (listaResultado.empty()) {
+                throw EErroPersistencia("Lista de resultados vazia!");
+        }
+        resultado = listaResultado.back();
+        idioma.setIdioma(resultado.getValorColuna());
+        listaResultado.pop_back();
+        if (listaResultado.empty()) {
+                throw EErroPersistencia("Lista de resultados vazia!");
+        }
+        resultado = listaResultado.back();
+        horario.setHorario(resultado.getValorColuna());
+        listaResultado.pop_back();
+        if (listaResultado.empty()) {
+                throw EErroPersistencia("Lista de resultados vazia!");
+        }
+        resultado = listaResultado.back();
+        data.setData(resultado.getValorColuna());
+        listaResultado.pop_back();
+        if (listaResultado.empty()) {
+                throw EErroPersistencia("Lista de resultados vazia!");
+        }
+        resultado = listaResultado.back();
+        codigo.setCodigo(resultado.getValorColuna());
+        listaResultado.pop_back();
+
+        // Adicionando os domínios adicionados dentro da Sessão
+        sessao.setCodigo(codigo);
+        sessao.setData(data);
+        sessao.setHorario(horario);
+        sessao.setIdioma(idioma);
+
+        return sessao;
 }

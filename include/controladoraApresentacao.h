@@ -4,7 +4,7 @@
 #include <iostream>
 #include <string.h>
 
-#include "ncurses.h"
+#include <ncurses.h>
 #include "dominios.h"
 #include "entidades.h"
 #include "interfaces.h"
