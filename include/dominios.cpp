@@ -537,7 +537,7 @@ void Codigo::validar(string codigo)
   }
 }
 
-string Codigo::getDigitoVerificador(int number)
+int Codigo::getDigitoVerificador(int number)
 {
   int n{6};
   int evenSum{};
@@ -570,8 +570,8 @@ string Codigo::getDigitoVerificador(int number)
   {
     rest = 10 - rest;
   }
-  code += std::to_string(rest);
-  return code;
+  // code += std::to_string(rest);
+  return rest;
 }
 
 void Codigo::setCodigo(string codigo)

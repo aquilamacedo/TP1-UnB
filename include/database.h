@@ -33,12 +33,14 @@ class ElementoResultado
 private:
   string nomeColuna;
   string valorColuna;
+  list<int> valoresColunas;
 
 public:
   void setNomeColuna(const string &);
   string getNomeColuna() const;
   void setValorColuna(const string &);
   string getValorColuna() const;
+  list<int> getValoresColuna() const;
 };
 
 inline string ElementoResultado::getNomeColuna() const
@@ -49,6 +51,11 @@ inline string ElementoResultado::getNomeColuna() const
 inline string ElementoResultado::getValorColuna() const
 {
   return valorColuna;
+}
+
+inline list<int> ElementoResultado::getValoresColuna() const
+{
+  return valoresColunas;
 }
 
 //---------------------------------------------------------------------------
@@ -118,11 +125,15 @@ public:
   NextIdExcursao();
   int getResultado();
 };
+class ListarExcursoes : public ComandoSQL
+{
+  ListarExcursoes();
+};
 
 class ComandoCadastrarExcursao : public ComandoSQL
 {
 public:
-  ComandoCadastrarExcursao(Excursao, Email);
+  ComandoCadastrarExcursao(Excursao, Email, int);
 };
 
 class ComandoDescadastrarExcursao : public ComandoSQL
@@ -157,7 +168,7 @@ public:
 class ComandoCadastrarSessao : public ComandoSQL
 {
 public:
-  ComandoCadastrarSessao(Sessao, Email, Codigo);
+  ComandoCadastrarSessao(Sessao, Email, Codigo, int);
 };
 
 class ComandoDescadastrarSessao : public ComandoSQL
@@ -176,5 +187,47 @@ class ComandoListarSessoes : public ComandoSQL
 {
 public:
   ComandoListarSessoes(Email);
+};
+
+//--------------------------------------------------------------------------------------
+//|                                 Avaliação                                          |
+//--------------------------------------------------------------------------------------
+
+class NextIdAvaliacao : public ComandoSQL
+{
+public:
+  NextIdAvaliacao();
+  int getResultado();
+};
+
+class GetNotasAvaliacao : public ComandoSQL
+{
+public:
+  GetNotasAvaliacao();
+  list<int> getResultado();
+};
+
+class ComandoCadastrarAvaliacao : public ComandoSQL
+{
+public:
+  ComandoCadastrarAvaliacao(Avaliacao, Email, Codigo);
+};
+
+class ComandoDescadastrarAvaliacao : public ComandoSQL
+{
+public:
+  ComandoDescadastrarAvaliacao(Codigo, Email);
+};
+
+class ComandoEditarAvaliacao : public ComandoSQL
+{
+public:
+  ComandoEditarAvaliacao(Avaliacao, Email);
+};
+
+class ComandoListarAvaliacoes : public ComandoSQL
+{
+public:
+  ComandoListarAvaliacoes(Email);
 };
 #endif // DATABASE_H

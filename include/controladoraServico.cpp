@@ -1,5 +1,6 @@
 #include "controladoraServico.h"
 #include <iostream>
+#include <iterator>
 
 using namespace std;
 
@@ -102,25 +103,16 @@ bool CntrServicoUsuario::editar(Usuario usuario)
 //|                                     Excursão                                       |
 //--------------------------------------------------------------------------------------
 
-int CntrServicoExcursao::getNextId()
-{
-  NextIdExcursao nextIdExcursao;
-  try
-  {
-    nextIdExcursao.executar();
-    int result;
-    result = nextIdExcursao.getResultado();
-    return result;
-  }
-  catch (EErroPersistencia)
-  {
-  }
-}
-
 bool CntrServicoExcursao::cadastrarExcursao(Excursao excursao, Email email)
 {
 
-  ComandoCadastrarExcursao registerExcursion(excursao, email);
+  NextIdExcursao nextIdExcursao;
+  nextIdExcursao.executar();
+  int result;
+  result = nextIdExcursao.getResultado();
+  Codigo codigo;
+
+  ComandoCadastrarExcursao registerExcursion(excursao, email, codigo.getDigitoVerificador(result));
   try
   {
     registerExcursion.executar();
@@ -195,7 +187,13 @@ Excursao CntrServicoExcursao::recuperarExcursao(Codigo codigo)
 */
 bool CntrServicoExcursao::cadastrarSessao(Sessao sessao, Email email, Codigo codigo)
 {
-  ComandoCadastrarSessao registerSession(sessao, email, codigo);
+  NextIdSessao nextIdSessao;
+  nextIdSessao.executar();
+  int result;
+  result = nextIdSessao.getResultado();
+  Codigo codigoVerificador;
+
+  ComandoCadastrarSessao registerSession(sessao, email, codigo, codigoVerificador.getDigitoVerificador(result));
   try
   {
     registerSession.executar();
@@ -207,18 +205,24 @@ bool CntrServicoExcursao::cadastrarSessao(Sessao sessao, Email email, Codigo cod
     return false;
   }
 }
-/*
+
 //--------------------------------------------------------------------------------------------
 
-bool CntrServicoExcursao::descadastrarSessao(Codigo codigo)
-{ // Armazena os dados em servidor ou lista
-  ContainerExcursao *container;
+bool CntrServicoExcursao::descadastrarSessao(Codigo codigo, Email email)
+{
+  ComandoDescadastrarSessao deregisterSession(codigo, email);
 
-  container = ContainerExcursao::getInstancia();
-
-  return container->excluirSessao(codigo); // Retorna um bool
+  try
+  {
+    deregisterSession.executar();
+    return true;
+  }
+  catch (EErroPersistencia)
+  {
+    return false;
+  }
 }
-
+/*
 //--------------------------------------------------------------------------------------------
 
 bool CntrServicoExcursao::editarSessao(Sessao avaliacao)
@@ -242,16 +246,36 @@ Sessao CntrServicoExcursao::recuperarSessao(Codigo codigo)
 //--------------------------------------------------------------------------------------
 //|                                 Avaliação                                          |
 //--------------------------------------------------------------------------------------
+*/
 
-bool CntrServicoExcursao::cadastrarAvaliacao(Avaliacao avaliacao)
-{ // Armazena os dados em servidor ou lista
-  ContainerExcursao *container;
+bool CntrServicoExcursao::cadastrarAvaliacao(Avaliacao avaliacao, Email email, Codigo codigo)
+{
+  GetNotasAvaliacao getnotas;
 
-  container = ContainerExcursao::getInstancia();
+  ComandoCadastrarAvaliacao registerAvaliacao(avaliacao, email, codigo);
+  try
+  {
 
-  return container->cadastrarAvaliacao(avaliacao); // Retorna um bool
+    getnotas.executar();
+    list<int> notas = getnotas.getResultado();
+    int soma = 0;
+    int contador = 0;
+    for (auto it = begin(notas); it != end(notas); ++it)
+    {
+      soma += *it;
+      contador++;
+    }
+
+    registerAvaliacao.executar();
+    return true;
+  }
+
+  catch (EErroPersistencia)
+  {
+    return false;
+  }
 }
-
+/*
 //--------------------------------------------------------------------------------------------
 
 bool CntrServicoExcursao::descadastrarAvaliacao(Codigo codigo)

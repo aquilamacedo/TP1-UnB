@@ -149,16 +149,17 @@ ComandoEditarUsuario::ComandoEditarUsuario(Usuario usuario)
 // ------------------------------------------------
 // Implementação do comando Cadastrar Excursão
 // ------------------------------------------------
-ComandoCadastrarExcursao::ComandoCadastrarExcursao(Excursao excursao, Email email)
+ComandoCadastrarExcursao::ComandoCadastrarExcursao(Excursao excursao, Email email, int digito_verificador)
 {
         comandoSQL = "INSERT INTO Excursao VALUES (";
-        comandoSQL += "'" + excursao.getCodigo().getCodigo() + "', ";
+        comandoSQL += "NULL, ";
         comandoSQL += "'" + excursao.getTitulo().getTitulo() + "', ";
-        comandoSQL += "'" + to_string(excursao.getNota().getNota()) + "', ";
+        comandoSQL += "NULL, ";
         comandoSQL += "'" + excursao.getCidade().getCidade() + "', ";
         comandoSQL += "'" + excursao.getDuracao().getDuracao() + "', ";
         comandoSQL += "'" + excursao.getEndereco().getEndereco() + "', ";
         comandoSQL += "'" + excursao.getDescricao().getDescricao() + "', ";
+        comandoSQL += "'" + to_string(digito_verificador) + "', ";
         comandoSQL += "'" + email.getEmail() + "')";
 }
 
@@ -187,11 +188,18 @@ int NextIdExcursao::getResultado()
 // ------------------------------------------------
 ComandoDescadastrarExcursao::ComandoDescadastrarExcursao(Codigo codigo, Email email)
 {
+        string icodigo = codigo.getCodigo();
+        icodigo.pop_back();
         comandoSQL = "DELETE FROM Excursao WHERE (Codigo = '";
-        comandoSQL += codigo.getCodigo();
+        comandoSQL += icodigo;
         comandoSQL += "') AND (Guia = '";
         comandoSQL += email.getEmail();
         comandoSQL += "')";
+}
+
+ListarExcursoes::ListarExcursoes()
+{
+        comandoSQL = "SELECT Codigo FROM Excursao";
 }
 
 // ------------------------------------------------
@@ -202,7 +210,7 @@ ComandoEditarExcursao::ComandoEditarExcursao(Excursao excursao, Email email)
 {
         comandoSQL = "UPDATE Excursao ";
         comandoSQL += "SET Titulo = '" + excursao.getTitulo().getTitulo();
-        comandoSQL += "', Nota = " + to_string(excursao.getNota().getNota());
+        // comandoSQL += "', Nota = " + to_string(excursao.getNota().getNota());
         comandoSQL += ", Cidade = '" + excursao.getCidade().getCidade();
         comandoSQL += "', Duracao = " + excursao.getDuracao().getDuracao();
         comandoSQL += ", Descricao = '" + excursao.getDescricao().getDescricao();
@@ -227,21 +235,120 @@ ComandoListarExcursoes::ComandoListarExcursoes()
 // ------------------------------------------------
 // Implementação do comando Cadastrar Sessão
 // ------------------------------------------------
-ComandoCadastrarSessao::ComandoCadastrarSessao(Sessao sessao, Email email, Codigo codigo)
+ComandoCadastrarSessao::ComandoCadastrarSessao(Sessao sessao, Email email, Codigo codigo, int digito_verificador)
 {
+        string codigoId = codigo.getCodigo();
+        codigoId.pop_back();
         comandoSQL = "INSERT INTO Sessao VALUES (";
-        comandoSQL += "'" + sessao.getCodigo().getCodigo() + "', ";
+        comandoSQL += "NULL, ";
         comandoSQL += "'" + sessao.getData().getData() + "', ";
         comandoSQL += "'" + sessao.getHorario().getHorario() + "', ";
         comandoSQL += "'" + sessao.getIdioma().getIdioma() + "', ";
+        comandoSQL += "'" + to_string(digito_verificador) + "', ";
+        comandoSQL += "'" + codigoId + "')";
+}
+
+NextIdSessao::NextIdSessao()
+{
+        comandoSQL = "SELECT seq + 1 FROM SQLITE_SEQUENCE WHERE name='Sessao'";
+}
+int NextIdSessao::getResultado()
+{
+        ElementoResultado resultado;
+        int result;
+
+        if (listaResultado.empty())
+        {
+                throw EErroPersistencia("Lista Vazia.");
+        }
+        resultado = listaResultado.back();
+        listaResultado.pop_back();
+
+        result = stoi(resultado.getValorColuna());
+        return result;
+}
+
+// ------------------------------------------------
+// Implementação do comando Descadastrar Sessão
+// ------------------------------------------------
+ComandoDescadastrarSessao::ComandoDescadastrarSessao(Codigo codigo, Email email)
+{
+        string icodigo = codigo.getCodigo();
+        icodigo.pop_back();
+        comandoSQL = "DELETE FROM Sessao WHERE Codigo in ";
+        comandoSQL += "(SELECT Sessao.Codigo FROM Sessao LEFT JOIN Excursao ON Excursao.Codigo = Sessao.Excursao ";
+        comandoSQL += "WHERE Sessao.Codigo  = ";
+        comandoSQL += icodigo;
+        comandoSQL += " AND Excursao.Guia = '";
+        comandoSQL += email.getEmail() + "'";
+}
+
+/*
+ WHERE Sessao.Codigo = 12 AND Excursao.Guia = "lucasbbs@live.fr")
+*/
+// ------------------------------------------------
+// Implementação do comando Editar Sessão
+// ------------------------------------------------
+
+ComandoEditarSessao::ComandoEditarSessao(Sessao sessao, Email email)
+{
+        comandoSQL = "UPDATE Sessao ";
+        comandoSQL += "SET Data = '" + sessao.getData().getData();
+        comandoSQL += "', Horario = " + sessao.getHorario().getHorario();
+        comandoSQL += "', Idioma = '" + sessao.getIdioma().getIdioma();
+        comandoSQL += "'WHERE Codigo in (SELECT Sessao.Codigo FROM Sessao LEFT JOIN Excursao ON Excursao.Codigo = Sessao.Excursao ";
+        comandoSQL += "WHERE Sessao.Codigo = " + sessao.getCodigo().getCodigo();
+        comandoSQL += " AND Excursao.Guia = '" + email.getEmail() + "')";
+}
+
+// ------------------------------------------------
+// Implementação do comando Listar Sessões
+// ------------------------------------------------
+
+ComandoListarSessoes::ComandoListarSessoes(Email)
+{
+        comandoSQL = "SELECT * FROM Excursao";
+}
+
+//--------------------------------------------------------------------------------------
+//|                                  Avaliação                                         |
+//--------------------------------------------------------------------------------------
+
+// ------------------------------------------------
+// Implementação do comando Cadastrar Avaliação
+// ------------------------------------------------
+ComandoCadastrarAvaliacao::ComandoCadastrarAvaliacao(Avaliacao avaliacao, Email email, Codigo codigo)
+{
+        comandoSQL = "INSERT INTO Avaliacao VALUES (";
+        comandoSQL += "NULL, ";
+        comandoSQL += "'" + to_string(avaliacao.getNota().getNota()) + "', ";
+        comandoSQL += "'" + avaliacao.getDescricao().getDescricao() + "', ";
         comandoSQL += "'" + codigo.getCodigo() + "')";
 }
 
-// NextIdExcursao::NextIdExcursao()
+GetNotasAvaliacao::GetNotasAvaliacao()
+{
+        comandoSQL = "SELECT Nota FROM Avaliacao";
+}
+list<int> GetNotasAvaliacao::getResultado()
+{
+        ElementoResultado resultado;
+
+        if (listaResultado.empty())
+        {
+                throw EErroPersistencia("Lista Vazia.");
+        }
+        resultado = listaResultado.back();
+        listaResultado.pop_back();
+
+        return resultado.getValoresColuna();
+}
+
+// NextIdAvaliacao::NextIdAvaliacao()
 // {
-//         comandoSQL = "SELECT seq + 1 FROM SQLITE_SEQUENCE WHERE name='Excursao'";
+//         comandoSQL = "SELECT seq + 1 FROM SQLITE_SEQUENCE WHERE name='Avaliacao'";
 // }
-// int NextIdExcursao::getResultado()
+// int NextIdAvaliacao::getResultado()
 // {
 //         ElementoResultado resultado;
 //         int result;
@@ -258,36 +365,35 @@ ComandoCadastrarSessao::ComandoCadastrarSessao(Sessao sessao, Email email, Codig
 // }
 
 // ------------------------------------------------
-// Implementação do comando Descadastrar Sessão
+// Implementação do comando Descadastrar Avaliação
 // ------------------------------------------------
-ComandoDescadastrarSessao::ComandoDescadastrarSessao(Codigo codigo, Email email)
+ComandoDescadastrarAvaliacao::ComandoDescadastrarAvaliacao(Codigo codigo, Email email)
 {
-        comandoSQL = "DELETE FROM Sessao WHERE (Codigo = '";
+        comandoSQL = "DELETE FROM Avaliacao WHERE (Codigo = '";
         comandoSQL += codigo.getCodigo();
-        comandoSQL += "') AND (Guia = '";
+        comandoSQL += "') AND (Avaliador = '";
         comandoSQL += email.getEmail();
         comandoSQL += "')";
 }
 
 // ------------------------------------------------
-// Implementação do comando Editar Sessão
+// Implementação do comando Editar Avaliação
 // ------------------------------------------------
 
-ComandoEditarSessao::ComandoEditarSessao(Sessao sessao, Email email)
+ComandoEditarAvaliacao::ComandoEditarAvaliacao(Avaliacao avaliacao, Email email)
 {
-        comandoSQL = "UPDATE Sessao ";
-        comandoSQL += "SET Data = '" + sessao.getData().getData();
-        comandoSQL += "', Horario = " + sessao.getHorario().getHorario();
-        comandoSQL += ", Idioma = '" + sessao.getIdioma().getIdioma();
-        comandoSQL += "' WHERE (Codigo = '" + sessao.getCodigo().getCodigo();
-        comandoSQL += "') AND (Guia = '" + email.getEmail() + "')";
+        comandoSQL = "UPDATE Avaliacao ";
+        comandoSQL += "SET Nota = '" + avaliacao.getNota().getNota();
+        comandoSQL += "', Descricao = " + avaliacao.getDescricao().getDescricao();
+        comandoSQL += "' WHERE (Codigo = '" + avaliacao.getCodigo().getCodigo();
+        comandoSQL += "') AND (Avaliador = '" + email.getEmail() + "')";
 }
 
 // ------------------------------------------------
-// Implementação do comando Listar Sessões
+// Implementação do comando Listar Avaliações
 // ------------------------------------------------
 
-ComandoListarSessoes::ComandoListarSessoes(Email)
+ComandoListarAvaliacoes::ComandoListarAvaliacoes(Email)
 {
         comandoSQL = "SELECT * FROM Excursao";
 }
