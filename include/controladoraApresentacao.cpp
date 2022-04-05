@@ -437,7 +437,7 @@ void CntrApresentacaoExcursao::executar()
     switch (campo)
     {
     case 1:
-      listarExcursoes();
+      // listarExcursoes();
       break;
     case 2:
       apresentar = false;
@@ -448,7 +448,7 @@ void CntrApresentacaoExcursao::executar()
 
 //--------------------------------------------------------------------------------------------
 
-void CntrApresentacaoExcursao::executar(Email)
+void CntrApresentacaoExcursao::executar(Email email)
 {
 
   // Mensagens a serem apresentadas tela completa de produtos financeiros.
@@ -491,16 +491,16 @@ void CntrApresentacaoExcursao::executar(Email)
     switch (campo)
     {
     case 1:
-      cadastrarExcursao();
+      cadastrarExcursao(email);
       break;
     case 2:
-      consultarExcursao();
+      consultarExcursao(email);
       break;
     case 3:
-      editarExcursao();
+      editarExcursao(email);
       break;
     case 4:
-      descadastrarExcursao();
+      descadastrarExcursao(email);
       break;
     case 5:
       apresentar = false;
@@ -509,12 +509,12 @@ void CntrApresentacaoExcursao::executar(Email)
   }
 }
 
-void CntrApresentacaoExcursao::consultarExcursao()
+void CntrApresentacaoExcursao::consultarExcursao(Email email)
 {
   return;
 }
 
-void CntrApresentacaoExcursao::cadastrarExcursao()
+void CntrApresentacaoExcursao::cadastrarExcursao(Email email)
 {
   // Mensagens a serem apresentadas na tela de cadastramento.
 
@@ -597,7 +597,7 @@ void CntrApresentacaoExcursao::cadastrarExcursao()
   excursao.setDescricao(descricao);
   excursao.setEndereco(endereco);
 
-  if (cntrServicoExcursao->cadastrarExcursao(excursao))
+  if (cntrServicoExcursao->cadastrarExcursao(excursao, email))
   {
     mvprintw(linha / 4 + 16, coluna / 4, "%s", texto7); // Informa sucesso.
     noecho();
@@ -613,7 +613,7 @@ void CntrApresentacaoExcursao::cadastrarExcursao()
   return;
 }
 
-void CntrApresentacaoExcursao::editarExcursao()
+void CntrApresentacaoExcursao::editarExcursao(Email email)
 {
   // Mensagens a serem apresentadas na tela de cadastramento.
 
@@ -696,7 +696,7 @@ void CntrApresentacaoExcursao::editarExcursao()
   excursao.setDescricao(descricao);
   excursao.setEndereco(endereco);
 
-  if (cntrServicoExcursao->editarExcursao(excursao))
+  if (cntrServicoExcursao->editarExcursao(excursao, email))
   {
     mvprintw(linha / 4 + 16, coluna / 4, "%s", texto10); // Informa sucesso.
     noecho();
@@ -712,7 +712,7 @@ void CntrApresentacaoExcursao::editarExcursao()
   return;
 }
 
-void CntrApresentacaoExcursao::descadastrarExcursao()
+void CntrApresentacaoExcursao::descadastrarExcursao(Email email)
 {
   // Mensagens a serem apresentadas na tela de cadastramento.
   char texto1[] = "Descadastrar uma excursao: ";
@@ -746,7 +746,7 @@ void CntrApresentacaoExcursao::descadastrarExcursao()
     return;
   }
 
-  if (cntrServicoExcursao->descadastrarExcursao(codigo) && campo1 != "")
+  if (cntrServicoExcursao->descadastrarExcursao(codigo, email) && campo1 != "")
   {
     mvprintw(linha / 4 + 4, coluna / 4, "%s", texto4); // Informa sucesso.
     noecho();
@@ -762,7 +762,7 @@ void CntrApresentacaoExcursao::descadastrarExcursao()
   return;
 }
 
-void CntrApresentacaoExcursao::listarExcursoes()
+void CntrApresentacaoExcursao::listarExcursoes(Email email)
 {
   return;
 }

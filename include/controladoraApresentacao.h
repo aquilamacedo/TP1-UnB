@@ -108,11 +108,11 @@ class CntrApresentacaoExcursao : public IApresentacaoExcursao
 {
 private:
     IServicoExcursao *cntrServicoExcursao;
-    void consultarExcursao();
-    void cadastrarExcursao();
-    void editarExcursao();
-    void descadastrarExcursao();
-    void listarExcursoes();
+    void consultarExcursao(Email);
+    void cadastrarExcursao(Email);
+    void editarExcursao(Email);
+    void descadastrarExcursao(Email);
+    void listarExcursoes(Email);
 
 public:
     void executar();

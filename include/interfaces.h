@@ -89,9 +89,9 @@ class IServicoExcursao
 public:
     // abstract service methods of Excursion
     virtual int getNextId() = 0;
-    virtual bool cadastrarExcursao(Excursao) = 0;
-    virtual bool descadastrarExcursao(Codigo) = 0;
-    virtual bool editarExcursao(Excursao) = 0;
+    virtual bool cadastrarExcursao(Excursao, Email) = 0;
+    virtual bool descadastrarExcursao(Codigo, Email) = 0;
+    virtual bool editarExcursao(Excursao, Email) = 0;
     // virtual Excursao recuperarExcursao(Codigo) = 0;
     // // virtual list<Excursao> listarExcursoes() = 0;
 

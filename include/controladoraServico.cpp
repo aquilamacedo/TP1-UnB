@@ -117,10 +117,10 @@ int CntrServicoExcursao::getNextId()
   }
 }
 
-bool CntrServicoExcursao::cadastrarExcursao(Excursao excursao)
+bool CntrServicoExcursao::cadastrarExcursao(Excursao excursao, Email email)
 {
 
-  ComandoCadastrarExcursao registerExcursion(excursao);
+  ComandoCadastrarExcursao registerExcursion(excursao, email);
   try
   {
     registerExcursion.executar();
@@ -133,38 +133,10 @@ bool CntrServicoExcursao::cadastrarExcursao(Excursao excursao)
   }
 }
 
-bool CntrServicoExcursao::descadastrarExcursao(Codigo codigo)
+bool CntrServicoExcursao::editarExcursao(Excursao excursao, Email email)
 {
-  ComandoDescadastrarExcursao deregisterExcursion(codigo);
 
-  try
-  {
-    deregisterExcursion.executar();
-    return true;
-  }
-  catch (EErroPersistencia)
-  {
-    return false;
-  }
-}
-/*
-//--------------------------------------------------------------------------------------------
-
-bool CntrServicoExcursao::descadastrarExcursao(Codigo codigo)
-{ // Armazena os dados em servidor ou lista
-  ContainerExcursao *container;
-
-  container = ContainerExcursao::getInstancia();
-
-  return container->excluirExcursao(codigo); // Retorna um bool
-}
-*/
-//--------------------------------------------------------------------------------------------
-
-bool CntrServicoExcursao::editarExcursao(Excursao excursao)
-{
-  // Armazena os dados em servidor ou lista
-  ComandoEditarExcursao editingExcursion(excursao);
+  ComandoEditarExcursao editingExcursion(excursao, email);
   try
   {
     editingExcursion.executar();
@@ -176,6 +148,37 @@ bool CntrServicoExcursao::editarExcursao(Excursao excursao)
     return false;
   }
 }
+
+bool CntrServicoExcursao::descadastrarExcursao(Codigo codigo, Email email)
+{
+  ComandoDescadastrarExcursao deregisterExcursion(codigo, email);
+
+  try
+  {
+    deregisterExcursion.executar();
+    return true;
+  }
+  catch (EErroPersistencia)
+  {
+    return false;
+  }
+}
+
+// bool CntrServicoExcursao::editarExcursao(Excursao excursao, Email email)
+// {
+//   // Armazena os dados em servidor ou lista
+//   ComandoEditarExcursao editingExcursion(excursao, email);
+//   try
+//   {
+//     editingExcursion.executar();
+//     return true;
+//   }
+
+//   catch (EErroPersistencia)
+//   {
+//     return false;
+//   }
+// }
 /*
 Excursao CntrServicoExcursao::recuperarExcursao(Codigo codigo)
 { // Armazena os dados em servidor ou lista
