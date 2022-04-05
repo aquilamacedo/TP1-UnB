@@ -812,7 +812,7 @@ void CntrApresentacaoSessao::executar()
   }
 }
 
-void CntrApresentacaoSessao::executar(Email)
+void CntrApresentacaoSessao::executar(Email email)
 {
 
   // Mensagens a serem apresentadas tela completa de produtos financeiros.
@@ -855,16 +855,16 @@ void CntrApresentacaoSessao::executar(Email)
     switch (campo)
     {
     case 1:
-      // consultarConta();
+      cadastrarSessao(email);
       break;
     case 2:
-      // cadastrarProdutoInvestimento();
+      consultarSessao(email);
       break;
     case 3:
-      // descadastrarProdutoInvestimento();
+      editarSessao(email);
       break;
     case 4:
-      // consultarProdutoInvestimento();
+      descadastrarSessao(email);
       break;
     case 5:
       apresentar = false;
@@ -873,27 +873,110 @@ void CntrApresentacaoSessao::executar(Email)
   }
 }
 
-void CntrApresentacaoSessao::consultarSessao()
+void CntrApresentacaoSessao::consultarSessao(Email email)
 {
   return;
 }
 
-void CntrApresentacaoSessao::cadastrarSessao()
+void CntrApresentacaoSessao::cadastrarSessao(Email email)
+{
+  // Mensagens a serem apresentadas na tela de cadastramento.
+
+  char texto1[] = "Preencha os seguintes campos: ";
+  char texto2[] = "Código              :";
+  char texto3[] = "Data                :";
+  char texto4[] = "Horario             :";
+  char texto5[] = "Idioma              :";
+  char texto6[] = "Código da Excursão  :";
+  char texto7[] = "Dados em formato incorreto. Digite algo.";
+  char texto8[] = "Sucesso no cadastramento. Digite algo.";
+  char texto9[] = "Falha no cadastramento. Digite algo.";
+
+  char campo1[80], campo2[80], campo3[80], campo4[80], campo5[80]; // Cria campos para entrada dos dados.
+
+  // Instancia os dom�nios.
+  Codigo codigo;
+  Data data;
+  Horario horario;
+  Idioma idioma;
+  Codigo codigoExcursao;
+
+  int linha, coluna; // Dados sobre tamanho da tela.
+
+  getmaxyx(stdscr, linha, coluna); // Armazena quantidade de linhas e colunas.
+
+  // Apresenta tela de cadastramento.
+
+  clear(); // Limpa janela.
+
+  mvprintw(linha / 4, coluna / 4, "%s", texto1);     // Imprime nome do campo.
+  mvprintw(linha / 4 + 2, coluna / 4, "%s", texto2); // Imprime nome do campo.
+  getstr(campo1);                                    // L� valor do campo.
+  mvprintw(linha / 4 + 4, coluna / 4, "%s", texto3); // Imprime nome do campo.
+  getstr(campo2);                                    // L� valor do campo.
+  mvprintw(linha / 4 + 6, coluna / 4, "%s", texto4); // Imprime nome do campo.
+  getstr(campo3);                                    // L� valor do campo.
+  int icampo2 = atoi(campo3);
+  mvprintw(linha / 4 + 8, coluna / 4, "%s", texto5);  // Imprime nome do campo.
+  getstr(campo4);                                     // L� valor do campo.
+  mvprintw(linha / 4 + 10, coluna / 4, "%s", texto6); // Imprime nome do campo.
+  getstr(campo5);                                     // L� valor do campo.
+
+  try
+  {
+    // codigo.setCodigo(codigo.getDigitoVerificador(nextId));
+    codigo.setCodigo(campo1);
+    data.setData(campo2);
+    horario.setHorario(campo3);
+    idioma.setIdioma(campo4);
+    codigoExcursao.setCodigo(campo5);
+  }
+  catch (invalid_argument &exp)
+  {
+    mvprintw(linha / 4 + 16, coluna / 4, "%s", texto7); // Informa formato incorreto.
+    noecho();                                           // Desabilita eco.
+    getch();                                            // Leitura de caracter digitado.
+    echo();                                             // Habilita eco.
+    return;
+  }
+
+  // Instancia e inicializa entidades.
+
+  Sessao sessao;
+
+  sessao.setCodigo(codigo);
+  sessao.setData(data);
+  sessao.setHorario(horario);
+  sessao.setIdioma(idioma);
+  // sessao.setCodigo(codigoExcursao);
+
+  if (cntrServicoExcursao->cadastrarSessao(sessao, email, codigoExcursao))
+  {
+    mvprintw(linha / 4 + 16, coluna / 4, "%s", texto8); // Informa sucesso.
+    noecho();
+    getch();
+    echo();
+    return;
+  }
+
+  mvprintw(linha / 4 + 16, coluna / 4, "%s", texto9); // Informa falha.
+  noecho();
+  getch();
+  echo();
+  return;
+}
+
+void CntrApresentacaoSessao::editarSessao(Email email)
 {
   return;
 }
 
-void CntrApresentacaoSessao::editarSessao()
+void CntrApresentacaoSessao::descadastrarSessao(Email email)
 {
   return;
 }
 
-void CntrApresentacaoSessao::descadastrarSessao()
-{
-  return;
-}
-
-void CntrApresentacaoSessao::listarSessoes()
+void CntrApresentacaoSessao::listarSessoes(Email email)
 {
   return;
 }
@@ -943,7 +1026,7 @@ void CntrApresentacaoAvaliacao::executar()
   }
 }
 
-void CntrApresentacaoAvaliacao::executar(Email)
+void CntrApresentacaoAvaliacao::executar(Email email)
 {
 
   // Mensagens a serem apresentadas tela completa de produtos financeiros.
@@ -986,16 +1069,16 @@ void CntrApresentacaoAvaliacao::executar(Email)
     switch (campo)
     {
     case 1:
-      // consultarConta();
+      // consultarConta(email);
       break;
     case 2:
-      // cadastrarProdutoInvestimento();
+      // cadastrarProdutoInvestimento(email);
       break;
     case 3:
-      // descadastrarProdutoInvestimento();
+      // descadastrarProdutoInvestimento(email);
       break;
     case 4:
-      // consultarProdutoInvestimento();
+      // consultarProdutoInvestimento(email);
       break;
     case 5:
       apresentar = false;

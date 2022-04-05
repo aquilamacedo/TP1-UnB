@@ -219,3 +219,75 @@ ComandoListarExcursoes::ComandoListarExcursoes()
 {
         comandoSQL = "SELECT * FROM Excursao";
 }
+
+//--------------------------------------------------------------------------------------
+//|                                   Sessão                                           |
+//--------------------------------------------------------------------------------------
+
+// ------------------------------------------------
+// Implementação do comando Cadastrar Sessão
+// ------------------------------------------------
+ComandoCadastrarSessao::ComandoCadastrarSessao(Sessao sessao, Email email, Codigo codigo)
+{
+        comandoSQL = "INSERT INTO Sessao VALUES (";
+        comandoSQL += "'" + sessao.getCodigo().getCodigo() + "', ";
+        comandoSQL += "'" + sessao.getData().getData() + "', ";
+        comandoSQL += "'" + sessao.getHorario().getHorario() + "', ";
+        comandoSQL += "'" + sessao.getIdioma().getIdioma() + "', ";
+        comandoSQL += "'" + codigo.getCodigo() + "')";
+}
+
+// NextIdExcursao::NextIdExcursao()
+// {
+//         comandoSQL = "SELECT seq + 1 FROM SQLITE_SEQUENCE WHERE name='Excursao'";
+// }
+// int NextIdExcursao::getResultado()
+// {
+//         ElementoResultado resultado;
+//         int result;
+
+//         if (listaResultado.empty())
+//         {
+//                 throw EErroPersistencia("Lista Vazia.");
+//         }
+//         resultado = listaResultado.back();
+//         listaResultado.pop_back();
+
+//         result = stoi(resultado.getValorColuna());
+//         return result;
+// }
+
+// ------------------------------------------------
+// Implementação do comando Descadastrar Sessão
+// ------------------------------------------------
+ComandoDescadastrarSessao::ComandoDescadastrarSessao(Codigo codigo, Email email)
+{
+        comandoSQL = "DELETE FROM Sessao WHERE (Codigo = '";
+        comandoSQL += codigo.getCodigo();
+        comandoSQL += "') AND (Guia = '";
+        comandoSQL += email.getEmail();
+        comandoSQL += "')";
+}
+
+// ------------------------------------------------
+// Implementação do comando Editar Sessão
+// ------------------------------------------------
+
+ComandoEditarSessao::ComandoEditarSessao(Sessao sessao, Email email)
+{
+        comandoSQL = "UPDATE Sessao ";
+        comandoSQL += "SET Data = '" + sessao.getData().getData();
+        comandoSQL += "', Horario = " + sessao.getHorario().getHorario();
+        comandoSQL += ", Idioma = '" + sessao.getIdioma().getIdioma();
+        comandoSQL += "' WHERE (Codigo = '" + sessao.getCodigo().getCodigo();
+        comandoSQL += "') AND (Guia = '" + email.getEmail() + "')";
+}
+
+// ------------------------------------------------
+// Implementação do comando Listar Sessões
+// ------------------------------------------------
+
+ComandoListarSessoes::ComandoListarSessoes(Email)
+{
+        comandoSQL = "SELECT * FROM Excursao";
+}

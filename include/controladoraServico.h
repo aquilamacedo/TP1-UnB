@@ -36,21 +36,21 @@ public:
     // list<Excursao> listarExcursoes();
 
     // // abstract service methods of Avaliation
-    // bool cadastrarAvaliacao(Avaliacao);
-    // bool descadastrarAvaliacao(Codigo);
-    // bool editarAvaliacao(Avaliacao);
-    // Avaliacao recuperarAvaliacao(Codigo);
+    // bool cadastrarAvaliacao(Avaliacao, Email);
+    // bool descadastrarAvaliacao(Codigo, Email);
+    // bool editarAvaliacao(Avaliacao, Email);
+    // Avaliacao recuperarAvaliacao(Codigo, Email);
     // list<Avaliacao> listarAvaliacoes();
-    // list<Avaliacao> listarAvaliacoes(Excursao);
-    // list<Avaliacao> listarAvaliacoes(Usuario);
+    // list<Avaliacao> listarAvaliacoes(Excursao, Email);
+    // list<Avaliacao> listarAvaliacoes(Usuario, Email);
 
     // // abstract service methods of Session
-    // bool cadastrarSessao(Sessao);
-    // bool descadastrarSessao(Codigo);
-    // bool editarSessao(Sessao);
-    // Sessao recuperarSessao(Codigo);
+    bool cadastrarSessao(Sessao, Email, Codigo);
+    // bool descadastrarSessao(Codigo, Email);
+    // bool editarSessao(Sessao, Email);
+    // Sessao recuperarSessao(Codigo, Email);
     // list<Sessao> listarSessoes();
-    // list<Sessao> listarSessoes(Excursao);
+    // list<Sessao> listarSessoes(Excursao, Email);
 };
 
 #endif
