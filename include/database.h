@@ -142,4 +142,39 @@ class ComandoListarExcursoes : public ComandoSQL
 public:
   ComandoListarExcursoes();
 };
+
+//--------------------------------------------------------------------------------------
+//|                                   Sessão                                           |
+//--------------------------------------------------------------------------------------
+
+class NextIdSessao : public ComandoSQL
+{
+public:
+  NextIdSessao();
+  int getResultado();
+};
+
+class ComandoCadastrarSessao : public ComandoSQL
+{
+public:
+  ComandoCadastrarSessao(Sessao, Email, Codigo);
+};
+
+class ComandoDescadastrarSessao : public ComandoSQL
+{
+public:
+  ComandoDescadastrarSessao(Codigo, Email);
+};
+
+class ComandoEditarSessao : public ComandoSQL
+{
+public:
+  ComandoEditarSessao(Sessao, Email);
+};
+
+class ComandoListarSessoes : public ComandoSQL
+{
+public:
+  ComandoListarSessoes(Email);
+};
 #endif // DATABASE_H

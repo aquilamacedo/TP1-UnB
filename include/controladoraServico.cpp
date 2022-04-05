@@ -192,16 +192,22 @@ Excursao CntrServicoExcursao::recuperarExcursao(Codigo codigo)
 //--------------------------------------------------------------------------------------
 //|                                    Sessão                                          |
 //--------------------------------------------------------------------------------------
+*/
+bool CntrServicoExcursao::cadastrarSessao(Sessao sessao, Email email, Codigo codigo)
+{
+  ComandoCadastrarSessao registerSession(sessao, email, codigo);
+  try
+  {
+    registerSession.executar();
+    return true;
+  }
 
-bool CntrServicoExcursao::cadastrarSessao(Sessao avaliacao)
-{ // Armazena os dados em servidor ou lista
-  ContainerExcursao *container;
-
-  container = ContainerExcursao::getInstancia();
-
-  return container->cadastrarSessao(avaliacao); // Retorna um bool
+  catch (EErroPersistencia)
+  {
+    return false;
+  }
 }
-
+/*
 //--------------------------------------------------------------------------------------------
 
 bool CntrServicoExcursao::descadastrarSessao(Codigo codigo)

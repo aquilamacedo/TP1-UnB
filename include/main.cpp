@@ -55,6 +55,8 @@ int main()
   cntrApresentacaoAutenticacao->setCntrServicoAutenticacao(cntrServicoAutenticacao);
   cntrApresentacaoUsuario->setCntrServicoUsuario(cntrServicoUsuario);
   cntrApresentacaoExcursao->setCntrServicoExcursao(cntrServicoExcursao);
+  cntrApresentacaoAvaliacao->setCntrServicoExcursao(cntrServicoExcursao);
+  cntrApresentacaoSessao->setCntrServicoExcursao(cntrServicoExcursao);
 
   initscr();
   cntrApresentacaoControle->executar(); // Solicitar servi�o apresentacao.

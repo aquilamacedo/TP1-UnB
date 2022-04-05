@@ -133,11 +133,11 @@ class CntrApresentacaoSessao : public IApresentacaoSessao
 {
 private:
     IServicoExcursao *cntrServicoExcursao;
-    void consultarSessao();
-    void cadastrarSessao();
-    void editarSessao();
-    void descadastrarSessao();
-    void listarSessoes();
+    void consultarSessao(Email);
+    void cadastrarSessao(Email);
+    void editarSessao(Email);
+    void descadastrarSessao(Email);
+    void listarSessoes(Email);
 
 public:
     void executar();
