@@ -521,7 +521,7 @@ void CntrApresentacaoExcursao::cadastrarExcursao(Email email)
   char texto1[] = "Preencha os seguintes campos: ";
   char texto2[] = "Código          :";
   char texto3[] = "Título          :";
-  char texto4[] = "Nota            :";
+  // char texto4[] = "Nota            :";
   char texto5[] = "Cidade          :";
   char texto5b[] = "Duração         :";
   char texto5c[] = "Descrição       :";
@@ -530,12 +530,12 @@ void CntrApresentacaoExcursao::cadastrarExcursao(Email email)
   char texto7[] = "Sucesso no cadastramento. Digite algo.";
   char texto8[] = "Falha no cadastramento. Digite algo.";
 
-  char campo0[80], campo1[80], campo2[80], campo3[80], campo4[80], campo5[80], campo6[80]; // Cria campos para entrada dos dados.
+  char campo0[80], campo1[80], /*campo2[80],*/ campo3[80], campo4[80], campo5[80], campo6[80]; // Cria campos para entrada dos dados.
 
   // Instancia os dom�nios.
-  Codigo codigo;
+  // Codigo codigo;
   Titulo titulo;
-  Nota nota;
+  // Nota nota;
   Cidade cidade;
   Duracao duracao;
   Descricao descricao;
@@ -549,28 +549,28 @@ void CntrApresentacaoExcursao::cadastrarExcursao(Email email)
 
   clear(); // Limpa janela.
 
-  mvprintw(linha / 4, coluna / 4, "%s", texto1);     // Imprime nome do campo.
-  mvprintw(linha / 4 + 2, coluna / 4, "%s", texto2); // Imprime nome do campo.
-  getstr(campo0);                                    // L� valor do campo.
-  mvprintw(linha / 4 + 4, coluna / 4, "%s", texto3); // Imprime nome do campo.
+  mvprintw(linha / 4, coluna / 4, "%s", texto1); // Imprime nome do campo.
+  // mvprintw(linha / 4 + 2, coluna / 4, "%s", texto2); // Imprime nome do campo.
+  // getstr(campo0);                                    // L� valor do campo.
+  mvprintw(linha / 4 + 2, coluna / 4, "%s", texto3); // Imprime nome do campo.
   getstr(campo1);                                    // L� valor do campo.
-  mvprintw(linha / 4 + 6, coluna / 4, "%s", texto4); // Imprime nome do campo.
-  getstr(campo2);                                    // L� valor do campo.
-  int icampo2 = atoi(campo2);
-  mvprintw(linha / 4 + 8, coluna / 4, "%s", texto5);   // Imprime nome do campo.
+  // mvprintw(linha / 4 + 6, coluna / 4, "%s", texto4); // Imprime nome do campo.
+  // getstr(campo2);                                    // L� valor do campo.
+  // int icampo2 = atoi(campo2);
+  mvprintw(linha / 4 + 4, coluna / 4, "%s", texto5);   // Imprime nome do campo.
   getstr(campo3);                                      // L� valor do campo.
-  mvprintw(linha / 4 + 10, coluna / 4, "%s", texto5b); // Imprime nome do campo.
+  mvprintw(linha / 4 + 6, coluna / 4, "%s", texto5b);  // Imprime nome do campo.
   getstr(campo4);                                      // L� valor do campo.
-  mvprintw(linha / 4 + 12, coluna / 4, "%s", texto5c); // Imprime nome do campo.
+  mvprintw(linha / 4 + 8, coluna / 4, "%s", texto5c);  // Imprime nome do campo.
   getstr(campo5);                                      // L� valor do campo.
-  mvprintw(linha / 4 + 14, coluna / 4, "%s", texto5d); // Imprime nome do campo.
+  mvprintw(linha / 4 + 10, coluna / 4, "%s", texto5d); // Imprime nome do campo.
   getstr(campo6);                                      // L� valor do campo.
   try
   {
     // codigo.setCodigo(codigo.getDigitoVerificador(nextId));
-    codigo.setCodigo(campo0);
+    // codigo.setCodigo(campo0);
     titulo.setTitulo(campo1);
-    nota.setNota(icampo2);
+    // nota.setNota(icampo2);
     cidade.setCidade(campo3);
     duracao.setDuracao(campo4);
     descricao.setDescricao(campo5);
@@ -589,9 +589,9 @@ void CntrApresentacaoExcursao::cadastrarExcursao(Email email)
 
   Excursao excursao;
 
-  excursao.setCodigo(codigo);
+  // excursao.setCodigo(codigo);
   excursao.setTitulo(titulo);
-  excursao.setNota(nota);
+  // excursao.setNota(nota);
   excursao.setCidade(cidade);
   excursao.setDuracao(duracao);
   excursao.setDescricao(descricao);
@@ -620,7 +620,7 @@ void CntrApresentacaoExcursao::editarExcursao(Email email)
   char texto1[] = "Preencha os seguintes campos: ";
   char texto2[] = "Qual o Código da Excursão que você deseja alterar?  :";
   char texto3[] = "Título          :";
-  char texto4[] = "Nota            :";
+  // char texto4[] = "Nota            :";
   char texto5[] = "Cidade          :";
   char texto6[] = "Duração         :";
   char texto7[] = "Descrição       :";
@@ -629,12 +629,12 @@ void CntrApresentacaoExcursao::editarExcursao(Email email)
   char texto10[] = "Sucesso na alteração. Digite algo.";
   char texto11[] = "Falha na alteração. Digite algo.";
 
-  char campo0[80], campo1[80], campo2[80], campo3[80], campo4[80], campo5[80], campo6[80]; // Cria campos para entrada dos dados.
+  char campo0[80], campo1[80], /*campo2[80],*/ campo3[80], campo4[80], campo5[80], campo6[80]; // Cria campos para entrada dos dados.
 
   // Instancia os dom�nios.
   Codigo codigo;
   Titulo titulo;
-  Nota nota;
+  // Nota nota;
   Cidade cidade;
   Duracao duracao;
   Descricao descricao;
@@ -653,9 +653,9 @@ void CntrApresentacaoExcursao::editarExcursao(Email email)
   getstr(campo0);                                    // L� valor do campo.
   mvprintw(linha / 4 + 4, coluna / 4, "%s", texto3); // Imprime nome do campo.
   getstr(campo1);                                    // L� valor do campo.
-  mvprintw(linha / 4 + 6, coluna / 4, "%s", texto4); // Imprime nome do campo.
-  getstr(campo2);                                    // L� valor do campo.
-  int icampo2 = atoi(campo2);
+  // mvprintw(linha / 4 + 6, coluna / 4, "%s", texto4); // Imprime nome do campo.
+  // getstr(campo2);                                    // L� valor do campo.
+  // int icampo2 = atoi(campo2);
   mvprintw(linha / 4 + 8, coluna / 4, "%s", texto5);  // Imprime nome do campo.
   getstr(campo3);                                     // L� valor do campo.
   mvprintw(linha / 4 + 10, coluna / 4, "%s", texto6); // Imprime nome do campo.
@@ -669,7 +669,7 @@ void CntrApresentacaoExcursao::editarExcursao(Email email)
     // codigo.setCodigo(codigo.getDigitoVerificador(nextId));
     codigo.setCodigo(campo0);
     titulo.setTitulo(campo1);
-    nota.setNota(icampo2);
+    // nota.setNota(icampo2);
     cidade.setCidade(campo3);
     duracao.setDuracao(campo4);
     descricao.setDescricao(campo5);
@@ -690,7 +690,7 @@ void CntrApresentacaoExcursao::editarExcursao(Email email)
 
   excursao.setCodigo(codigo);
   excursao.setTitulo(titulo);
-  excursao.setNota(nota);
+  // excursao.setNota(nota);
   excursao.setCidade(cidade);
   excursao.setDuracao(duracao);
   excursao.setDescricao(descricao);
@@ -973,6 +973,51 @@ void CntrApresentacaoSessao::editarSessao(Email email)
 
 void CntrApresentacaoSessao::descadastrarSessao(Email email)
 {
+  // Mensagens a serem apresentadas na tela de cadastramento.
+  char texto1[] = "Descadastrar uma sessão: ";
+  char texto2[] = "Código da sessão :";
+  char texto3[] = "Dado em formato incorreto. Digite algo.";
+  char texto4[] = "Sucesso no descadastramento. Digite algo.";
+  char texto5[] = "Falha no descadastramento. Digite algo.";
+
+  char campo1[80];
+
+  Codigo codigo;
+
+  int linha, coluna;               // Dados sobre tamanho da tela.
+  getmaxyx(stdscr, linha, coluna); // Armazena quantidade de linhas e colunas.
+
+  clear();                                           // Limpa janela.
+  mvprintw(linha / 4, coluna / 4, "%s", texto1);     // Imprime nome do campo.
+  mvprintw(linha / 4 + 2, coluna / 4, "%s", texto2); // Imprime nome do campo.
+  getstr(campo1);                                    // L� valor do campo.
+
+  try
+  {
+    codigo.setCodigo(campo1);
+  }
+  catch (invalid_argument &exp)
+  {
+    mvprintw(linha / 4 + 4, coluna / 4, "%s", texto3); // Informa falha.
+    noecho();                                          // Desabilita eco.
+    getch();                                           // Leitura de caracter digitado.
+    echo();                                            // Habilita eco.
+    return;
+  }
+
+  if (cntrServicoExcursao->descadastrarExcursao(codigo, email) && campo1 != "")
+  {
+    mvprintw(linha / 4 + 4, coluna / 4, "%s", texto4); // Informa sucesso.
+    noecho();
+    getch();
+    echo();
+    return;
+  }
+
+  mvprintw(linha / 4 + 4, coluna / 4, "%s", texto5); // Informa falha.
+  noecho();
+  getch();
+  echo();
   return;
 }
 
@@ -1087,27 +1132,106 @@ void CntrApresentacaoAvaliacao::executar(Email email)
   }
 }
 
-void CntrApresentacaoAvaliacao::consultarAvaliacao()
+void CntrApresentacaoAvaliacao::consultarAvaliacao(Email email)
 {
   return;
 }
 
-void CntrApresentacaoAvaliacao::cadastrarAvaliacao()
+void CntrApresentacaoAvaliacao::cadastrarAvaliacao(Email email)
+{
+  // Mensagens a serem apresentadas na tela de cadastramento.
+
+  char texto1[] = "Preencha os seguintes campos: ";
+  char texto2[] = "Código              :";
+  char texto3[] = "Nota                :";
+  char texto4[] = "Descricao             :";
+  char texto5[] = "Código da Excursão  :";
+  char texto6[] = "Dados em formato incorreto. Digite algo.";
+  char texto7[] = "Sucesso no cadastramento. Digite algo.";
+  char texto8[] = "Falha no cadastramento. Digite algo.";
+
+  char campo1[80], campo2[80], campo3[80], campo4[80]; // Cria campos para entrada dos dados.
+
+  // Instancia os dom�nios.
+  Codigo codigo;
+  Nota nota;
+  Descricao descricao;
+  Codigo codigoExcursao;
+
+  int linha, coluna; // Dados sobre tamanho da tela.
+
+  getmaxyx(stdscr, linha, coluna); // Armazena quantidade de linhas e colunas.
+
+  // Apresenta tela de cadastramento.
+
+  clear(); // Limpa janela.
+
+  mvprintw(linha / 4, coluna / 4, "%s", texto1);     // Imprime nome do campo.
+  mvprintw(linha / 4 + 2, coluna / 4, "%s", texto2); // Imprime nome do campo.
+  getstr(campo1);                                    // L� valor do campo.
+  mvprintw(linha / 4 + 4, coluna / 4, "%s", texto3); // Imprime nome do campo.
+  getstr(campo2);                                    // L� valor do campo.
+  int icampo2 = atoi(campo2);
+
+  mvprintw(linha / 4 + 6, coluna / 4, "%s", texto4); // Imprime nome do campo.
+  getstr(campo3);                                    // L� valor do campo.
+  mvprintw(linha / 4 + 8, coluna / 4, "%s", texto5); // Imprime nome do campo.
+  getstr(campo4);                                    // L� valor do campo.
+
+  try
+  {
+    // codigo.setCodigo(codigo.getDigitoVerificador(nextId));
+    codigo.setCodigo(campo1);
+    nota.setNota(icampo2);
+    descricao.setDescricao(campo3);
+    codigoExcursao.setCodigo(campo4);
+  }
+  catch (invalid_argument &exp)
+  {
+    mvprintw(linha / 4 + 16, coluna / 4, "%s", texto6); // Informa formato incorreto.
+    noecho();                                           // Desabilita eco.
+    getch();                                            // Leitura de caracter digitado.
+    echo();                                             // Habilita eco.
+    return;
+  }
+
+  // Instancia e inicializa entidades.
+
+  Avaliacao avaliacao;
+
+  avaliacao.setCodigo(codigo);
+  avaliacao.setNota(nota);
+  avaliacao.setDescricao(descricao);
+  // avaliacao.setIdioma(idioma);
+  // sessao.setCodigo(codigoExcursao);
+
+  if (cntrServicoExcursao->cadastrarAvaliacao(avaliacao, email, codigoExcursao))
+  {
+    mvprintw(linha / 4 + 16, coluna / 4, "%s", texto7); // Informa sucesso.
+    noecho();
+    getch();
+    echo();
+    return;
+  }
+
+  mvprintw(linha / 4 + 16, coluna / 4, "%s", texto8); // Informa falha.
+  noecho();
+  getch();
+  echo();
+  return;
+}
+
+void CntrApresentacaoAvaliacao::editarAvaliacao(Email email)
 {
   return;
 }
 
-void CntrApresentacaoAvaliacao::editarAvaliacao()
+void CntrApresentacaoAvaliacao::descadastrarAvaliacao(Email email)
 {
   return;
 }
 
-void CntrApresentacaoAvaliacao::descadastrarAvaliacao()
-{
-  return;
-}
-
-void CntrApresentacaoAvaliacao::listarAvaliacoes()
+void CntrApresentacaoAvaliacao::listarAvaliacoes(Email email)
 {
   return;
 }

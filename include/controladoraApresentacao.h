@@ -158,11 +158,11 @@ class CntrApresentacaoAvaliacao : public IApresentacaoAvaliacao
 {
 private:
     IServicoExcursao *cntrServicoExcursao;
-    void consultarAvaliacao();
-    void cadastrarAvaliacao();
-    void editarAvaliacao();
-    void descadastrarAvaliacao();
-    void listarAvaliacoes();
+    void consultarAvaliacao(Email);
+    void cadastrarAvaliacao(Email);
+    void editarAvaliacao(Email);
+    void descadastrarAvaliacao(Email);
+    void listarAvaliacoes(Email);
 
 public:
     void executar();

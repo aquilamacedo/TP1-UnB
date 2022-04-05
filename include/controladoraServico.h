@@ -36,7 +36,8 @@ public:
     // list<Excursao> listarExcursoes();
 
     // // abstract service methods of Avaliation
-    // bool cadastrarAvaliacao(Avaliacao, Email);
+    list<int> getNotasAvaliacao();
+    bool cadastrarAvaliacao(Avaliacao, Email, Codigo);
     // bool descadastrarAvaliacao(Codigo, Email);
     // bool editarAvaliacao(Avaliacao, Email);
     // Avaliacao recuperarAvaliacao(Codigo, Email);
@@ -46,7 +47,7 @@ public:
 
     // // abstract service methods of Session
     bool cadastrarSessao(Sessao, Email, Codigo);
-    // bool descadastrarSessao(Codigo, Email);
+    bool descadastrarSessao(Codigo, Email);
     // bool editarSessao(Sessao, Email);
     // Sessao recuperarSessao(Codigo, Email);
     // list<Sessao> listarSessoes();

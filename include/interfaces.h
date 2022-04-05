@@ -88,7 +88,7 @@ class IServicoExcursao
 {
 public:
     // abstract service methods of Excursion
-    virtual int getNextId() = 0;
+    // virtual int getNextId() = 0;
     virtual bool cadastrarExcursao(Excursao, Email) = 0;
     virtual bool descadastrarExcursao(Codigo, Email) = 0;
     virtual bool editarExcursao(Excursao, Email) = 0;
@@ -96,7 +96,7 @@ public:
     // // virtual list<Excursao> listarExcursoes() = 0;
 
     // abstract service methods of Avaliation
-    // virtual bool cadastrarAvaliacao(Avaliacao) = 0;
+    virtual bool cadastrarAvaliacao(Avaliacao, Email, Codigo) = 0;
     // virtual bool descadastrarAvaliacao(Codigo) = 0;
     // virtual bool editarAvaliacao(Avaliacao) = 0;
     // virtual Avaliacao recuperarAvaliacao(Codigo) = 0;
@@ -106,7 +106,7 @@ public:
 
     // abstract service methods of Session
     virtual bool cadastrarSessao(Sessao, Email, Codigo) = 0;
-    // virtual bool descadastrarSessao(Codigo) = 0;
+    virtual bool descadastrarSessao(Codigo, Email) = 0;
     // virtual bool editarSessao(Sessao) = 0;
     // virtual Sessao recuperarSessao(Codigo) = 0;
     // // virtual list<Sessao> listarSessoes() = 0;
