@@ -1,4 +1,5 @@
 #include <iostream>
+#include <ncurses.h>
 #include <iomanip>
 #include <math.h>
 #include <string>
@@ -7,12 +8,12 @@
 #include "interfaces.h"
 #include "controladoraApresentacao.h"
 #include "controladoraServico.h"
-
 #include <regex>
 
-using namespace std;
 
 using namespace std;
+
+
 
 int main()
 {

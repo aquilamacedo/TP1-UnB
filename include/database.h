@@ -183,16 +183,22 @@ public:
   ComandoEditarSessao(Sessao, Email);
 };
 
+class ComandoRecuperarSessao : public ComandoSQL
+{
+public:
+  ComandoRecuperarSessao(Codigo);
+  Sessao getResultado();
+};
 class ComandoListarSessoes : public ComandoSQL
 {
 public:
-  ComandoListarSessoes(Email);
+  ComandoListarSessoes();
+  ComandoListarSessoes(Excursao);
+  list<Sessao> getResultado();
 };
-
 //--------------------------------------------------------------------------------------
 //|                                 Avaliação                                          |
 //--------------------------------------------------------------------------------------
-
 class NextIdAvaliacao : public ComandoSQL
 {
 public:

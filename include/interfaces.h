@@ -79,7 +79,7 @@ class IServicoUsuario
 public:
     virtual bool cadastrarUsuario(Usuario) = 0;
     virtual bool editarUsuario(Usuario) = 0;
-    //virtual bool descadastrarUsuario(Email) = 0;
+    virtual bool descadastrarUsuario(Email) = 0;
     //virtual Usuario recuperar(Email) = 0;
     virtual ~IServicoUsuario() {}
 };
@@ -98,7 +98,7 @@ public:
     // abstract service methods of Avaliation
     virtual bool cadastrarAvaliacao(Avaliacao, Email, Codigo) = 0;
     // virtual bool descadastrarAvaliacao(Codigo) = 0;
-    // virtual bool editarAvaliacao(Avaliacao) = 0;
+    // virtual bool editarAvaliacao(Avaliacao, Email) = 0;
     // virtual Avaliacao recuperarAvaliacao(Codigo) = 0;
     // // virtual list<Avaliacao> listarAvaliacoes() = 0;
     // // virtual list<Avaliacao> listarAvaliacoes(Excursao) = 0;
@@ -108,9 +108,9 @@ public:
     virtual bool cadastrarSessao(Sessao, Email, Codigo) = 0;
     virtual bool descadastrarSessao(Codigo, Email) = 0;
     // virtual bool editarSessao(Sessao) = 0;
-    // virtual Sessao recuperarSessao(Codigo) = 0;
-    // // virtual list<Sessao> listarSessoes() = 0;
-    // // virtual list<Sessao> listarSessoes(Excursao) = 0;
+    virtual Sessao recuperarSessao(Codigo) = 0;
+    virtual list<Sessao> listarSessoes() = 0;
+    virtual list<Sessao> listarSessoes(Excursao) = 0;
 
     // virtual ~IServicoExcursao() {}
 };
