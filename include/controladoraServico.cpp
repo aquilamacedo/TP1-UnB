@@ -267,13 +267,13 @@ bool CntrServicoExcursao::cadastrarAvaliacao(Avaliacao avaliacao, Email email, C
   {
 
     getnotas.executar();
-    list<int> notas = getnotas.getResultado();
+    list<string> notas = getnotas.getResultado();
     int soma = 0;
     int contador = 0;
     for (auto it = begin(notas); it != end(notas); ++it)
     {
-      soma += *it;
-      contador++;
+      // soma += *it;
+      // contador++;
     }
 
     registerAvaliacao.executar();

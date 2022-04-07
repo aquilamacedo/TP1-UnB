@@ -139,6 +139,7 @@ private:
     void editarSessao(Email);
     void descadastrarSessao(Email);
     void listarSessoes(Email);
+    void listarSessoes();
 
 public:
     void executar();
