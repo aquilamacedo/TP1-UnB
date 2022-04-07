@@ -75,7 +75,8 @@ bool CntrServicoUsuario::descadastrarUsuario(Email email) {
     return true;
   }
 
-  catch(EErroPersistencia) {
+  catch (EErroPersistencia)
+  {
     return false;
   }
 }
@@ -197,12 +198,10 @@ bool CntrServicoExcursao::descadastrarSessao(Codigo codigo, Email email)
     deleteSession.executar();
     return true;
   }
-  catch(EErroPersistencia)
+  catch (EErroPersistencia)
   {
     return false;
   }
-  
-
 }
 //--------------------------------------------------------------------------------------------
 
@@ -220,36 +219,45 @@ bool CntrServicoExcursao::editarSessao(Sessao sessao, Email email) {
 }
 */
 
-Sessao CntrServicoExcursao::recuperarSessao(Codigo codigo) { 
+Sessao CntrServicoExcursao::recuperarSessao(Codigo codigo)
+{
   ComandoRecuperarSessao getSession(codigo);
-  try {
+  try
+  {
     getSession.executar();
     return getSession.getResultado();
-    
   }
-  catch(EErroPersistencia) {
+  catch (EErroPersistencia)
+  {
     throw EErroPersistencia("Erro na execução do comando!");
   }
 }
 
-list<Sessao> CntrServicoExcursao::listarSessoes() {
+list<Sessao> CntrServicoExcursao::listarSessoes()
+{
   ComandoListarSessoes getSessions;
-  try {
+  try
+  {
     getSessions.executar();
-    return getSessions.getResultado();
+    list<Sessao> sessoes = getSessions.getResultado();
+    return sessoes;
   }
-  catch(EErroPersistencia) {
+  catch (EErroPersistencia)
+  {
     throw EErroPersistencia("Erro na execução do comando!");
   }
 }
 
-list<Sessao> CntrServicoExcursao::listarSessoes(Excursao excursao) {
+list<Sessao> CntrServicoExcursao::listarSessoes(Excursao excursao)
+{
   ComandoListarSessoes getSessions(excursao);
-  try {
+  try
+  {
     getSessions.executar();
     return getSessions.getResultado();
   }
-  catch(EErroPersistencia) {
+  catch (EErroPersistencia)
+  {
     throw EErroPersistencia("Erro na execução do comando!");
   }
 }

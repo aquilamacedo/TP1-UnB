@@ -79,16 +79,16 @@ void CntrApresentacaoControle::executar()
           switch (campo)
           {
           case 1:
-            cntrApresentacaoUsuario->executar(email); // Solicita servi�o de pessoal.
+            cntrApresentacaoUsuario->executar(email);
             break;
           case 2:
             cntrApresentacaoExcursao->executar(email);
             break;
           case 3:
-            cntrApresentacaoSessao->executar(email); // Solicita servi�o de produto financeiro.
+            cntrApresentacaoSessao->executar(email);
             break;
           case 4:
-            cntrApresentacaoAvaliacao->executar(email); // Solicita servi�o de produto financeiro.
+            cntrApresentacaoAvaliacao->executar(email);
             break;
           case 5:
             apresentar = false;

@@ -114,6 +114,7 @@ private:
     void editarExcursao(Email);
     void descadastrarExcursao(Email);
     void listarExcursoes(Email);
+    void listarExcursoes();
 
 public:
     void executar();
@@ -165,6 +166,7 @@ private:
     void editarAvaliacao(Email);
     void descadastrarAvaliacao(Email);
     void listarAvaliacoes(Email);
+    void listarAvaliacoes();
 
 public:
     void executar();
