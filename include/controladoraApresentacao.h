@@ -87,7 +87,8 @@ class CntrApresentacaoUsuario : public IApresentacaoUsuario
 private:
     IServicoUsuario *cntrServicoUsuario;
     void consultarDadosUsuario();
-    void editarUsuario();
+    void editarUsuario(Email);
+    bool descadastrar(Email);
 
 public:
     void executar(Email);

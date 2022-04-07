@@ -32,6 +32,7 @@ class IApresentacaoUsuario
 public:
     virtual void executar(Email) = 0;
     virtual void cadastrar() = 0;
+    virtual bool descadastrar(Email) = 0;
     virtual void setCntrServicoUsuario(IServicoUsuario *) = 0;
     // virtual ~IApresentacaoUsuario() {}
 };

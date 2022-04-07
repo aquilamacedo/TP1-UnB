@@ -110,6 +110,7 @@ string ComandoSenha::getResultado()
 // ---------------------------------------------
 // Implementação do comando Cadastrar Usuario
 // ---------------------------------------------
+
 ComandoCadastrarUsuario::ComandoCadastrarUsuario(Usuario usuario)
 {
         comandoSQL = "INSERT INTO usuario VALUES (";
@@ -121,6 +122,7 @@ ComandoCadastrarUsuario::ComandoCadastrarUsuario(Usuario usuario)
 // ---------------------------------------------
 // Implementação do comando Descadastrar Usuario
 // ---------------------------------------------
+
 ComandoDescadastrarUsuario::ComandoDescadastrarUsuario(Email email)
 {
         comandoSQL = "DELETE FROM usuario WHERE email = '";
@@ -137,7 +139,8 @@ ComandoEditarUsuario::ComandoEditarUsuario(Usuario usuario)
         comandoSQL = "UPDATE usuario ";
         comandoSQL += "SET nome = '" + usuario.getNome().getNome();
         comandoSQL += "', senha = '" + usuario.getSenha().getSenha();
-        comandoSQL += "' WHERE email = 'lucasbbs@live.fr'"; //+ usuario.getEmail().getEmail();
+        comandoSQL += "' WHERE email = '" + usuario.getEmail().getEmail();
+        comandoSQL += "'";
 }
 
 //ComandoPesquisarUsuario::ComandoPesquisarUsuario(Email email) {}
@@ -507,4 +510,8 @@ ComandoEditarAvaliacao::ComandoEditarAvaliacao(Avaliacao avaliacao, Email email)
 // ------------------------------------------------
 // Implementação do comando Listar Avaliações
 // ------------------------------------------------
-ComandoListarAvaliacoes::ComandoListarAvaliacoes(Email){}
+
+ComandoListarAvaliacoes::ComandoListarAvaliacoes(Email)
+{
+        comandoSQL = "SELECT * FROM Excursao";
+}

@@ -84,6 +84,10 @@ public:
   void executar();
 };
 
+//--------------------------------------------------------------------------------------
+//                                  Usuario                                            |
+//--------------------------------------------------------------------------------------
+
 class ComandoSenha : public ComandoSQL
 {
 public:
@@ -189,6 +193,7 @@ public:
   ComandoRecuperarSessao(Codigo);
   Sessao getResultado();
 };
+
 class ComandoListarSessoes : public ComandoSQL
 {
 public:
@@ -196,6 +201,7 @@ public:
   ComandoListarSessoes(Excursao);
   list<Sessao> getResultado();
 };
+
 //--------------------------------------------------------------------------------------
 //|                                 Avaliação                                          |
 //--------------------------------------------------------------------------------------
@@ -237,12 +243,16 @@ public:
   ComandoListarAvaliacoes(Email);
 };
 
+/*
+
 class ComandoRecuperarSessao : public ComandoSQL
 {
 public:
   ComandoRecuperarSessao(Codigo);
   Sessao getResultado();
 };
+
+/*
 
 //--------------------------------------------------------------------------------------
 //|                                   Avaliação                                           |

@@ -66,22 +66,19 @@ bool CntrServicoUsuario::editarUsuario(Usuario usuario)
   }
 }
 
-//--------------------------------------------------------------------------------------------
-
-bool CntrServicoUsuario::descadastrarUsuario(Email email)
-{ // Armazena os dados em servidor ou lista
+bool CntrServicoUsuario::descadastrarUsuario(Email email) {
+  // Armazena os dados em servidor ou lista
   ComandoDescadastrarUsuario deleteUser(email);
-  try
-  {
+
+  try {
     deleteUser.executar();
     return true;
   }
-  catch(EErroPersistencia)
-  {
+
+  catch(EErroPersistencia) {
     return false;
   }
 }
-
 
 //--------------------------------------------------------------------------------------
 //|                                     Excursão                                       |

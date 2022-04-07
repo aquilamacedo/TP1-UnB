@@ -21,7 +21,8 @@ public:
     bool cadastrarUsuario(Usuario);
     bool editarUsuario(Usuario);
     bool descadastrarUsuario(Email);
-    //Usuario recuperarUsuario(Email);
+
+    Usuario recuperarUsuario(Email);
 };
 
 class CntrServicoExcursao : public IServicoExcursao
