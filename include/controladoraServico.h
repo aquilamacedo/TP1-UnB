@@ -20,7 +20,7 @@ public:
     // abstract services methods of Users
     bool cadastrarUsuario(Usuario);
     bool editarUsuario(Usuario);
-    //bool descadastrarUsuario(Email);
+    bool descadastrarUsuario(Email);
     //Usuario recuperarUsuario(Email);
 };
 
@@ -38,8 +38,8 @@ public:
     // // abstract service methods of Avaliation
     list<int> getNotasAvaliacao();
     bool cadastrarAvaliacao(Avaliacao, Email, Codigo);
-    // bool descadastrarAvaliacao(Codigo, Email);
-    // bool editarAvaliacao(Avaliacao, Email);
+    //bool descadastrarAvaliacao(Codigo, Email);
+    //bool editarAvaliacao(Avaliacao, Email);
     // Avaliacao recuperarAvaliacao(Codigo, Email);
     // list<Avaliacao> listarAvaliacoes();
     // list<Avaliacao> listarAvaliacoes(Excursao, Email);
@@ -49,9 +49,9 @@ public:
     bool cadastrarSessao(Sessao, Email, Codigo);
     bool descadastrarSessao(Codigo, Email);
     // bool editarSessao(Sessao, Email);
-    // Sessao recuperarSessao(Codigo, Email);
-    // list<Sessao> listarSessoes();
-    // list<Sessao> listarSessoes(Excursao, Email);
+    Sessao recuperarSessao(Codigo);
+    list<Sessao> listarSessoes();
+    list<Sessao> listarSessoes(Excursao);
 };
 
 #endif
