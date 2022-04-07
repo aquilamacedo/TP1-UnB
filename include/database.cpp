@@ -507,7 +507,4 @@ ComandoEditarAvaliacao::ComandoEditarAvaliacao(Avaliacao avaliacao, Email email)
 // ------------------------------------------------
 // Implementação do comando Listar Avaliações
 // ------------------------------------------------
-ComandoListarAvaliacoes::ComandoListarAvaliacoes(Email){
-        
-}
-
+ComandoListarAvaliacoes::ComandoListarAvaliacoes(Email){}

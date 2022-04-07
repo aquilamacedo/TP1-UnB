@@ -192,6 +192,22 @@ bool CntrServicoExcursao::cadastrarSessao(Sessao sessao, Email email, Codigo cod
 
 //--------------------------------------------------------------------------------------------
 
+bool CntrServicoExcursao::descadastrarSessao(Codigo codigo, Email email)
+{
+  ComandoDescadastrarSessao deleteSession(codigo, email);
+  try
+  {
+    deleteSession.executar();
+    return true;
+  }
+  catch(EErroPersistencia)
+  {
+    return false;
+  }
+  
+
+}
+//--------------------------------------------------------------------------------------------
 
 /*
 bool CntrServicoExcursao::editarSessao(Sessao sessao, Email email) {
@@ -240,8 +256,6 @@ list<Sessao> CntrServicoExcursao::listarSessoes(Excursao excursao) {
     throw EErroPersistencia("Erro na execução do comando!");
   }
 }
-
-
 
 //--------------------------------------------------------------------------------------
 //|                                 Avaliação                                          |

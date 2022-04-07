@@ -236,4 +236,31 @@ class ComandoListarAvaliacoes : public ComandoSQL
 public:
   ComandoListarAvaliacoes(Email);
 };
+
+class ComandoRecuperarSessao : public ComandoSQL
+{
+public:
+  ComandoRecuperarSessao(Codigo);
+  Sessao getResultado();
+};
+
+//--------------------------------------------------------------------------------------
+//|                                   Avaliação                                           |
+//--------------------------------------------------------------------------------------
+/*
+class ComandoCadastrarAvaliacao : public ComandoSQL {
+  public:
+  ComandoCadastrarAvaliacao(Avaliacao, Email, Codigo);
+};
+
+class ComandoDescadastrarAvaliacao : public ComandoSQL {
+  public:
+  ComandoDescadastrarAvaliacao(Codigo);
+};
+
+class ComandoEditarAvaliacao : public ComandoSQL {
+  public:
+  ComandoEditarAvaliacao(Avaliacao);
+};
+*/
 #endif // DATABASE_H
