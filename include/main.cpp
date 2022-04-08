@@ -1,8 +1,9 @@
 #include <iostream>
-#include <ncurses.h>
+#include <stdexcept>
 #include <iomanip>
 #include <math.h>
 #include <string>
+
 #include "dominios.h"
 #include "entidades.h"
 #include "interfaces.h"
@@ -59,9 +60,7 @@ int main()
   cntrApresentacaoAvaliacao->setCntrServicoExcursao(cntrServicoExcursao);
   cntrApresentacaoSessao->setCntrServicoExcursao(cntrServicoExcursao);
 
-  initscr();
   cntrApresentacaoControle->executar(); // Solicitar servi�o apresentacao.
-  endwin();
 
   return 0;
 }

@@ -1,12 +1,14 @@
 #include "controladoraApresentacao.h"
 #include <string>
+
 //--------------------------------------------------------------------------------------------
-// Implementa��es dos m�todos de classes controladoras.
+// Implementations of methods from apresentation controllers.
+//--------------------------------------------------------------------------------------------
 
 void CntrApresentacaoControle::executar()
 {
 
-  // Mensagens a serem apresentadas na tela inicial.
+  // Messages for presenting in initial screen.
 
   char texto1[] = "Selecione um dos servicos : ";
   char texto2[] = "1 - Acessar sistema.";
@@ -16,7 +18,7 @@ void CntrApresentacaoControle::executar()
   char texto6[] = "5 - Acessar dados sobre avaliações.";
   char texto7[] = "6 - Encerrar execução do sistema.";
 
-  // Mensagens a serem apresentadas na tela de sele��o de servi�o.
+  // Messages for presenting the screen of services selection.
 
   char texto8[] = "Selecione um dos servicos : ";
   char texto9[] = "1 - Selecionar servicos de usuarios.";
@@ -25,108 +27,86 @@ void CntrApresentacaoControle::executar()
   char texto12[] = "4 - Selecionar servicos relacionados a avaliações.";
   char texto13[] = "5 - Encerrar sessao.";
 
-  char texto14[] = "Falha na autenticação. Digite algo para continuar."; // Mensagem a ser apresentada.
+  char texto14[] = "Falha na autenticação. Digite algo para continuar."; // Message of error in auth
 
-  int campo; // Campo de entrada.
+  int campo;
 
-  int linha, coluna; // Dados sobre tamanho da tela.
+  bool apresentar = true;
 
-  getmaxyx(stdscr, linha, coluna); // Armazena quantidade de linhas e colunas.
+  while(apresentar) {
+    // presentation of initial screen
+    CLR_SCR;  // clear screen
 
-  bool apresentar = true; // Controle de la�o.
+    // presentation messages
+    cout << texto1 << endl;                                                             
+    cout << texto2 << endl;                                                               
+    cout << texto3 << endl;                                                               
+    cout << texto4 << endl;                                                               
+    cout << texto5 << endl;
+    cout << texto6 << endl;
+    cout << texto7 << endl;
 
-  while (apresentar)
-  {
+    campo = getch() - 48;   // getting the input of user and conversion in ASCII
 
-    // Apresenta tela inicial.
-
-    clear();                                            // Limpa janela.
-    mvprintw(linha / 4, coluna / 4, "%s", texto1);      // Imprime nome do campo.
-    mvprintw(linha / 4 + 2, coluna / 4, "%s", texto2);  // Imprime nome do campo.
-    mvprintw(linha / 4 + 4, coluna / 4, "%s", texto3);  // Imprime nome do campo.
-    mvprintw(linha / 4 + 6, coluna / 4, "%s", texto4);  // Imprime nome do campo.
-    mvprintw(linha / 4 + 8, coluna / 4, "%s", texto5);  // Imprime nome do campo.
-    mvprintw(linha / 4 + 10, coluna / 4, "%s", texto6); // Imprime nome do campo.
-    mvprintw(linha / 4 + 12, coluna / 4, "%s", texto7); // Imprime nome do campo.
-
-    noecho();
-    campo = getch() - 48; // Leitura do campo de entrada e convers�o de ASCII.
-    echo();
-
-    switch (campo)
-    {
-    case 1:
-      if (cntrApresentacaoAutenticacao->autenticar(&email))
-      {                         // Solicita autentica��o.
-        bool apresentar = true; // Controle de la�o.
-        while (apresentar)
+    switch(campo) {
+      case 1: 
+        if(cntrApresentacaoAutenticacao->autenticar(&email)) 
         {
+          bool apresentar = true;
+          while(apresentar) {
+            // screen of service selection
+            CLR_SCR;  // clear screen
 
-          // Apresenta tela de sele��o de servi�o.
+            cout << texto8 << endl;
+            cout << texto9 << endl;
+            cout << texto10 << endl;
+            cout << texto11 << endl;
+            cout << texto12 << endl;
+            cout << texto13 << endl;
 
-          clear();                                             // Limpa janela.
-          mvprintw(linha / 4, coluna / 4, "%s", texto8);       // Imprime nome do campo.
-          mvprintw(linha / 4 + 2, coluna / 4, "%s", texto9);   // Imprime nome do campo.
-          mvprintw(linha / 4 + 4, coluna / 4, "%s", texto10);  // Imprime nome do campo.
-          mvprintw(linha / 4 + 6, coluna / 4, "%s", texto11);  // Imprime nome do campo.
-          mvprintw(linha / 4 + 8, coluna / 4, "%s", texto12);  // Imprime nome do campo.
-          mvprintw(linha / 4 + 10, coluna / 4, "%s", texto13); // Imprime nome do campo.
-          // Apresenta tela de sele��o de servi�o.
-          noecho();
-          campo = getch() - 48; // Leitura do campo de entrada e convers�o de ASCII.
-          echo();
+            campo = getch() - 48;
 
-          switch (campo)
-          {
-          case 1:
-            cntrApresentacaoUsuario->executar(email); // Solicita servi�o de pessoal.
-            break;
-          case 2:
-            cntrApresentacaoExcursao->executar(email);
-            break;
-          case 3:
-            cntrApresentacaoSessao->executar(email); // Solicita servi�o de produto financeiro.
-            break;
-          case 4:
-            cntrApresentacaoAvaliacao->executar(email); // Solicita servi�o de produto financeiro.
-            break;
-          case 5:
-            apresentar = false;
-            break;
+            switch(campo) {
+              case 1: cntrApresentacaoUsuario->executar(email);
+                break;
+              case 2: cntrApresentacaoExcursao->executar(email);
+                break;
+              case 3: cntrApresentacaoSessao->executar(email);
+                break;
+              case 4: cntrApresentacaoAvaliacao->executar(email);
+                break;
+              case 5: apresentar = false;
+                break;
+            }
+
           }
+        } else // case if the user is not auth. 
+        {
+          CLR_SCR;
+          cout << texto14 << endl;
+          getch();
         }
-      }
-      else
-      {
-        clear();                                        // Limpa janela.
-        mvprintw(linha / 4, coluna / 4, "%s", texto14); // Imprime mensagem.
-        noecho();                                       // Desabilita eco.
-        getch();                                        // Leitura de caracter digitado.
-        echo();                                         // Habilita eco.
-      }
-      break;
-    case 2:
-      cntrApresentacaoUsuario->cadastrar();
-      break;
-    case 3:
-      cntrApresentacaoExcursao->executar();
-      break;
-    case 4:
-      cntrApresentacaoSessao->executar();
-      break;
-    case 5:
-      cntrApresentacaoAvaliacao->executar();
-      break;
-    case 6:
-      apresentar = false;
-      break;
+        break;
+      case 2: cntrApresentacaoUsuario->cadastrar();
+        break;
+      case 3: cntrApresentacaoExcursao->executar();
+        break;
+      case 4: cntrApresentacaoSessao->executar();
+        break;
+      case 5: cntrApresentacaoAvaliacao->executar();
+        break;
+      case 6: apresentar = false;
+        break;
+
     }
   }
   return;
 }
 
-//--------------------------------------------------------------------------------------------
 
+
+/*
+//--------------------------------------------------------------------------------------------
 bool CntrApresentacaoAutenticacao::autenticar(Email *email)
 {
 
@@ -530,10 +510,10 @@ void CntrApresentacaoExcursao::cadastrarExcursao(Email email)
   char texto7[] = "Sucesso no cadastramento. Digite algo.";
   char texto8[] = "Falha no cadastramento. Digite algo.";
 
-  char campo0[80], campo1[80], /*campo2[80],*/ campo3[80], campo4[80], campo5[80], campo6[80]; // Cria campos para entrada dos dados.
-
+  char campo0[80], campo1[80], campo2[80], campo3[80], campo4[80], campo5[80], campo6[80]; // Cria campos para entrada dos dados.
   // Instancia os dom�nios.
   // Codigo codigo;
+
   Titulo titulo;
   // Nota nota;
   Cidade cidade;
@@ -629,7 +609,7 @@ void CntrApresentacaoExcursao::editarExcursao(Email email)
   char texto10[] = "Sucesso na alteração. Digite algo.";
   char texto11[] = "Falha na alteração. Digite algo.";
 
-  char campo0[80], campo1[80], /*campo2[80],*/ campo3[80], campo4[80], campo5[80], campo6[80]; // Cria campos para entrada dos dados.
+  char campo0[80], campo1[80], campo2[80], campo3[80], campo4[80], campo5[80], campo6[80]; // Cria campos para entrada dos dados.
 
   // Instancia os dom�nios.
   Codigo codigo;
@@ -1235,3 +1215,5 @@ void CntrApresentacaoAvaliacao::listarAvaliacoes(Email email)
 {
   return;
 }
+
+*/

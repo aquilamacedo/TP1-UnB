@@ -3,13 +3,14 @@
 
 #include <iostream>
 #include <string.h>
+#include <conio.h>
 
-#include <ncurses.h>
 #include "dominios.h"
 #include "entidades.h"
 #include "interfaces.h"
 
 #define CLR_SCR system("cls");
+
 // -------------------------------------------
 // Declaration of controllers of control
 // -------------------------------------------

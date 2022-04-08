@@ -237,13 +237,6 @@ public:
   ComandoListarAvaliacoes(Email);
 };
 
-class ComandoRecuperarSessao : public ComandoSQL
-{
-public:
-  ComandoRecuperarSessao(Codigo);
-  Sessao getResultado();
-};
-
 //--------------------------------------------------------------------------------------
 //|                                   Avaliação                                           |
 //--------------------------------------------------------------------------------------
