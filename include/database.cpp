@@ -317,6 +317,7 @@ ComandoListarSessoes::ComandoListarSessoes(Excursao excursao){
         comandoSQL += excursao.getCodigo().getCodigo();
 
 }
+
 // -----------------------------------------------------
 // Implementação do comando ListarSessoes getResultado
 // -----------------------------------------------------
@@ -363,6 +364,7 @@ list<Sessao> ComandoListarSessoes::getResultado() {
                 sessao.setIdioma(idioma);
                 sessoes.push_back(sessao);
         }
+
         return sessoes;
 }
 
