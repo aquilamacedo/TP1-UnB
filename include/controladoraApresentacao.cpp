@@ -217,10 +217,10 @@ void CntrApresentacaoUsuario::executar(Email email)
     switch (campo)
     {
     case 1:
-      editarUsuario();
+      editarUsuario(email);
       break;
     case 2:
-      // editarDadosUsuario();
+      descadastrar(email);
       break;
     case 3:
       apresentar = false;
@@ -309,6 +309,33 @@ void CntrApresentacaoUsuario::cadastrar()
 
 // //--------------------------------------------------------------------------------------------
 
+bool CntrApresentacaoUsuario::descadastrar(Email email) {
+  int linha, coluna;               // Dados sobre tamanho da tela.
+  getmaxyx(stdscr, linha, coluna); // Armazena quantidade de linhas e colunas.
+
+  char texto1[]= "Sucesso. Usuario descadastrado.";
+  char texto2[]= "Falha no descadastramento.";
+  clear();
+
+  if(cntrServicoUsuario->descadastrarUsuario(email)) {
+    mvprintw(linha/4, coluna/4, "%s", texto1);
+    noecho();
+    getch();
+    echo();
+
+    return true;
+  }
+
+  mvprintw(linha/4, coluna/4, "%s", texto2);
+  noecho();
+  getch();
+  echo();
+  return false;
+}
+
+// //--------------------------------------------------------------------------------------------
+
+
 void CntrApresentacaoUsuario::consultarDadosUsuario()
 {
 
@@ -331,7 +358,7 @@ void CntrApresentacaoUsuario::consultarDadosUsuario()
   echo();
 }
 
-void CntrApresentacaoUsuario::editarUsuario()
+void CntrApresentacaoUsuario::editarUsuario(Email email)
 {
 
   // Mensagens a serem apresentadas na tela de cadastramento.
@@ -383,6 +410,7 @@ void CntrApresentacaoUsuario::editarUsuario()
 
   usuario.setNome(nome);
   usuario.setSenha(senha);
+  usuario.setEmail(email);
 
   if (cntrServicoUsuario->editarUsuario(usuario))
   {
