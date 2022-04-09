@@ -79,16 +79,16 @@ void CntrApresentacaoControle::executar()
           switch (campo)
           {
           case 1:
-            cntrApresentacaoUsuario->executar(email); // Solicita servi�o de pessoal.
+            cntrApresentacaoUsuario->executar(email);
             break;
           case 2:
             cntrApresentacaoExcursao->executar(email);
             break;
           case 3:
-            cntrApresentacaoSessao->executar(email); // Solicita servi�o de produto financeiro.
+            cntrApresentacaoSessao->executar(email);
             break;
           case 4:
-            cntrApresentacaoAvaliacao->executar(email); // Solicita servi�o de produto financeiro.
+            cntrApresentacaoAvaliacao->executar(email);
             break;
           case 5:
             apresentar = false;
@@ -831,7 +831,7 @@ void CntrApresentacaoSessao::executar()
     switch (campo)
     {
     case 1:
-      // consultarProdutoInvestimento();
+      listarSessoes();
       break;
     case 2:
       apresentar = false;
@@ -1043,6 +1043,39 @@ void CntrApresentacaoSessao::descadastrarSessao(Email email)
   }
 
   mvprintw(linha / 4 + 4, coluna / 4, "%s", texto5); // Informa falha.
+  noecho();
+  getch();
+  echo();
+  return;
+}
+
+void CntrApresentacaoSessao::listarSessoes()
+{
+  char texto1[] = "Código         :";
+  char texto2[] = "Data            :";
+  char texto3[] = "Horario         :";
+  char texto4[] = "Idioma          :";
+
+  clear();
+
+  int linha, coluna;               // Dados sobre tamanho da tela.
+  getmaxyx(stdscr, linha, coluna); // Armazena quantidade de linhas e colunas.
+
+  list<Sessao> sessoes = cntrServicoExcursao->listarSessoes();
+  int count = 0;
+
+  while(!sessoes.empty()) {
+    Sessao sessao = sessoes.back();
+    sessoes.pop_back();
+
+    mvprintw(linha/4 + count, coluna/4,"%s %s", texto1, sessao.getCodigo().getCodigo().c_str());
+    mvprintw(linha/4 + count + 2,coluna/4,"%s %s", texto2, sessao.getData().getData().c_str());
+    mvprintw(linha/4 + count + 4,coluna/4,"%s %s", texto3, sessao.getHorario().getHorario().c_str());
+    mvprintw(linha/4 + count + 6,coluna/4,"%s %s", texto4,  sessao.getIdioma().getIdioma().c_str());
+
+    count+=1;
+  }
+
   noecho();
   getch();
   echo();

@@ -33,14 +33,14 @@ class ElementoResultado
 private:
   string nomeColuna;
   string valorColuna;
-  list<int> valoresColunas;
+  list<string> valoresColunas;
 
 public:
   void setNomeColuna(const string &);
   string getNomeColuna() const;
   void setValorColuna(const string &);
   string getValorColuna() const;
-  list<int> getValoresColuna() const;
+  list<string> getValoresColuna() const;
 };
 
 inline string ElementoResultado::getNomeColuna() const
@@ -53,7 +53,37 @@ inline string ElementoResultado::getValorColuna() const
   return valorColuna;
 }
 
-inline list<int> ElementoResultado::getValoresColuna() const
+inline list<string> ElementoResultado::getValoresColuna() const
+{
+  return valoresColunas;
+}
+//---------------------------------------------------------------------------
+//Classe ElementoResultado.
+
+class ElementoListResultado
+{
+private:
+  list<string> nomeColuna;
+  list<string> valorColuna;
+  list<string> valoresColunas;
+
+public:
+  list<string> getNomeColuna() const;
+  list<string> getValorColuna() const;
+  list<string> getValoresColuna() const;
+};
+
+inline list<string> ElementoListResultado::getNomeColuna() const
+{
+  return nomeColuna;
+}
+
+inline list<string> ElementoListResultado::getValorColuna() const
+{
+  return valorColuna;
+}
+
+inline list<string> ElementoListResultado::getValoresColuna() const
 {
   return valoresColunas;
 }
@@ -216,7 +246,7 @@ class GetNotasAvaliacao : public ComandoSQL
 {
 public:
   GetNotasAvaliacao();
-  list<int> getResultado();
+  list<string> getResultado();
 };
 
 class ComandoCadastrarAvaliacao : public ComandoSQL

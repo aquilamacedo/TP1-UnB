@@ -317,47 +317,44 @@ ComandoListarSessoes::ComandoListarSessoes(Excursao excursao){
         comandoSQL += excursao.getCodigo().getCodigo();
 
 }
+
 // -----------------------------------------------------
 // Implementação do comando ListarSessoes getResultado
 // -----------------------------------------------------
+
 list<Sessao> ComandoListarSessoes::getResultado() {
         list<Sessao> sessoes;
         Codigo codigo;
+        Codigo codigoExcursao;
         Data data;
         Horario horario;
         Idioma idioma;
+        int digitoVerificador;
         ElementoResultado resultado;
-        
+
         while (!listaResultado.empty()) {
                 Sessao sessao;
-                // Adicionando valores pesquisados dentro dos domínios.
-                if (listaResultado.empty()) {
-                        throw EErroPersistencia("Lista de resultados vazia!");
-                }
-                listaResultado.pop_back();
-                if (listaResultado.empty()) {
-                        throw EErroPersistencia("Lista de resultados vazia!");
-                }
+
+                // Remove Codigo
                 resultado = listaResultado.back();
-                idioma.setIdioma(resultado.getValorColuna());
                 listaResultado.pop_back();
-                if (listaResultado.empty()) {
-                        throw EErroPersistencia("Lista de resultados vazia!");
-                }
-                resultado = listaResultado.back();
-                horario.setHorario(resultado.getValorColuna());
-                listaResultado.pop_back();
-                if (listaResultado.empty()) {
-                        throw EErroPersistencia("Lista de resultados vazia!");
-                }
-                resultado = listaResultado.back();
-                data.setData(resultado.getValorColuna());
-                listaResultado.pop_back();
-                if (listaResultado.empty()) {
-                        throw EErroPersistencia("Lista de resultados vazia!");
-                }
-                resultado = listaResultado.back();
                 codigo.setCodigo(resultado.getValorColuna());
+
+                // Remove Data
+                resultado = listaResultado.back();
+                listaResultado.pop_back(); //6
+                data.setData(resultado.getValorColuna());
+
+                // Remove Horario
+                resultado = listaResultado.back();
+                listaResultado.pop_back(); //4
+                horario.setHorario(resultado.getValorColuna());
+
+                // Remove Idioma
+                resultado = listaResultado.back();
+                listaResultado.pop_back();
+                idioma.setIdioma(resultado.getValorColuna());
+
                 listaResultado.pop_back();
 
                 // Adicionando os domínios adicionados dentro da Sessão
@@ -367,6 +364,7 @@ list<Sessao> ComandoListarSessoes::getResultado() {
                 sessao.setIdioma(idioma);
                 sessoes.push_back(sessao);
         }
+
         return sessoes;
 }
 
@@ -428,6 +426,7 @@ Sessao ComandoRecuperarSessao::getResultado() {
 
         return sessao;
 }
+
 //--------------------------------------------------------------------------------------
 //|                                  Avaliação                                         |
 //--------------------------------------------------------------------------------------
@@ -435,6 +434,7 @@ Sessao ComandoRecuperarSessao::getResultado() {
 // ------------------------------------------------
 // Implementação do comando Cadastrar Avaliação
 // ------------------------------------------------
+
 ComandoCadastrarAvaliacao::ComandoCadastrarAvaliacao(Avaliacao avaliacao, Email email, Codigo codigo)
 {
         comandoSQL = "INSERT INTO Avaliacao VALUES (";
@@ -448,7 +448,7 @@ GetNotasAvaliacao::GetNotasAvaliacao()
 {
         comandoSQL = "SELECT Nota FROM Avaliacao";
 }
-list<int> GetNotasAvaliacao::getResultado()
+list<string> GetNotasAvaliacao::getResultado()
 {
         ElementoResultado resultado;
 

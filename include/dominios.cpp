@@ -573,6 +573,42 @@ int Codigo::getDigitoVerificador(int number)
   // code += std::to_string(rest);
   return rest;
 }
+string Codigo::getCodigoDigitoVerificador(int number)
+{
+  int n{6};
+  int evenSum{};
+  int oddSum{};
+  int totalSum{};
+  int doubleNumber{};
+  int rest{};
+  std::string code{};
+  code += std::to_string(number);
+  code.insert(code.begin(), 6 - code.length(), '0');
+  for (std::string::size_type i = 0; i < code.size(); ++i)
+  {
+    if ((i + 1) % 2 == 0)
+    {
+      doubleNumber = ((int)code[i] - 48) * 2;
+      if (doubleNumber > 9)
+      {
+        doubleNumber -= 9;
+      }
+      evenSum += doubleNumber;
+    }
+    else
+    {
+      oddSum += (int)code[i] - 48;
+    }
+  }
+  totalSum = oddSum + evenSum;
+  rest = totalSum % 10;
+  if (rest != 0)
+  {
+    rest = 10 - rest;
+  }
+  code += std::to_string(rest);
+  return code;
+}
 
 void Codigo::setCodigo(string codigo)
 {
