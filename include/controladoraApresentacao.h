@@ -3,11 +3,11 @@
 
 #include <iostream>
 #include <string.h>
-#include <conio.h>
 
 #include "dominios.h"
 #include "entidades.h"
 #include "interfaces.h"
+#include "controladoraServico.h"
 
 #define CLR_SCR system("cls");
 
@@ -26,6 +26,7 @@ private:
     IApresentacaoSessao *cntrApresentacaoSessao;
 
 public:
+    void encerrar();
     void executar();
     void executar(Email);
     void setCntrApresentacaoAutenticacao(IApresentacaoAutenticacao *);
@@ -87,8 +88,9 @@ class CntrApresentacaoUsuario : public IApresentacaoUsuario
 {
 private:
     IServicoUsuario *cntrServicoUsuario;
-    void consultarDadosUsuario();
-    void editarUsuario();
+    void consultarDadosUsuario(Email);
+    void editarUsuario(Email);
+    void excluirUsuario(Email);
 
 public:
     void executar(Email);
@@ -114,6 +116,7 @@ private:
     void editarExcursao(Email);
     void descadastrarExcursao(Email);
     void listarExcursoes(Email);
+    void listarExcursoes();
 
 public:
     void executar();
@@ -139,6 +142,7 @@ private:
     void editarSessao(Email);
     void descadastrarSessao(Email);
     void listarSessoes(Email);
+    void listarSessoes();
 
 public:
     void executar();
@@ -164,6 +168,7 @@ private:
     void editarAvaliacao(Email);
     void descadastrarAvaliacao(Email);
     void listarAvaliacoes(Email);
+    // void listarAvaliacoes();
 
 public:
     void executar();

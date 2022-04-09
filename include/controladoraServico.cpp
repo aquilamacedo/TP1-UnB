@@ -1,7 +1,7 @@
 #include "controladoraServico.h"
 #include <iostream>
 #include <iterator>
-
+#include <algorithm>
 using namespace std;
 
 //--------------------------------------------------------------------------------------
@@ -66,26 +66,64 @@ bool CntrServicoUsuario::editarUsuario(Usuario usuario)
   }
 }
 
+bool CntrServicoUsuario::checarUsuario(Usuario usuario)
+{
+  list<string> usuarios;
+  ComandoChecarUsuario comandoChecarUsuarios;
+  comandoChecarUsuarios.executar();
+  usuarios = comandoChecarUsuarios.getResultado();
+
+  return !(find(begin(usuarios), end(usuarios), usuario.getEmail().getEmail()) == end(usuarios));
+}
+
 //--------------------------------------------------------------------------------------------
 
 bool CntrServicoUsuario::descadastrarUsuario(Email email)
 { // Armazena os dados em servidor ou lista
-  ComandoDescadastrarUsuario deleteUser(email);
-  try
+  Usuario usuario;
+  usuario.setEmail(email);
+  if (checarUsuario(usuario))
   {
-    deleteUser.executar();
-    return true;
+    ComandoDescadastrarUsuario deleteUser(email);
+    try
+    {
+      deleteUser.executar();
+      return true;
+    }
+    catch (EErroPersistencia)
+    {
+      return false;
+    }
   }
-  catch(EErroPersistencia)
+  else
   {
     return false;
   }
 }
 
-
 //--------------------------------------------------------------------------------------
 //|                                     Excursão                                       |
 //--------------------------------------------------------------------------------------
+bool CntrServicoExcursao::checarExcursao(Excursao excursao, Email email)
+{
+  list<string> excursoes;
+  ComandoChecarExcursao comandoChecarExcursoes(email);
+  cout << "Teste de Chamada de Função" << endl;
+  comandoChecarExcursoes.executar();
+  cout << "Teste comandoChecarExcursoes executar" << endl;
+  excursoes = comandoChecarExcursoes.getResultado();
+  cout << "Teste comandoChecarExcursoes getResultado" << endl;
+  list<string> iexcursoes;
+  string str;
+  Codigo codigo;
+  for (auto excursao = excursoes.begin(); excursao != excursoes.end(); excursao++)
+  {
+    str = codigo.getCodigoDigitoVerificador(stoi(*excursao));
+    cout << str << *excursao << endl;
+    iexcursoes.push_back(str);
+  }
+  return find(begin(iexcursoes), end(iexcursoes), excursao.getCodigo().getCodigo()) != end(iexcursoes);
+}
 
 bool CntrServicoExcursao::cadastrarExcursao(Excursao excursao, Email email)
 {
@@ -127,49 +165,66 @@ bool CntrServicoExcursao::editarExcursao(Excursao excursao, Email email)
 
 bool CntrServicoExcursao::descadastrarExcursao(Codigo codigo, Email email)
 {
-  ComandoDescadastrarExcursao deregisterExcursion(codigo, email);
+  Excursao excursao;
+  excursao.setCodigo(codigo);
+  if (checarExcursao(excursao, email))
+  {
 
+    ComandoDescadastrarExcursao deregisterExcursion(codigo, email);
+
+    try
+    {
+      deregisterExcursion.executar();
+      return true;
+    }
+    catch (EErroPersistencia)
+    {
+      return false;
+    }
+  }
+  return false;
+}
+
+Excursao CntrServicoExcursao::recuperarExcursao(Codigo codigo)
+{
+  Excursao excursao;
+  ComandoRecuperarExcursao recuperarExcursao(codigo);
+
+  recuperarExcursao.executar();
+  excursao = recuperarExcursao.getResultado();
+
+  return excursao;
+}
+
+list<Excursao> CntrServicoExcursao::listarExcursoes()
+{
+  ComandoListarExcursoes getExcursions;
   try
   {
-    deregisterExcursion.executar();
-    return true;
+    getExcursions.executar();
+    return getExcursions.getResultado();
   }
   catch (EErroPersistencia)
   {
-    return false;
+    throw EErroPersistencia("Erro na execução do comando!");
   }
 }
-
-// bool CntrServicoExcursao::editarExcursao(Excursao excursao, Email email)
-// {
-//   // Armazena os dados em servidor ou lista
-//   ComandoEditarExcursao editingExcursion(excursao, email);
-//   try
-//   {
-//     editingExcursion.executar();
-//     return true;
-//   }
-
-//   catch (EErroPersistencia)
-//   {
-//     return false;
-//   }
-// }
 /*
-Excursao CntrServicoExcursao::recuperarExcursao(Codigo codigo)
-{ // Armazena os dados em servidor ou lista
-  ContainerExcursao *container;
-
-  container = ContainerExcursao::getInstancia();
-
-  return container->recuperarExcursao(codigo); // Retorna um bool
-}
-
 //--------------------------------------------------------------------------------------
 //|                                    Sessão                                          |
 //--------------------------------------------------------------------------------------
 */
-bool CntrServicoExcursao::cadastrarSessao(Sessao sessao, Email email, Codigo codigo)
+
+bool CntrServicoExcursao::checarSessao(Sessao sessao, Email email)
+{
+  ComandoChecarSessao comandoChecarSessoes(sessao.getCodigo(), email);
+
+  comandoChecarSessoes.executar();
+
+  return comandoChecarSessoes.getResultado();
+}
+
+bool CntrServicoExcursao::cadastrarSessao(Sessao sessao, Email email)
 {
   NextIdSessao nextIdSessao;
   nextIdSessao.executar();
@@ -177,7 +232,7 @@ bool CntrServicoExcursao::cadastrarSessao(Sessao sessao, Email email, Codigo cod
   result = nextIdSessao.getResultado();
   Codigo codigoVerificador;
 
-  ComandoCadastrarSessao registerSession(sessao, email, codigo, codigoVerificador.getDigitoVerificador(result));
+  ComandoCadastrarSessao registerSession(sessao, email, sessao.getCodigoExcursao(), codigoVerificador.getDigitoVerificador(result));
   try
   {
     registerSession.executar();
@@ -194,65 +249,84 @@ bool CntrServicoExcursao::cadastrarSessao(Sessao sessao, Email email, Codigo cod
 
 bool CntrServicoExcursao::descadastrarSessao(Codigo codigo, Email email)
 {
-  ComandoDescadastrarSessao deleteSession(codigo, email);
-  try
+  Sessao sessao;
+  sessao.setCodigo(codigo);
+  if (checarSessao(sessao, email))
   {
-    deleteSession.executar();
-    return true;
+    ComandoDescadastrarSessao deleteSession(codigo, email);
+    try
+    {
+      deleteSession.executar();
+      return true;
+    }
+    catch (EErroPersistencia)
+    {
+      return false;
+    }
   }
-  catch(EErroPersistencia)
-  {
-    return false;
-  }
-  
-
+  return false;
 }
 //--------------------------------------------------------------------------------------------
 
-/*
-bool CntrServicoExcursao::editarSessao(Sessao sessao, Email email) {
-  ComandoEditarSessao editSession(sessao, email);
-  try {
-    editSession.executar();
-    return true;
+bool CntrServicoExcursao::editarSessao(Sessao sessao, Email email)
+{
+  cout << "Teste de Chamada de Função" << endl;
+  cout << checarSessao(sessao, email) << sessao.getCodigo().getCodigo() << endl;
+  if (checarSessao(sessao, email))
+  {
+    ComandoEditarSessao editSession(sessao, email);
+    try
+    {
+      editSession.executar();
+      cout << "Teste executar" << endl;
+      return true;
+    }
+    catch (EErroPersistencia)
+    {
+      return false;
+    }
   }
-  catch(EErroPersistencia) {
-    return false;
-  }
-  
+  return false;
 }
-*/
 
-Sessao CntrServicoExcursao::recuperarSessao(Codigo codigo) { 
+Sessao CntrServicoExcursao::recuperarSessao(Codigo codigo)
+{
   ComandoRecuperarSessao getSession(codigo);
-  try {
+  try
+  {
     getSession.executar();
     return getSession.getResultado();
-    
   }
-  catch(EErroPersistencia) {
+  catch (EErroPersistencia)
+  {
     throw EErroPersistencia("Erro na execução do comando!");
   }
 }
 
-list<Sessao> CntrServicoExcursao::listarSessoes() {
+list<Sessao> CntrServicoExcursao::listarSessoes()
+{
   ComandoListarSessoes getSessions;
-  try {
+  try
+  {
     getSessions.executar();
     return getSessions.getResultado();
   }
-  catch(EErroPersistencia) {
+  catch (EErroPersistencia)
+  {
     throw EErroPersistencia("Erro na execução do comando!");
   }
 }
 
-list<Sessao> CntrServicoExcursao::listarSessoes(Excursao excursao) {
+list<Sessao> CntrServicoExcursao::listarSessoes(Excursao excursao)
+{
   ComandoListarSessoes getSessions(excursao);
-  try {
+  try
+  {
     getSessions.executar();
     return getSessions.getResultado();
   }
-  catch(EErroPersistencia) {
+  catch (EErroPersistencia)
+  {
     throw EErroPersistencia("Erro na execução do comando!");
   }
 }
@@ -263,61 +337,130 @@ list<Sessao> CntrServicoExcursao::listarSessoes(Excursao excursao) {
 
 bool CntrServicoExcursao::cadastrarAvaliacao(Avaliacao avaliacao, Email email, Codigo codigo)
 {
-  GetNotasAvaliacao getnotas;
+  string icodigo = codigo.getCodigo();
+  icodigo.pop_back();
 
-  ComandoCadastrarAvaliacao registerAvaliacao(avaliacao, email, codigo);
+  NextIdAvaliacao nextIdAvaliacao;
+  nextIdAvaliacao.executar();
+  int result;
+  result = nextIdAvaliacao.getResultado();
+  float nota;
+
   try
   {
 
-    getnotas.executar();
-    list<int> notas = getnotas.getResultado();
-    int soma = 0;
-    int contador = 0;
-    for (auto it = begin(notas); it != end(notas); ++it)
-    {
-      soma += *it;
-      contador++;
-    }
-
+    ComandoCadastrarAvaliacao registerAvaliacao(avaliacao, email, codigo, codigo.getDigitoVerificador(result));
     registerAvaliacao.executar();
+    GetNotasMediaAvaliacao getnotas(stoi(icodigo));
+    getnotas.executar();
+    nota = getnotas.getResultado();
+    ComandoAtualizarNotaExcursao updatingExcursion(nota, email, codigo);
+    updatingExcursion.executar();
+
     return true;
   }
-
   catch (EErroPersistencia)
   {
     return false;
   }
 }
-/*
-//--------------------------------------------------------------------------------------------
-
-/*
-bool CntrServicoExcursao::descadastrarAvaliacao(Codigo codigo){
-  ComandoDescadastrarAvaliacao deleteAvaliation(codigo);
-  try {
-    deleteAvaliation.executar();
-    return true;
-} catch(EErroPersistencia) {
-    return false;
-}
-}
-
 
 //--------------------------------------------------------------------------------------------
-/*
-bool CntrServicoExcursao::editarAvaliacao(Avaliacao avaliacao, Email email) {
-  ComandoEditarAvaliacao  editAvaliation(avaliacao, email);
-  try {
-    editAvaliation.executar();
-    return true
-  }
-  catch(EErroPersistencia) {
-    return false;
-  }
 
+bool CntrServicoExcursao::descadastrarAvaliacao(Codigo codigo, Email email)
+{
+  float nota;
+
+  Avaliacao avaliacao;
+  avaliacao.setCodigo(codigo);
+  if (checarAvaliacao(avaliacao, email))
+  {
+    ComandoDescadastrarAvaliacao deleteAvaliation(codigo, email);
+
+    try
+    {
+      ComandoRecuperarAvaliacao recuperarAvaliacao(avaliacao.getCodigo().getCodigo());
+      recuperarAvaliacao.executar();
+      avaliacao = recuperarAvaliacao.getResultado();
+      string icodigo = avaliacao.getCodigoExcursao().getCodigo();
+      icodigo.pop_back();
+
+      deleteAvaliation.executar();
+      avaliacao.setCodigoExcursao(avaliacao.getCodigoExcursao());
+      GetNotasMediaAvaliacao getnotas(stoi(icodigo));
+      getnotas.executar();
+      nota = getnotas.getResultado();
+      ComandoAtualizarNotaExcursao updatingExcursion(nota, email, avaliacao.getCodigoExcursao());
+      updatingExcursion.executar();
+
+      return true;
+    }
+    catch (EErroPersistencia)
+    {
+      return false;
+    }
+  }
+  return false;
 }
 
+//--------------------------------------------------------------------------------------------
 
+bool CntrServicoExcursao::editarAvaliacao(Avaliacao avaliacao, Email email)
+{
+  float nota;
+
+  Avaliacao avaliacaoAtual;
+
+  if (checarAvaliacao(avaliacao, email))
+  {
+    ComandoEditarAvaliacao editAvaliation(avaliacao, email);
+    try
+    {
+      editAvaliation.executar();
+
+      ComandoRecuperarAvaliacao recuperarAvaliacao(avaliacao.getCodigo().getCodigo());
+
+      recuperarAvaliacao.executar();
+      avaliacaoAtual = recuperarAvaliacao.getResultado();
+      string icodigo = avaliacaoAtual.getCodigoExcursao().getCodigo();
+      icodigo.pop_back();
+
+      avaliacao.setCodigoExcursao(avaliacaoAtual.getCodigoExcursao());
+      GetNotasMediaAvaliacao getnotas(stoi(icodigo));
+      getnotas.executar();
+      nota = getnotas.getResultado();
+      ComandoAtualizarNotaExcursao updatingExcursion(nota, email, avaliacao.getCodigoExcursao());
+      updatingExcursion.executar();
+
+      return true;
+    }
+    catch (EErroPersistencia)
+    {
+      return false;
+    }
+  }
+  return false;
+}
+
+bool CntrServicoExcursao::checarAvaliacao(Avaliacao avaliacao, Email email)
+{
+  list<string> avaliacoes;
+  ComandoChecarAvaliacao comandoChecarAvaliacoes(email);
+
+  comandoChecarAvaliacoes.executar();
+  avaliacoes = comandoChecarAvaliacoes.getResultado();
+  list<string> iavaliacoes;
+  string str;
+  Codigo codigo;
+  for (auto avaliacao = avaliacoes.begin(); avaliacao != avaliacoes.end(); avaliacao++)
+  {
+    str = codigo.getCodigoDigitoVerificador(stoi(*avaliacao));
+    iavaliacoes.push_back(str);
+  }
+  return find(begin(iavaliacoes), end(iavaliacoes), avaliacao.getCodigo().getCodigo()) != end(iavaliacoes);
+}
+
+/*
 Avaliacao CntrServicoExcursao::recuperarAvaliacao(Codigo codigo)
 { // Armazena os dados em servidor ou lista
   ContainerExcursao *container;

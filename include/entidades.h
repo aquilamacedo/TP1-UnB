@@ -82,6 +82,8 @@ private:
     Codigo codigo;
     Nota nota;
     Descricao descricao;
+    Codigo codigoExcursao;
+    Email email;
 
 public:
     void setCodigo(const Codigo &);
@@ -90,6 +92,10 @@ public:
     Nota getNota() const;
     void setDescricao(const Descricao &);
     Descricao getDescricao() const;
+    void setEmail(const Email &);
+    Email getEmail() const;
+    void setCodigoExcursao(const Codigo &);
+    Codigo getCodigoExcursao() const;
 };
 
 /// -----------------------------------------------------------------------------
@@ -108,7 +114,14 @@ inline void Avaliacao::setNota(const Nota &nota)
 {
     this->nota = nota;
 }
-
+inline void Avaliacao::setEmail(const Email &email)
+{
+    this->email = email;
+}
+inline void Avaliacao::setCodigoExcursao(const Codigo &codigoExcursao)
+{
+    this->codigoExcursao = codigoExcursao;
+}
 /// -----------------------------------------------------------------------------
 /// Implementacao Metodos inline get da entidade Avaliacao. Matricula: 200060295
 /// -----------------------------------------------------------------------------
@@ -124,6 +137,15 @@ inline Nota Avaliacao::getNota() const
 inline Descricao Avaliacao::getDescricao() const
 {
     return descricao;
+}
+
+inline Email Avaliacao::getEmail() const
+{
+    return email;
+}
+inline Codigo Avaliacao::getCodigoExcursao() const
+{
+    return codigoExcursao;
 }
 /// -----------------------------------------------------------------------------
 /// Declaracao da entidade Excursao. Matricula: 202021767
@@ -148,6 +170,7 @@ private:
     Duracao duracao;
     Descricao descricao;
     Endereco endereco;
+    Email email;
 
 public:
     void setCodigo(const Codigo &);
@@ -157,6 +180,7 @@ public:
     void setDuracao(const Duracao &);
     void setDescricao(const Descricao &);
     void setEndereco(const Endereco &);
+    void setEmail(const Email &);
 
     Codigo getCodigo() const;
     Titulo getTitulo() const;
@@ -165,6 +189,7 @@ public:
     Duracao getDuracao() const;
     Descricao getDescricao() const;
     Endereco getEndereco() const;
+    Email getEmail() const;
 };
 
 /// -----------------------------------------------------------------------------
@@ -206,6 +231,11 @@ inline void Excursao::setEndereco(const Endereco &endereco)
     this->endereco = endereco;
 }
 
+inline void Excursao::setEmail(const Email &email)
+{
+    this->email = email;
+}
+
 /// -----------------------------------------------------------------------------
 /// Implementacao Metodos inline get da entidade Excursao. Matricula: 202021767
 /// -----------------------------------------------------------------------------
@@ -245,6 +275,11 @@ inline Endereco Excursao::getEndereco() const
     return endereco;
 }
 
+inline Email Excursao::getEmail() const
+{
+    return email;
+}
+
 /// -----------------------------------------------------------------------------
 /// Declaracao da entidade Sessao. Matricula: 202021767
 /// -----------------------------------------------------------------------------
@@ -261,17 +296,20 @@ private:
     Data data;
     Horario horario;
     Idioma idioma;
+    Codigo codigoExcursao;
 
 public:
     void setCodigo(const Codigo &);
     void setData(const Data &);
     void setHorario(const Horario &);
     void setIdioma(const Idioma &);
+    void setCodigoExcursao(const Codigo &);
 
     Codigo getCodigo() const;
     Data getData() const;
     Horario getHorario() const;
     Idioma getIdioma() const;
+    Codigo getCodigoExcursao() const;
 };
 
 /// -----------------------------------------------------------------------------
@@ -298,6 +336,11 @@ inline void Sessao::setIdioma(const Idioma &idioma)
     this->idioma = idioma;
 }
 
+inline void Sessao::setCodigoExcursao(const Codigo &codigoExcursao)
+{
+    this->codigoExcursao = codigoExcursao;
+}
+
 /// -----------------------------------------------------------------------------
 /// Implementação Metodos inline get da entidade Sessao. Matricula: 202021767
 /// -----------------------------------------------------------------------------
@@ -322,4 +365,8 @@ inline Idioma Sessao::getIdioma() const
     return idioma;
 }
 
+inline Codigo Sessao::getCodigoExcursao() const
+{
+    return codigoExcursao;
+}
 #endif // ENTIDADES_H_INCLUDED

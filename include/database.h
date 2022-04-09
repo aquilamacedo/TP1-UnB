@@ -109,11 +109,12 @@ public:
   ComandoEditarUsuario(Usuario);
 };
 
-//class ComandoPesquisarUsuario:public ComandoSQL {
-//  public:
-//    ComandoPesquisarUsuario(Email);
-//    Usuario getResultado();
-//};
+class ComandoChecarUsuario : public ComandoSQL
+{
+public:
+  ComandoChecarUsuario();
+  list<string> getResultado();
+};
 
 //--------------------------------------------------------------------------------------
 //|                                 Excursão                                           |
@@ -124,10 +125,6 @@ class NextIdExcursao : public ComandoSQL
 public:
   NextIdExcursao();
   int getResultado();
-};
-class ListarExcursoes : public ComandoSQL
-{
-  ListarExcursoes();
 };
 
 class ComandoCadastrarExcursao : public ComandoSQL
@@ -148,10 +145,25 @@ public:
   ComandoEditarExcursao(Excursao, Email);
 };
 
+class ComandoRecuperarExcursao : public ComandoSQL
+{
+public:
+  ComandoRecuperarExcursao(Codigo);
+  Excursao getResultado();
+};
+
 class ComandoListarExcursoes : public ComandoSQL
 {
 public:
   ComandoListarExcursoes();
+  list<Excursao> getResultado();
+};
+
+class ComandoChecarExcursao : public ComandoSQL
+{
+public:
+  ComandoChecarExcursao(Email);
+  list<string> getResultado();
 };
 
 //--------------------------------------------------------------------------------------
@@ -196,6 +208,14 @@ public:
   ComandoListarSessoes(Excursao);
   list<Sessao> getResultado();
 };
+
+class ComandoChecarSessao : public ComandoSQL
+{
+public:
+  ComandoChecarSessao(Codigo, Email);
+  bool getResultado();
+};
+
 //--------------------------------------------------------------------------------------
 //|                                 Avaliação                                          |
 //--------------------------------------------------------------------------------------
@@ -206,17 +226,27 @@ public:
   int getResultado();
 };
 
+class GetNotasMediaAvaliacao : public ComandoSQL
+{
+private:
+  int codigo;
+
+public:
+  GetNotasMediaAvaliacao(int);
+  float getResultado();
+};
+
 class GetNotasAvaliacao : public ComandoSQL
 {
 public:
-  GetNotasAvaliacao();
-  list<int> getResultado();
+  GetNotasAvaliacao(int);
+  bool getResultado();
 };
 
 class ComandoCadastrarAvaliacao : public ComandoSQL
 {
 public:
-  ComandoCadastrarAvaliacao(Avaliacao, Email, Codigo);
+  ComandoCadastrarAvaliacao(Avaliacao, Email, Codigo, int);
 };
 
 class ComandoDescadastrarAvaliacao : public ComandoSQL
@@ -231,29 +261,24 @@ public:
   ComandoEditarAvaliacao(Avaliacao, Email);
 };
 
-class ComandoListarAvaliacoes : public ComandoSQL
+class ComandoAtualizarNotaExcursao : public ComandoSQL
 {
 public:
-  ComandoListarAvaliacoes(Email);
+  ComandoAtualizarNotaExcursao(float, Email, Codigo);
 };
 
-//--------------------------------------------------------------------------------------
-//|                                   Avaliação                                           |
-//--------------------------------------------------------------------------------------
-/*
-class ComandoCadastrarAvaliacao : public ComandoSQL {
-  public:
-  ComandoCadastrarAvaliacao(Avaliacao, Email, Codigo);
+class ComandoChecarAvaliacao : public ComandoSQL
+{
+public:
+  ComandoChecarAvaliacao(Email);
+  list<string> getResultado();
 };
 
-class ComandoDescadastrarAvaliacao : public ComandoSQL {
-  public:
-  ComandoDescadastrarAvaliacao(Codigo);
+class ComandoRecuperarAvaliacao : public ComandoSQL
+{
+public:
+  ComandoRecuperarAvaliacao(Codigo);
+  Avaliacao getResultado();
 };
 
-class ComandoEditarAvaliacao : public ComandoSQL {
-  public:
-  ComandoEditarAvaliacao(Avaliacao);
-};
-*/
 #endif // DATABASE_H

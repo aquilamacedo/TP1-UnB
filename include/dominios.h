@@ -65,7 +65,7 @@ class Nota
 {
 private:
   ///@param int nota
-  int nota;
+  float nota;
 
   ///Funcao validar que valida um inteiro
   ///@throw invalid_argument
@@ -84,10 +84,11 @@ public:
   ///@param int
   ///return void
   void setNota(int);
+  void setNotaMedia(float);
 
   ///Funcao getNota
   ///@return int nota
-  int getNota() const
+  float getNota() const
   {
     return nota;
   }
@@ -363,6 +364,8 @@ public:
   void setCodigo(string);
 
   int getDigitoVerificador(int);
+
+  string getCodigoDigitoVerificador(int);
 
   string getCodigo() const
   {

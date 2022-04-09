@@ -84,7 +84,6 @@ int ComandoSQL::callback(void *NotUsed, int argc, char **valorColuna, char **nom
 ComandoSenha::ComandoSenha(Email email)
 {
         comandoSQL = "SELECT senha FROM usuario WHERE email = '";
-        // senha da tabela usuario onde email eh o getemail
         comandoSQL += email.getEmail();
         comandoSQL += "'";
 }
@@ -137,10 +136,29 @@ ComandoEditarUsuario::ComandoEditarUsuario(Usuario usuario)
         comandoSQL = "UPDATE usuario ";
         comandoSQL += "SET nome = '" + usuario.getNome().getNome();
         comandoSQL += "', senha = '" + usuario.getSenha().getSenha();
-        comandoSQL += "' WHERE email = 'lucasbbs@live.fr'"; //+ usuario.getEmail().getEmail();
+        comandoSQL += "' WHERE email = '" + usuario.getEmail().getEmail() + "'";
 }
 
-//ComandoPesquisarUsuario::ComandoPesquisarUsuario(Email email) {}
+// ---------------------------------------------
+// Implementação do comando Checar Usuario
+// ---------------------------------------------
+ComandoChecarUsuario::ComandoChecarUsuario()
+{
+        comandoSQL = "SELECT Email from usuario";
+}
+
+list<string> ComandoChecarUsuario::getResultado()
+{
+        ElementoResultado resultado;
+        list<string> elementos;
+        while (!listaResultado.empty())
+        {
+                resultado = listaResultado.back();
+                listaResultado.pop_back();
+                elementos.push_back(resultado.getValorColuna());
+        }
+        return elementos;
+}
 
 //--------------------------------------------------------------------------------------
 //|                                 Excursão                                           |
@@ -154,7 +172,7 @@ ComandoCadastrarExcursao::ComandoCadastrarExcursao(Excursao excursao, Email emai
         comandoSQL = "INSERT INTO Excursao VALUES (";
         comandoSQL += "NULL, ";
         comandoSQL += "'" + excursao.getTitulo().getTitulo() + "', ";
-        comandoSQL += "NULL, ";
+        comandoSQL += "-1, ";
         comandoSQL += "'" + excursao.getCidade().getCidade() + "', ";
         comandoSQL += "'" + excursao.getDuracao().getDuracao() + "', ";
         comandoSQL += "'" + excursao.getEndereco().getEndereco() + "', ";
@@ -197,35 +215,272 @@ ComandoDescadastrarExcursao::ComandoDescadastrarExcursao(Codigo codigo, Email em
         comandoSQL += "')";
 }
 
-ListarExcursoes::ListarExcursoes()
+// ------------------------------------------------
+// Implementação do comando Listar Excursões
+// ------------------------------------------------
+ComandoListarExcursoes::ComandoListarExcursoes()
 {
-        comandoSQL = "SELECT Codigo FROM Excursao";
+        comandoSQL = "SELECT * FROM Excursao";
 }
+list<Excursao> ComandoListarExcursoes::getResultado()
+{
+        list<Excursao> excursoes;
 
+        Codigo codigo;
+        Titulo titulo;
+        Nota nota;
+        Cidade cidade;
+        Duracao duracao;
+        Endereco endereco;
+        Descricao descricao;
+        Email email;
+        int digito_verificador;
+
+        ElementoResultado resultado;
+
+        while (!listaResultado.empty())
+        {
+                Excursao excursao;
+
+                // Adicionando valores pesquisados dentro dos domínios.
+                if (listaResultado.empty())
+                {
+                        throw EErroPersistencia("Lista de resultados vazia!");
+                }
+                resultado = listaResultado.back();
+                codigo.setCodigo(codigo.getCodigoDigitoVerificador(stoi(resultado.getValorColuna())));
+                listaResultado.pop_back(); //1
+
+                if (listaResultado.empty())
+                {
+                        throw EErroPersistencia("Lista de resultados vazia!");
+                }
+                resultado = listaResultado.back();
+                titulo.setTitulo(resultado.getValorColuna());
+                listaResultado.pop_back(); //2
+
+                if (listaResultado.empty())
+                {
+                        throw EErroPersistencia("Lista de resultados vazia!");
+                }
+                resultado = listaResultado.back();
+                nota.setNotaMedia(stof(resultado.getValorColuna()));
+                listaResultado.pop_back(); //3
+
+                if (listaResultado.empty())
+                {
+                        throw EErroPersistencia("Lista de resultados vazia!");
+                }
+                resultado = listaResultado.back();
+                cidade.setCidade(resultado.getValorColuna());
+                listaResultado.pop_back(); //4
+
+                if (listaResultado.empty())
+                {
+                        throw EErroPersistencia("Lista de resultados vazia!");
+                }
+                resultado = listaResultado.back();
+                duracao.setDuracao(resultado.getValorColuna());
+                listaResultado.pop_back(); //5
+
+                if (listaResultado.empty())
+                {
+                        throw EErroPersistencia("Lista de resultados vazia!");
+                }
+                resultado = listaResultado.back();
+                endereco.setEndereco(resultado.getValorColuna());
+                listaResultado.pop_back(); //6
+
+                if (listaResultado.empty())
+                {
+                        throw EErroPersistencia("Lista de resultados vazia!");
+                }
+                resultado = listaResultado.back();
+                descricao.setDescricao(resultado.getValorColuna());
+                listaResultado.pop_back(); //7
+
+                if (listaResultado.empty())
+                {
+                        throw EErroPersistencia("Lista de resultados vazia!");
+                }
+                resultado = listaResultado.back();
+                digito_verificador = stoi(resultado.getValorColuna());
+                listaResultado.pop_back(); //8
+
+                if (listaResultado.empty())
+                {
+                        throw EErroPersistencia("Lista de resultados vazia!");
+                }
+                resultado = listaResultado.back();
+                email.setEmail(resultado.getValorColuna());
+                listaResultado.pop_back(); //9
+
+                // Adicionando os domínios adicionados dentro da Sessão
+                excursao.setCodigo(codigo);
+                excursao.setTitulo(titulo);
+                excursao.setNota(nota);
+                excursao.setCidade(cidade);
+                excursao.setDuracao(duracao);
+                excursao.setEndereco(endereco);
+                excursao.setDescricao(descricao);
+                excursao.setEmail(email);
+                excursoes.push_back(excursao);
+        }
+        return excursoes;
+}
 // ------------------------------------------------
 // Implementação do comando Editar Excursão
 // ------------------------------------------------
 
 ComandoEditarExcursao::ComandoEditarExcursao(Excursao excursao, Email email)
 {
+        string icodigo = excursao.getCodigo().getCodigo();
+        icodigo.pop_back();
         comandoSQL = "UPDATE Excursao ";
         comandoSQL += "SET Titulo = '" + excursao.getTitulo().getTitulo();
-        // comandoSQL += "', Nota = " + to_string(excursao.getNota().getNota());
-        comandoSQL += ", Cidade = '" + excursao.getCidade().getCidade();
+        comandoSQL += "', Cidade = '" + excursao.getCidade().getCidade();
         comandoSQL += "', Duracao = " + excursao.getDuracao().getDuracao();
         comandoSQL += ", Descricao = '" + excursao.getDescricao().getDescricao();
         comandoSQL += "', Endereco = '" + excursao.getEndereco().getEndereco();
-        comandoSQL += "' WHERE (Codigo = '" + excursao.getCodigo().getCodigo();
+        comandoSQL += "' WHERE (Codigo = '" + icodigo;
         comandoSQL += "') AND (Guia = '" + email.getEmail() + "')";
 }
 
 // ------------------------------------------------
-// Implementação do comando Listar Excursões
+// Implementação do comando Recuperar Excursao
 // ------------------------------------------------
-
-ComandoListarExcursoes::ComandoListarExcursoes()
+ComandoRecuperarExcursao::ComandoRecuperarExcursao(Codigo codigo)
 {
-        comandoSQL = "SELECT * FROM Excursao";
+        string icodigo = codigo.getCodigo();
+        icodigo.pop_back();
+
+        comandoSQL = "SELECT * FROM Excursao WHERE Codigo = ";
+        comandoSQL += icodigo;
+}
+
+// -------------------------------------------------------
+// Implementação do comando Recuperar Excursao - getResultado
+// -------------------------------------------------------
+Excursao ComandoRecuperarExcursao::getResultado()
+{
+        Excursao excursao;
+        Codigo codigo;
+        Titulo titulo;
+        Nota nota;
+        Cidade cidade;
+        Duracao duracao;
+        Endereco endereco;
+        Descricao descricao;
+        int digito_verificador;
+        Email email;
+
+        ElementoResultado resultado;
+
+        // Adicionando valores pesquisados dentro dos domínios.
+        if (listaResultado.empty())
+        {
+                throw EErroPersistencia("Lista de resultados vazia!");
+        }
+        resultado = listaResultado.back();
+        codigo.setCodigo(codigo.getCodigoDigitoVerificador(stoi(resultado.getValorColuna())));
+        listaResultado.pop_back(); //1
+
+        if (listaResultado.empty())
+        {
+                throw EErroPersistencia("Lista de resultados vazia!");
+        }
+        resultado = listaResultado.back();
+        titulo.setTitulo(resultado.getValorColuna());
+        listaResultado.pop_back(); //2
+
+        if (listaResultado.empty())
+        {
+                throw EErroPersistencia("Lista de resultados vazia!");
+        }
+        resultado = listaResultado.back();
+        nota.setNotaMedia(stof(resultado.getValorColuna()));
+        listaResultado.pop_back(); //3
+
+        if (listaResultado.empty())
+        {
+                throw EErroPersistencia("Lista de resultados vazia!");
+        }
+        resultado = listaResultado.back();
+        cidade.setCidade(resultado.getValorColuna());
+        listaResultado.pop_back(); //4
+
+        if (listaResultado.empty())
+        {
+                throw EErroPersistencia("Lista de resultados vazia!");
+        }
+        resultado = listaResultado.back();
+        duracao.setDuracao(resultado.getValorColuna());
+        listaResultado.pop_back(); //5
+
+        if (listaResultado.empty())
+        {
+                throw EErroPersistencia("Lista de resultados vazia!");
+        }
+        resultado = listaResultado.back();
+        endereco.setEndereco(resultado.getValorColuna());
+        listaResultado.pop_back(); //6
+
+        if (listaResultado.empty())
+        {
+                throw EErroPersistencia("Lista de resultados vazia!");
+        }
+        resultado = listaResultado.back();
+        descricao.setDescricao(resultado.getValorColuna());
+        listaResultado.pop_back(); //7
+
+        if (listaResultado.empty())
+        {
+                throw EErroPersistencia("Lista de resultados vazia!");
+        }
+        resultado = listaResultado.back();
+        digito_verificador = stoi(resultado.getValorColuna());
+        listaResultado.pop_back(); //8
+
+        if (listaResultado.empty())
+        {
+                throw EErroPersistencia("Lista de resultados vazia!");
+        }
+        resultado = listaResultado.back();
+        email.setEmail(resultado.getValorColuna());
+        listaResultado.pop_back(); //9
+
+        // Adicionando os domínios adicionados dentro da Sessão
+        excursao.setCodigo(codigo);
+        excursao.setTitulo(titulo);
+        excursao.setNota(nota);
+        excursao.setCidade(cidade);
+        excursao.setDuracao(duracao);
+        excursao.setEndereco(endereco);
+        excursao.setDescricao(descricao);
+        excursao.setEmail(email);
+
+        return excursao;
+}
+// ------------------------------------------------
+// Implementação do comando Checar Excursão
+// ------------------------------------------------
+ComandoChecarExcursao::ComandoChecarExcursao(Email email)
+{
+        comandoSQL = "SELECT Codigo from Excursao where Guia = '";
+        comandoSQL += email.getEmail() + "'";
+}
+
+list<string> ComandoChecarExcursao::getResultado()
+{
+        ElementoResultado resultado;
+        list<string> elementos;
+        while (!listaResultado.empty())
+        {
+                resultado = listaResultado.back();
+                listaResultado.pop_back();
+                elementos.push_back(resultado.getValorColuna());
+        }
+        return elementos;
 }
 
 //--------------------------------------------------------------------------------------
@@ -277,10 +532,10 @@ ComandoDescadastrarSessao::ComandoDescadastrarSessao(Codigo codigo, Email email)
         icodigo.pop_back();
         comandoSQL = "DELETE FROM Sessao WHERE Codigo in ";
         comandoSQL += "(SELECT Sessao.Codigo FROM Sessao LEFT JOIN Excursao ON Excursao.Codigo = Sessao.Excursao ";
-        comandoSQL += "WHERE Sessao.Codigo  = ";
+        comandoSQL += "WHERE Sessao.Codigo = ";
         comandoSQL += icodigo;
         comandoSQL += " AND Excursao.Guia = '";
-        comandoSQL += email.getEmail() + "'";
+        comandoSQL += email.getEmail() + "')";
 }
 
 /*
@@ -292,70 +547,99 @@ ComandoDescadastrarSessao::ComandoDescadastrarSessao(Codigo codigo, Email email)
 
 ComandoEditarSessao::ComandoEditarSessao(Sessao sessao, Email email)
 {
+        string icodigo = sessao.getCodigo().getCodigo();
+        icodigo.pop_back();
         comandoSQL = "UPDATE Sessao ";
         comandoSQL += "SET Data = '" + sessao.getData().getData();
-        comandoSQL += "', Horario = " + sessao.getHorario().getHorario();
+        comandoSQL += "', Horario = '" + sessao.getHorario().getHorario();
         comandoSQL += "', Idioma = '" + sessao.getIdioma().getIdioma();
-        comandoSQL += "'WHERE Codigo in (SELECT Sessao.Codigo FROM Sessao LEFT JOIN Excursao ON Excursao.Codigo = Sessao.Excursao ";
-        comandoSQL += "WHERE Sessao.Codigo = " + sessao.getCodigo().getCodigo();
+        comandoSQL += "' WHERE Codigo in (SELECT Sessao.Codigo FROM Sessao LEFT JOIN Excursao ON Excursao.Codigo = Sessao.Excursao ";
+        comandoSQL += "WHERE Sessao.Codigo = " + icodigo;
         comandoSQL += " AND Excursao.Guia = '" + email.getEmail() + "')";
+        cout << comandoSQL << endl;
 }
 
 // ------------------------------------------------
 // Implementação do comando Listar Sessões
 // ------------------------------------------------
 
-ComandoListarSessoes::ComandoListarSessoes() {
+ComandoListarSessoes::ComandoListarSessoes()
+{
         comandoSQL = "SELECT * FROM Sessao";
 }
 
-ComandoListarSessoes::ComandoListarSessoes(Excursao excursao){
+ComandoListarSessoes::ComandoListarSessoes(Excursao excursao)
+{
         comandoSQL = "SELECT * FROM Sessao WHERE Excursao = ";
         comandoSQL += excursao.getCodigo().getCodigo();
-
 }
 // -----------------------------------------------------
 // Implementação do comando ListarSessoes getResultado
 // -----------------------------------------------------
-list<Sessao> ComandoListarSessoes::getResultado() {
+list<Sessao> ComandoListarSessoes::getResultado()
+{
         list<Sessao> sessoes;
         Codigo codigo;
+        Codigo codigoExcursao;
         Data data;
         Horario horario;
         Idioma idioma;
         ElementoResultado resultado;
-        
-        while (!listaResultado.empty()) {
+
+        while (!listaResultado.empty())
+        {
                 Sessao sessao;
                 // Adicionando valores pesquisados dentro dos domínios.
-                if (listaResultado.empty()) {
-                        throw EErroPersistencia("Lista de resultados vazia!");
-                }
-                listaResultado.pop_back();
-                if (listaResultado.empty()) {
+                if (listaResultado.empty())
+                {
                         throw EErroPersistencia("Lista de resultados vazia!");
                 }
                 resultado = listaResultado.back();
-                idioma.setIdioma(resultado.getValorColuna());
-                listaResultado.pop_back();
-                if (listaResultado.empty()) {
-                        throw EErroPersistencia("Lista de resultados vazia!");
-                }
-                resultado = listaResultado.back();
-                horario.setHorario(resultado.getValorColuna());
-                listaResultado.pop_back();
-                if (listaResultado.empty()) {
+                codigo.setCodigo(codigo.getCodigoDigitoVerificador(stoi(resultado.getValorColuna())));
+                listaResultado.pop_back(); //1
+
+                if (listaResultado.empty())
+                {
                         throw EErroPersistencia("Lista de resultados vazia!");
                 }
                 resultado = listaResultado.back();
                 data.setData(resultado.getValorColuna());
-                listaResultado.pop_back();
-                if (listaResultado.empty()) {
+                listaResultado.pop_back(); //2
+
+                if (listaResultado.empty())
+                {
                         throw EErroPersistencia("Lista de resultados vazia!");
                 }
                 resultado = listaResultado.back();
-                codigo.setCodigo(resultado.getValorColuna());
-                listaResultado.pop_back();
+                horario.setHorario(resultado.getValorColuna());
+
+                listaResultado.pop_back(); //3
+
+                if (listaResultado.empty())
+                {
+                        throw EErroPersistencia("Lista de resultados vazia!");
+                }
+                resultado = listaResultado.back();
+                idioma.setIdioma(resultado.getValorColuna());
+
+                listaResultado.pop_back(); //4
+
+                if (listaResultado.empty())
+                {
+                        throw EErroPersistencia("Lista de resultados vazia!");
+                }
+                resultado = listaResultado.back();
+
+                listaResultado.pop_back(); //5
+
+                if (listaResultado.empty())
+                {
+                        throw EErroPersistencia("Lista de resultados vazia!");
+                }
+                resultado = listaResultado.back();
+                codigoExcursao.setCodigo(codigoExcursao.getCodigoDigitoVerificador(stoi(resultado.getValorColuna())));
+
+                listaResultado.pop_back(); //6
 
                 // Adicionando os domínios adicionados dentro da Sessão
                 sessao.setCodigo(codigo);
@@ -364,6 +648,7 @@ list<Sessao> ComandoListarSessoes::getResultado() {
                 sessao.setIdioma(idioma);
                 sessoes.push_back(sessao);
         }
+
         return sessoes;
 }
 
@@ -379,7 +664,8 @@ ComandoRecuperarSessao::ComandoRecuperarSessao(Codigo codigo)
 // -------------------------------------------------------
 // Implementação do comando Recuperar Sessao- getResultado
 // -------------------------------------------------------
-Sessao ComandoRecuperarSessao::getResultado() {
+Sessao ComandoRecuperarSessao::getResultado()
+{
         Sessao sessao;
         Codigo codigo;
         Data data;
@@ -388,34 +674,46 @@ Sessao ComandoRecuperarSessao::getResultado() {
         ElementoResultado resultado;
 
         // Adicionando valores pesquisados dentro dos domínios.
-        if (listaResultado.empty()) {
+        if (listaResultado.empty())
+        {
                 throw EErroPersistencia("Lista de resultados vazia!");
         }
-        listaResultado.pop_back();
-        if (listaResultado.empty()) {
+        listaResultado.pop_back(); //1
+        resultado = listaResultado.back();
+
+        listaResultado.pop_back(); //2
+        resultado = listaResultado.back();
+
+        if (listaResultado.empty())
+        {
                 throw EErroPersistencia("Lista de resultados vazia!");
         }
         resultado = listaResultado.back();
         idioma.setIdioma(resultado.getValorColuna());
-        listaResultado.pop_back();
-        if (listaResultado.empty()) {
+        listaResultado.pop_back(); //3
+
+        if (listaResultado.empty())
+        {
                 throw EErroPersistencia("Lista de resultados vazia!");
         }
         resultado = listaResultado.back();
         horario.setHorario(resultado.getValorColuna());
-        listaResultado.pop_back();
-        if (listaResultado.empty()) {
+
+        listaResultado.pop_back(); //4
+        if (listaResultado.empty())
+        {
                 throw EErroPersistencia("Lista de resultados vazia!");
         }
         resultado = listaResultado.back();
         data.setData(resultado.getValorColuna());
-        listaResultado.pop_back();
-        if (listaResultado.empty()) {
+        listaResultado.pop_back(); //5
+        if (listaResultado.empty())
+        {
                 throw EErroPersistencia("Lista de resultados vazia!");
         }
         resultado = listaResultado.back();
         codigo.setCodigo(resultado.getValorColuna());
-        listaResultado.pop_back();
+        listaResultado.pop_back(); //6
 
         // Adicionando os domínios adicionados dentro da Sessão
         sessao.setCodigo(codigo);
@@ -425,6 +723,33 @@ Sessao ComandoRecuperarSessao::getResultado() {
 
         return sessao;
 }
+
+ComandoChecarSessao::ComandoChecarSessao(Codigo codigo, Email email)
+{
+        string icodigo = codigo.getCodigo();
+        icodigo.pop_back();
+        comandoSQL = "SELECT * FROM Sessao WHERE Codigo in ";
+        comandoSQL += "(SELECT Sessao.Codigo FROM Sessao LEFT JOIN Excursao ON Excursao.Codigo = Sessao.Excursao ";
+        comandoSQL += "WHERE Sessao.Codigo = ";
+        comandoSQL += icodigo;
+        comandoSQL += " AND Excursao.Guia = '";
+        comandoSQL += email.getEmail() + "')";
+        cout << comandoSQL << endl;
+}
+
+bool ComandoChecarSessao::getResultado()
+{
+        cout << listaResultado.size() << endl;
+        if (listaResultado.empty())
+        {
+                return false;
+        }
+        else
+        {
+                return true;
+        }
+}
+
 //--------------------------------------------------------------------------------------
 //|                                  Avaliação                                         |
 //--------------------------------------------------------------------------------------
@@ -432,20 +757,135 @@ Sessao ComandoRecuperarSessao::getResultado() {
 // ------------------------------------------------
 // Implementação do comando Cadastrar Avaliação
 // ------------------------------------------------
-ComandoCadastrarAvaliacao::ComandoCadastrarAvaliacao(Avaliacao avaliacao, Email email, Codigo codigo)
+ComandoCadastrarAvaliacao::ComandoCadastrarAvaliacao(Avaliacao avaliacao, Email email, Codigo codigo, int digito_verificador)
 {
+        string codigoId = codigo.getCodigo();
+        codigoId.pop_back();
         comandoSQL = "INSERT INTO Avaliacao VALUES (";
         comandoSQL += "NULL, ";
-        comandoSQL += "'" + to_string(avaliacao.getNota().getNota()) + "', ";
+        comandoSQL += "" + to_string(avaliacao.getNota().getNota()) + ", ";
         comandoSQL += "'" + avaliacao.getDescricao().getDescricao() + "', ";
-        comandoSQL += "'" + codigo.getCodigo() + "')";
+        comandoSQL += "'" + to_string(digito_verificador) + "', ";
+        comandoSQL += "'" + email.getEmail() + "', ";
+        comandoSQL += "'" + codigoId + "')";
 }
 
-GetNotasAvaliacao::GetNotasAvaliacao()
+// ------------------------------------------------
+// Implementação do comando Recuperar Avaliação
+// ------------------------------------------------
+ComandoRecuperarAvaliacao::ComandoRecuperarAvaliacao(Codigo codigo)
 {
-        comandoSQL = "SELECT Nota FROM Avaliacao";
+        string icodigo = codigo.getCodigo();
+        icodigo.pop_back();
+        comandoSQL = "SELECT * FROM Avaliacao WHERE Codigo = ";
+        comandoSQL += icodigo;
 }
-list<int> GetNotasAvaliacao::getResultado()
+
+// -------------------------------------------------------
+// Implementação do comando Recuperar Avaliação - getResultado
+// -------------------------------------------------------
+
+Avaliacao ComandoRecuperarAvaliacao::getResultado()
+{
+        Avaliacao excursao;
+
+        Codigo codigo;
+        Nota nota;
+        Descricao descricao;
+        Email avaliador;
+        Codigo codigoExcursao;
+        int digito_verificador;
+
+        ElementoResultado resultado;
+
+        // Adicionando valores pesquisados dentro dos domínios.
+        if (listaResultado.empty())
+        {
+                throw EErroPersistencia("Lista de resultados vazia!");
+        }
+        resultado = listaResultado.back();
+        codigo.setCodigo(codigo.getCodigoDigitoVerificador(stoi(resultado.getValorColuna())));
+        listaResultado.pop_back(); //1
+
+        if (listaResultado.empty())
+        {
+                throw EErroPersistencia("Lista de resultados vazia!");
+        }
+        resultado = listaResultado.back();
+        nota.setNota(stof(resultado.getValorColuna()));
+        listaResultado.pop_back(); //2
+
+        if (listaResultado.empty())
+        {
+                throw EErroPersistencia("Lista de resultados vazia!");
+        }
+        resultado = listaResultado.back();
+        descricao.setDescricao(resultado.getValorColuna());
+        listaResultado.pop_back(); //3
+
+        if (listaResultado.empty())
+        {
+                throw EErroPersistencia("Lista de resultados vazia!");
+        }
+        resultado = listaResultado.back();
+        digito_verificador = stoi(resultado.getValorColuna());
+        listaResultado.pop_back(); //4
+        if (listaResultado.empty())
+        {
+                throw EErroPersistencia("Lista de resultados vazia!");
+        }
+        resultado = listaResultado.back();
+        avaliador.setEmail(resultado.getValorColuna());
+        listaResultado.pop_back(); //5
+
+        if (listaResultado.empty())
+        {
+                throw EErroPersistencia("Lista de resultados vazia!");
+        }
+        resultado = listaResultado.back();
+        codigoExcursao.setCodigo(codigoExcursao.getCodigoDigitoVerificador(stoi(resultado.getValorColuna())));
+        listaResultado.pop_back(); //6
+
+        // Adicionando os domínios adicionados dentro da Avaliação
+        excursao.setCodigo(codigo);
+        excursao.setNota(nota);
+        excursao.setDescricao(descricao);
+        excursao.setDescricao(descricao);
+        excursao.setEmail(avaliador);
+        excursao.setCodigoExcursao(codigoExcursao);
+
+        return excursao;
+}
+GetNotasAvaliacao::GetNotasAvaliacao(int codigo)
+{
+        comandoSQL = "SELECT Nota FROM Avaliacao where Excursao = ";
+        comandoSQL += to_string(codigo);
+}
+bool GetNotasAvaliacao::getResultado()
+{
+        ElementoResultado resultado;
+        cout << "Teste" << endl;
+
+        if (listaResultado.empty())
+        {
+                cout << "Lista vazia" << endl;
+
+                return false;
+        }
+        else
+        {
+                cout << "Lista não vazia" << endl;
+                return true;
+        }
+}
+
+GetNotasMediaAvaliacao::GetNotasMediaAvaliacao(int codigo)
+{
+        this->codigo = codigo;
+        comandoSQL = "SELECT avg(Nota) FROM Avaliacao where Excursao = ";
+        comandoSQL += to_string(codigo);
+}
+float GetNotasMediaAvaliacao::getResultado()
 {
         ElementoResultado resultado;
 
@@ -455,37 +895,49 @@ list<int> GetNotasAvaliacao::getResultado()
         }
         resultado = listaResultado.back();
         listaResultado.pop_back();
-
-        return resultado.getValoresColuna();
+        GetNotasAvaliacao notas(codigo);
+        notas.executar();
+        cout << resultado.getValorColuna() << " testando isso aqui" << endl;
+        if (notas.getResultado())
+        {
+                return stof(resultado.getValorColuna());
+        }
+        else
+        {
+                return -1;
+        }
 }
 
-// NextIdAvaliacao::NextIdAvaliacao()
-// {
-//         comandoSQL = "SELECT seq + 1 FROM SQLITE_SEQUENCE WHERE name='Avaliacao'";
-// }
-// int NextIdAvaliacao::getResultado()
-// {
-//         ElementoResultado resultado;
-//         int result;
+NextIdAvaliacao::NextIdAvaliacao()
+{
+        comandoSQL = "SELECT seq + 1 FROM SQLITE_SEQUENCE WHERE name='Avaliacao'";
+}
+int NextIdAvaliacao::getResultado()
+{
+        ElementoResultado resultado;
+        int result;
 
-//         if (listaResultado.empty())
-//         {
-//                 throw EErroPersistencia("Lista Vazia.");
-//         }
-//         resultado = listaResultado.back();
-//         listaResultado.pop_back();
+        if (listaResultado.empty())
+        {
+                throw EErroPersistencia("Lista Vazia.");
+        }
+        resultado = listaResultado.back();
+        listaResultado.pop_back();
 
-//         result = stoi(resultado.getValorColuna());
-//         return result;
-// }
+        result = stoi(resultado.getValorColuna());
+        return result;
+}
 
 // ------------------------------------------------
 // Implementação do comando Descadastrar Avaliação
 // ------------------------------------------------
 ComandoDescadastrarAvaliacao::ComandoDescadastrarAvaliacao(Codigo codigo, Email email)
 {
+        string icodigo;
+        icodigo = codigo.getCodigo();
+        icodigo.pop_back();
         comandoSQL = "DELETE FROM Avaliacao WHERE (Codigo = '";
-        comandoSQL += codigo.getCodigo();
+        comandoSQL += icodigo;
         comandoSQL += "') AND (Avaliador = '";
         comandoSQL += email.getEmail();
         comandoSQL += "')";
@@ -497,14 +949,46 @@ ComandoDescadastrarAvaliacao::ComandoDescadastrarAvaliacao(Codigo codigo, Email 
 
 ComandoEditarAvaliacao::ComandoEditarAvaliacao(Avaliacao avaliacao, Email email)
 {
+        string icodigo;
+        icodigo = avaliacao.getCodigo().getCodigo();
+        icodigo.pop_back();
         comandoSQL = "UPDATE Avaliacao ";
-        comandoSQL += "SET Nota = '" + avaliacao.getNota().getNota();
-        comandoSQL += "', Descricao = " + avaliacao.getDescricao().getDescricao();
-        comandoSQL += "' WHERE (Codigo = '" + avaliacao.getCodigo().getCodigo();
+        comandoSQL += "SET Nota = '" + to_string((int)avaliacao.getNota().getNota());
+        comandoSQL += "', Descricao = '" + avaliacao.getDescricao().getDescricao();
+        comandoSQL += "' WHERE (Codigo = '" + icodigo;
         comandoSQL += "') AND (Avaliador = '" + email.getEmail() + "')";
 }
 
 // ------------------------------------------------
-// Implementação do comando Listar Avaliações
+// Implementação do comando Atualizar Nonta Excursao
 // ------------------------------------------------
-ComandoListarAvaliacoes::ComandoListarAvaliacoes(Email){}
+
+ComandoAtualizarNotaExcursao::ComandoAtualizarNotaExcursao(float averageGrade, Email email, Codigo codigo)
+{
+        string codigoId = codigo.getCodigo();
+        codigoId.pop_back();
+        comandoSQL = "UPDATE Excursao ";
+        comandoSQL += "SET Nota = " + to_string(averageGrade);
+        comandoSQL += " WHERE Codigo = " + codigoId;
+}
+// ------------------------------------------------
+// Implementação do comando Checar Avaliação
+// ------------------------------------------------
+ComandoChecarAvaliacao::ComandoChecarAvaliacao(Email email)
+{
+        comandoSQL = "SELECT Codigo from Avaliacao where Avaliador = '";
+        comandoSQL += email.getEmail() + "'";
+}
+
+list<string> ComandoChecarAvaliacao::getResultado()
+{
+        ElementoResultado resultado;
+        list<string> elementos;
+        while (!listaResultado.empty())
+        {
+                resultado = listaResultado.back();
+                listaResultado.pop_back();
+                elementos.push_back(resultado.getValorColuna());
+        }
+        return elementos;
+}
