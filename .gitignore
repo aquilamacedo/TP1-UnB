@@ -1,5 +1,4 @@
 /.vscode
 *.exe
 include/*.db
-*.db
 *.db-journal

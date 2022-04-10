@@ -123,7 +123,7 @@ ComandoCadastrarUsuario::ComandoCadastrarUsuario(Usuario usuario)
 // ---------------------------------------------
 ComandoDescadastrarUsuario::ComandoDescadastrarUsuario(Email email)
 {
-        comandoSQL = "DELETE FROM usuario WHERE email = '";
+        comandoSQL = "PRAGMA foreign_keys = ON; DELETE FROM usuario WHERE email = '";
         comandoSQL += email.getEmail();
         comandoSQL += "';";
 }
@@ -209,7 +209,7 @@ ComandoDescadastrarExcursao::ComandoDescadastrarExcursao(Codigo codigo, Email em
 {
         string icodigo = codigo.getCodigo();
         icodigo.pop_back();
-        comandoSQL = "DELETE FROM Excursao WHERE (Codigo = '";
+        comandoSQL = "PRAGMA foreign_keys = ON; DELETE FROM Excursao WHERE (Codigo = '";
         comandoSQL += icodigo;
         comandoSQL += "') AND (Guia = '";
         comandoSQL += email.getEmail();
@@ -531,7 +531,7 @@ ComandoDescadastrarSessao::ComandoDescadastrarSessao(Codigo codigo, Email email)
 {
         string icodigo = codigo.getCodigo();
         icodigo.pop_back();
-        comandoSQL = "DELETE FROM Sessao WHERE Codigo in ";
+        comandoSQL = "PRAGMA foreign_keys = ON; DELETE FROM Sessao WHERE Codigo in ";
         comandoSQL += "(SELECT Sessao.Codigo FROM Sessao LEFT JOIN Excursao ON Excursao.Codigo = Sessao.Excursao ";
         comandoSQL += "WHERE Sessao.Codigo = ";
         comandoSQL += icodigo;
@@ -760,6 +760,10 @@ bool ComandoChecarSessao::getResultado()
         }
         else
         {
+                while (!listaResultado.empty())
+                {
+                        listaResultado.pop_back();
+                }
                 return true;
         }
 }
@@ -890,6 +894,11 @@ bool GetNotasAvaliacao::getResultado()
         }
         else
         {
+                while (!listaResultado.empty())
+                {
+                        listaResultado.pop_back();
+                }
+
                 return true;
         }
 }
@@ -949,7 +958,7 @@ ComandoDescadastrarAvaliacao::ComandoDescadastrarAvaliacao(Codigo codigo, Email 
 {
         string icodigo = codigo.getCodigo();
         icodigo.pop_back();
-        comandoSQL = "DELETE FROM Avaliacao WHERE (Codigo = '";
+        comandoSQL = "PRAGMA foreign_keys = ON; DELETE FROM Avaliacao WHERE (Codigo = '";
         comandoSQL += icodigo;
         comandoSQL += "') AND (Avaliador = '";
         comandoSQL += email.getEmail();
@@ -1044,6 +1053,7 @@ list<Avaliacao> ComandoListarAvaliacoes::getResultado()
                         throw EErroPersistencia("Lista de resultados vazia!");
                 }
                 resultado = listaResultado.back();
+                cout << resultado.getValorColuna() << endl;
                 codigo.setCodigo(codigo.getCodigoDigitoVerificador(stoi(resultado.getValorColuna())));
                 listaResultado.pop_back(); //1
 
@@ -1060,6 +1070,7 @@ list<Avaliacao> ComandoListarAvaliacoes::getResultado()
                         throw EErroPersistencia("Lista de resultados vazia!");
                 }
                 resultado = listaResultado.back();
+                cout << resultado.getValorColuna() << endl;
                 descricao.setDescricao(resultado.getValorColuna());
 
                 listaResultado.pop_back(); //3
@@ -1069,7 +1080,7 @@ list<Avaliacao> ComandoListarAvaliacoes::getResultado()
                         throw EErroPersistencia("Lista de resultados vazia!");
                 }
                 resultado = listaResultado.back();
-
+                cout << resultado.getValorColuna() << endl;
                 digito_verificador = stoi(resultado.getValorColuna());
 
                 listaResultado.pop_back(); //4
@@ -1079,6 +1090,7 @@ list<Avaliacao> ComandoListarAvaliacoes::getResultado()
                         throw EErroPersistencia("Lista de resultados vazia!");
                 }
                 resultado = listaResultado.back();
+                cout << resultado.getValorColuna() << endl;
                 avaliador.setEmail(resultado.getValorColuna());
                 listaResultado.pop_back(); //5
 
@@ -1087,6 +1099,7 @@ list<Avaliacao> ComandoListarAvaliacoes::getResultado()
                         throw EErroPersistencia("Lista de resultados vazia!");
                 }
                 resultado = listaResultado.back();
+                cout << resultado.getValorColuna() << endl;
                 codigoExcursao.setCodigo(codigoExcursao.getCodigoDigitoVerificador(stoi(resultado.getValorColuna())));
 
                 listaResultado.pop_back(); //6

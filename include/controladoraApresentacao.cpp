@@ -1206,7 +1206,7 @@ void CntrApresentacaoSessao::descadastrarSessao(Email email)
 
   CLR_SCR;                             // Limpa janela.
   cout << texto1 << endl;              // Imprime nome do campo.
-  cout << texto2 << endl;              // Imprime nome do campo.
+  cout << texto2;                      // Imprime nome do campo.
   cin.getline(campo1, sizeof(campo1)); // L� valor do campo.
 
   try
