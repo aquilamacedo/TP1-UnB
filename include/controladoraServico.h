@@ -47,8 +47,8 @@ public:
     bool cadastrarAvaliacao(Avaliacao, Email, Codigo);
     bool descadastrarAvaliacao(Codigo, Email);
     bool editarAvaliacao(Avaliacao, Email);
-    // Avaliacao recuperarAvaliacao(Codigo, Email);
-    // list<Avaliacao> listarAvaliacoes();
+    Avaliacao recuperarAvaliacao(Codigo);
+    list<Avaliacao> listarAvaliacoes();
     // list<Avaliacao> listarAvaliacoes(Excursao, Email);
     // list<Avaliacao> listarAvaliacoes(Usuario, Email);
 

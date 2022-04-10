@@ -83,7 +83,8 @@ int ComandoSQL::callback(void *NotUsed, int argc, char **valorColuna, char **nom
 
 ComandoSenha::ComandoSenha(Email email)
 {
-        comandoSQL = "SELECT senha FROM usuario WHERE email = '";
+        comandoSQL = "PRAGMA foreign_keys = ON;";
+        comandoSQL += "SELECT senha FROM usuario WHERE email = '";
         comandoSQL += email.getEmail();
         comandoSQL += "'";
 }
@@ -124,7 +125,7 @@ ComandoDescadastrarUsuario::ComandoDescadastrarUsuario(Email email)
 {
         comandoSQL = "DELETE FROM usuario WHERE email = '";
         comandoSQL += email.getEmail();
-        comandoSQL += "'";
+        comandoSQL += "';";
 }
 
 // ---------------------------------------------
@@ -556,7 +557,6 @@ ComandoEditarSessao::ComandoEditarSessao(Sessao sessao, Email email)
         comandoSQL += "' WHERE Codigo in (SELECT Sessao.Codigo FROM Sessao LEFT JOIN Excursao ON Excursao.Codigo = Sessao.Excursao ";
         comandoSQL += "WHERE Sessao.Codigo = " + icodigo;
         comandoSQL += " AND Excursao.Guia = '" + email.getEmail() + "')";
-        cout << comandoSQL << endl;
 }
 
 // ------------------------------------------------
@@ -646,6 +646,7 @@ list<Sessao> ComandoListarSessoes::getResultado()
                 sessao.setData(data);
                 sessao.setHorario(horario);
                 sessao.setIdioma(idioma);
+                sessao.setCodigoExcursao(codigoExcursao);
                 sessoes.push_back(sessao);
         }
 
@@ -657,8 +658,10 @@ list<Sessao> ComandoListarSessoes::getResultado()
 // ------------------------------------------------
 ComandoRecuperarSessao::ComandoRecuperarSessao(Codigo codigo)
 {
+        string icodigo = codigo.getCodigo();
+        icodigo.pop_back();
         comandoSQL = "SELECT * FROM Sessao WHERE Codigo = ";
-        comandoSQL += codigo.getCodigo();
+        comandoSQL += icodigo;
 }
 
 // -------------------------------------------------------
@@ -671,6 +674,8 @@ Sessao ComandoRecuperarSessao::getResultado()
         Data data;
         Horario horario;
         Idioma idioma;
+        int digito_verificador;
+        Codigo codigoExcursao;
         ElementoResultado resultado;
 
         // Adicionando valores pesquisados dentro dos domínios.
@@ -678,19 +683,17 @@ Sessao ComandoRecuperarSessao::getResultado()
         {
                 throw EErroPersistencia("Lista de resultados vazia!");
         }
+        resultado = listaResultado.back();
+        codigo.setCodigo(codigo.getCodigoDigitoVerificador(stoi(resultado.getValorColuna())));
         listaResultado.pop_back(); //1
-        resultado = listaResultado.back();
-
-        listaResultado.pop_back(); //2
-        resultado = listaResultado.back();
 
         if (listaResultado.empty())
         {
                 throw EErroPersistencia("Lista de resultados vazia!");
         }
         resultado = listaResultado.back();
-        idioma.setIdioma(resultado.getValorColuna());
-        listaResultado.pop_back(); //3
+        data.setData(resultado.getValorColuna());
+        listaResultado.pop_back(); //2
 
         if (listaResultado.empty())
         {
@@ -699,20 +702,32 @@ Sessao ComandoRecuperarSessao::getResultado()
         resultado = listaResultado.back();
         horario.setHorario(resultado.getValorColuna());
 
+        listaResultado.pop_back(); //3
+
+        if (listaResultado.empty())
+        {
+                throw EErroPersistencia("Lista de resultados vazia!");
+        }
+        resultado = listaResultado.back();
+        idioma.setIdioma(resultado.getValorColuna());
+
         listaResultado.pop_back(); //4
+
         if (listaResultado.empty())
         {
                 throw EErroPersistencia("Lista de resultados vazia!");
         }
         resultado = listaResultado.back();
-        data.setData(resultado.getValorColuna());
+
         listaResultado.pop_back(); //5
+
         if (listaResultado.empty())
         {
                 throw EErroPersistencia("Lista de resultados vazia!");
         }
         resultado = listaResultado.back();
-        codigo.setCodigo(resultado.getValorColuna());
+        codigoExcursao.setCodigo(codigoExcursao.getCodigoDigitoVerificador(stoi(resultado.getValorColuna())));
+
         listaResultado.pop_back(); //6
 
         // Adicionando os domínios adicionados dentro da Sessão
@@ -720,6 +735,7 @@ Sessao ComandoRecuperarSessao::getResultado()
         sessao.setData(data);
         sessao.setHorario(horario);
         sessao.setIdioma(idioma);
+        sessao.setCodigoExcursao(codigoExcursao);
 
         return sessao;
 }
@@ -734,12 +750,10 @@ ComandoChecarSessao::ComandoChecarSessao(Codigo codigo, Email email)
         comandoSQL += icodigo;
         comandoSQL += " AND Excursao.Guia = '";
         comandoSQL += email.getEmail() + "')";
-        cout << comandoSQL << endl;
 }
 
 bool ComandoChecarSessao::getResultado()
 {
-        cout << listaResultado.size() << endl;
         if (listaResultado.empty())
         {
                 return false;
@@ -787,7 +801,7 @@ ComandoRecuperarAvaliacao::ComandoRecuperarAvaliacao(Codigo codigo)
 
 Avaliacao ComandoRecuperarAvaliacao::getResultado()
 {
-        Avaliacao excursao;
+        Avaliacao avaliacao;
 
         Codigo codigo;
         Nota nota;
@@ -812,7 +826,7 @@ Avaliacao ComandoRecuperarAvaliacao::getResultado()
                 throw EErroPersistencia("Lista de resultados vazia!");
         }
         resultado = listaResultado.back();
-        nota.setNota(stof(resultado.getValorColuna()));
+        nota.setNota(stoi(resultado.getValorColuna()));
         listaResultado.pop_back(); //2
 
         if (listaResultado.empty())
@@ -821,6 +835,7 @@ Avaliacao ComandoRecuperarAvaliacao::getResultado()
         }
         resultado = listaResultado.back();
         descricao.setDescricao(resultado.getValorColuna());
+
         listaResultado.pop_back(); //3
 
         if (listaResultado.empty())
@@ -828,8 +843,11 @@ Avaliacao ComandoRecuperarAvaliacao::getResultado()
                 throw EErroPersistencia("Lista de resultados vazia!");
         }
         resultado = listaResultado.back();
+
         digito_verificador = stoi(resultado.getValorColuna());
+
         listaResultado.pop_back(); //4
+
         if (listaResultado.empty())
         {
                 throw EErroPersistencia("Lista de resultados vazia!");
@@ -844,18 +862,19 @@ Avaliacao ComandoRecuperarAvaliacao::getResultado()
         }
         resultado = listaResultado.back();
         codigoExcursao.setCodigo(codigoExcursao.getCodigoDigitoVerificador(stoi(resultado.getValorColuna())));
+
         listaResultado.pop_back(); //6
 
-        // Adicionando os domínios adicionados dentro da Avaliação
-        excursao.setCodigo(codigo);
-        excursao.setNota(nota);
-        excursao.setDescricao(descricao);
-        excursao.setDescricao(descricao);
-        excursao.setEmail(avaliador);
-        excursao.setCodigoExcursao(codigoExcursao);
+        // Adicionando os domínios adicionados dentro da Sessão
+        avaliacao.setCodigo(codigo);
+        avaliacao.setNota(nota);
+        avaliacao.setDescricao(descricao);
+        avaliacao.setEmail(avaliador);
+        avaliacao.setCodigoExcursao(codigoExcursao);
 
-        return excursao;
+        return avaliacao;
 }
+
 GetNotasAvaliacao::GetNotasAvaliacao(int codigo)
 {
         comandoSQL = "SELECT Nota FROM Avaliacao where Excursao = ";
@@ -864,17 +883,13 @@ GetNotasAvaliacao::GetNotasAvaliacao(int codigo)
 bool GetNotasAvaliacao::getResultado()
 {
         ElementoResultado resultado;
-        cout << "Teste" << endl;
 
         if (listaResultado.empty())
         {
-                cout << "Lista vazia" << endl;
-
                 return false;
         }
         else
         {
-                cout << "Lista não vazia" << endl;
                 return true;
         }
 }
@@ -897,7 +912,6 @@ float GetNotasMediaAvaliacao::getResultado()
         listaResultado.pop_back();
         GetNotasAvaliacao notas(codigo);
         notas.executar();
-        cout << resultado.getValorColuna() << " testando isso aqui" << endl;
         if (notas.getResultado())
         {
                 return stof(resultado.getValorColuna());
@@ -933,8 +947,7 @@ int NextIdAvaliacao::getResultado()
 // ------------------------------------------------
 ComandoDescadastrarAvaliacao::ComandoDescadastrarAvaliacao(Codigo codigo, Email email)
 {
-        string icodigo;
-        icodigo = codigo.getCodigo();
+        string icodigo = codigo.getCodigo();
         icodigo.pop_back();
         comandoSQL = "DELETE FROM Avaliacao WHERE (Codigo = '";
         comandoSQL += icodigo;
@@ -949,8 +962,7 @@ ComandoDescadastrarAvaliacao::ComandoDescadastrarAvaliacao(Codigo codigo, Email 
 
 ComandoEditarAvaliacao::ComandoEditarAvaliacao(Avaliacao avaliacao, Email email)
 {
-        string icodigo;
-        icodigo = avaliacao.getCodigo().getCodigo();
+        string icodigo = avaliacao.getCodigo().getCodigo();
         icodigo.pop_back();
         comandoSQL = "UPDATE Avaliacao ";
         comandoSQL += "SET Nota = '" + to_string((int)avaliacao.getNota().getNota());
@@ -991,4 +1003,102 @@ list<string> ComandoChecarAvaliacao::getResultado()
                 elementos.push_back(resultado.getValorColuna());
         }
         return elementos;
+}
+
+// ------------------------------------------------
+// Implementação do comando Listar Sessões
+// ------------------------------------------------
+
+ComandoListarAvaliacoes::ComandoListarAvaliacoes()
+{
+        comandoSQL = "SELECT * FROM Avaliacao";
+}
+
+// ComandoListarAvaliacoes::ComandoListarAvaliacoes()
+// {
+//         comandoSQL = "SELECT * FROM Avaliacao WHERE Excursao = ";
+//         comandoSQL += excursao.getCodigo().getCodigo();
+// }
+
+// -----------------------------------------------------
+// Implementação do comando ListarAvaliacoes getResultado
+// -----------------------------------------------------
+list<Avaliacao> ComandoListarAvaliacoes::getResultado()
+{
+        list<Avaliacao> avaliacoes;
+        Codigo codigo;
+        Nota nota;
+        Descricao descricao;
+        int digito_verificador;
+        Email avaliador;
+        Codigo codigoExcursao;
+
+        ElementoResultado resultado;
+
+        while (!listaResultado.empty())
+        {
+                Avaliacao avaliacao;
+                // Adicionando valores pesquisados dentro dos domínios.
+                if (listaResultado.empty())
+                {
+                        throw EErroPersistencia("Lista de resultados vazia!");
+                }
+                resultado = listaResultado.back();
+                codigo.setCodigo(codigo.getCodigoDigitoVerificador(stoi(resultado.getValorColuna())));
+                listaResultado.pop_back(); //1
+
+                if (listaResultado.empty())
+                {
+                        throw EErroPersistencia("Lista de resultados vazia!");
+                }
+                resultado = listaResultado.back();
+                nota.setNota(stoi(resultado.getValorColuna()));
+                listaResultado.pop_back(); //2
+
+                if (listaResultado.empty())
+                {
+                        throw EErroPersistencia("Lista de resultados vazia!");
+                }
+                resultado = listaResultado.back();
+                descricao.setDescricao(resultado.getValorColuna());
+
+                listaResultado.pop_back(); //3
+
+                if (listaResultado.empty())
+                {
+                        throw EErroPersistencia("Lista de resultados vazia!");
+                }
+                resultado = listaResultado.back();
+
+                digito_verificador = stoi(resultado.getValorColuna());
+
+                listaResultado.pop_back(); //4
+
+                if (listaResultado.empty())
+                {
+                        throw EErroPersistencia("Lista de resultados vazia!");
+                }
+                resultado = listaResultado.back();
+                avaliador.setEmail(resultado.getValorColuna());
+                listaResultado.pop_back(); //5
+
+                if (listaResultado.empty())
+                {
+                        throw EErroPersistencia("Lista de resultados vazia!");
+                }
+                resultado = listaResultado.back();
+                codigoExcursao.setCodigo(codigoExcursao.getCodigoDigitoVerificador(stoi(resultado.getValorColuna())));
+
+                listaResultado.pop_back(); //6
+
+                // Adicionando os domínios adicionados dentro da Sessão
+                avaliacao.setCodigo(codigo);
+                avaliacao.setNota(nota);
+                avaliacao.setDescricao(descricao);
+                avaliacao.setEmail(avaliador);
+                avaliacao.setCodigoExcursao(codigoExcursao);
+                avaliacoes.push_back(avaliacao);
+        }
+
+        return avaliacoes;
 }

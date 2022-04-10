@@ -52,18 +52,23 @@ bool CntrServicoUsuario::cadastrarUsuario(Usuario usuario)
 
 bool CntrServicoUsuario::editarUsuario(Usuario usuario)
 {
-  ComandoEditarUsuario editingUser(usuario);
-
-  try
+  if (checarUsuario(usuario))
   {
-    editingUser.executar();
-    return true;
-  }
 
-  catch (EErroPersistencia)
-  {
-    return false;
+    ComandoEditarUsuario editingUser(usuario);
+
+    try
+    {
+      editingUser.executar();
+      return true;
+    }
+
+    catch (EErroPersistencia)
+    {
+      return false;
+    }
   }
+  return false;
 }
 
 bool CntrServicoUsuario::checarUsuario(Usuario usuario)
@@ -79,7 +84,7 @@ bool CntrServicoUsuario::checarUsuario(Usuario usuario)
 //--------------------------------------------------------------------------------------------
 
 bool CntrServicoUsuario::descadastrarUsuario(Email email)
-{ // Armazena os dados em servidor ou lista
+{
   Usuario usuario;
   usuario.setEmail(email);
   if (checarUsuario(usuario))
@@ -108,18 +113,14 @@ bool CntrServicoExcursao::checarExcursao(Excursao excursao, Email email)
 {
   list<string> excursoes;
   ComandoChecarExcursao comandoChecarExcursoes(email);
-  cout << "Teste de Chamada de Função" << endl;
   comandoChecarExcursoes.executar();
-  cout << "Teste comandoChecarExcursoes executar" << endl;
   excursoes = comandoChecarExcursoes.getResultado();
-  cout << "Teste comandoChecarExcursoes getResultado" << endl;
   list<string> iexcursoes;
   string str;
   Codigo codigo;
   for (auto excursao = excursoes.begin(); excursao != excursoes.end(); excursao++)
   {
     str = codigo.getCodigoDigitoVerificador(stoi(*excursao));
-    cout << str << *excursao << endl;
     iexcursoes.push_back(str);
   }
   return find(begin(iexcursoes), end(iexcursoes), excursao.getCodigo().getCodigo()) != end(iexcursoes);
@@ -150,17 +151,22 @@ bool CntrServicoExcursao::cadastrarExcursao(Excursao excursao, Email email)
 bool CntrServicoExcursao::editarExcursao(Excursao excursao, Email email)
 {
 
-  ComandoEditarExcursao editingExcursion(excursao, email);
-  try
+  if (checarExcursao(excursao, email))
   {
-    editingExcursion.executar();
-    return true;
-  }
 
-  catch (EErroPersistencia)
-  {
-    return false;
+    ComandoEditarExcursao editingExcursion(excursao, email);
+    try
+    {
+      editingExcursion.executar();
+      return true;
+    }
+
+    catch (EErroPersistencia)
+    {
+      return false;
+    }
   }
+  return false;
 }
 
 bool CntrServicoExcursao::descadastrarExcursao(Codigo codigo, Email email)
@@ -170,16 +176,22 @@ bool CntrServicoExcursao::descadastrarExcursao(Codigo codigo, Email email)
   if (checarExcursao(excursao, email))
   {
 
-    ComandoDescadastrarExcursao deregisterExcursion(codigo, email);
+    Excursao excursao;
+    excursao.setCodigo(codigo);
+    if (checarExcursao(excursao, email))
+    {
 
-    try
-    {
-      deregisterExcursion.executar();
-      return true;
-    }
-    catch (EErroPersistencia)
-    {
-      return false;
+      ComandoDescadastrarExcursao deregisterExcursion(codigo, email);
+
+      try
+      {
+        deregisterExcursion.executar();
+        return true;
+      }
+      catch (EErroPersistencia)
+      {
+        return false;
+      }
     }
   }
   return false;
@@ -270,15 +282,12 @@ bool CntrServicoExcursao::descadastrarSessao(Codigo codigo, Email email)
 
 bool CntrServicoExcursao::editarSessao(Sessao sessao, Email email)
 {
-  cout << "Teste de Chamada de Função" << endl;
-  cout << checarSessao(sessao, email) << sessao.getCodigo().getCodigo() << endl;
   if (checarSessao(sessao, email))
   {
     ComandoEditarSessao editSession(sessao, email);
     try
     {
       editSession.executar();
-      cout << "Teste executar" << endl;
       return true;
     }
     catch (EErroPersistencia)
@@ -369,8 +378,6 @@ bool CntrServicoExcursao::cadastrarAvaliacao(Avaliacao avaliacao, Email email, C
 
 bool CntrServicoExcursao::descadastrarAvaliacao(Codigo codigo, Email email)
 {
-  float nota;
-
   Avaliacao avaliacao;
   avaliacao.setCodigo(codigo);
   if (checarAvaliacao(avaliacao, email))
@@ -389,7 +396,7 @@ bool CntrServicoExcursao::descadastrarAvaliacao(Codigo codigo, Email email)
       avaliacao.setCodigoExcursao(avaliacao.getCodigoExcursao());
       GetNotasMediaAvaliacao getnotas(stoi(icodigo));
       getnotas.executar();
-      nota = getnotas.getResultado();
+      float nota = getnotas.getResultado();
       ComandoAtualizarNotaExcursao updatingExcursion(nota, email, avaliacao.getCodigoExcursao());
       updatingExcursion.executar();
 
@@ -407,8 +414,6 @@ bool CntrServicoExcursao::descadastrarAvaliacao(Codigo codigo, Email email)
 
 bool CntrServicoExcursao::editarAvaliacao(Avaliacao avaliacao, Email email)
 {
-  float nota;
-
   Avaliacao avaliacaoAtual;
 
   if (checarAvaliacao(avaliacao, email))
@@ -428,7 +433,7 @@ bool CntrServicoExcursao::editarAvaliacao(Avaliacao avaliacao, Email email)
       avaliacao.setCodigoExcursao(avaliacaoAtual.getCodigoExcursao());
       GetNotasMediaAvaliacao getnotas(stoi(icodigo));
       getnotas.executar();
-      nota = getnotas.getResultado();
+      float nota = getnotas.getResultado();
       ComandoAtualizarNotaExcursao updatingExcursion(nota, email, avaliacao.getCodigoExcursao());
       updatingExcursion.executar();
 
@@ -460,13 +465,27 @@ bool CntrServicoExcursao::checarAvaliacao(Avaliacao avaliacao, Email email)
   return find(begin(iavaliacoes), end(iavaliacoes), avaliacao.getCodigo().getCodigo()) != end(iavaliacoes);
 }
 
-/*
 Avaliacao CntrServicoExcursao::recuperarAvaliacao(Codigo codigo)
-{ // Armazena os dados em servidor ou lista
-  ContainerExcursao *container;
+{
+  Avaliacao avaliacao;
+  ComandoRecuperarAvaliacao recuperarAvaliacao(codigo);
 
-  container = ContainerExcursao::getInstancia();
+  recuperarAvaliacao.executar();
+  avaliacao = recuperarAvaliacao.getResultado();
 
-  return container->recuperarAvaliacao(codigo); // Retorna um bool
+  return avaliacao;
+}
 
-*/
+list<Avaliacao> CntrServicoExcursao::listarAvaliacoes()
+{
+  ComandoListarAvaliacoes getExcursions;
+  try
+  {
+    getExcursions.executar();
+    return getExcursions.getResultado();
+  }
+  catch (EErroPersistencia)
+  {
+    throw EErroPersistencia("Erro na execução do comando!");
+  }
+}

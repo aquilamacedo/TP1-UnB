@@ -27,7 +27,7 @@ void CntrApresentacaoControle::executar()
   char texto14[] = "Falha na autenticação. Digite algo para continuar.";
 
   int campo;
-
+  bool apresentarAutenticacao = false;
   bool apresentar = true;
 
   while (apresentar)
@@ -50,14 +50,10 @@ void CntrApresentacaoControle::executar()
     switch (campo)
     {
     case 1:
-
+      apresentarAutenticacao = true;
       if (cntrApresentacaoAutenticacao->autenticar(&email))
       {
-        if (apresentar == false)
-        {
-          return;
-        }
-        while (true)
+        while (apresentarAutenticacao)
         {
           CLR_SCR;                 // Limpa janela.
           cout << texto8 << endl;  // Imprime nome do campo.
@@ -84,7 +80,8 @@ void CntrApresentacaoControle::executar()
             cntrApresentacaoAvaliacao->executar(email); // Solicita servi�o de produto financeiro.
             break;
           case 5:
-            return;
+            apresentarAutenticacao = false;
+            break;
           }
         }
       }
@@ -92,7 +89,7 @@ void CntrApresentacaoControle::executar()
       {
         CLR_SCR;                 // Limpa janela.
         cout << texto14 << endl; // Imprime mensagem.
-        getch();                 // Leitura de caracter digitado.
+        campo = getch() - 48;    // Leitura de caracter digitado.
       }
       break;
     case 2:
@@ -125,8 +122,8 @@ void CntrApresentacaoControle::executar()
 bool CntrApresentacaoAutenticacao::autenticar(Email *email)
 {
 
-  char texto1[] = "Digite o email  : ";
-  char texto2[] = "Digite a senha: ";
+  char texto1[] = "Digite o email : ";
+  char texto2[] = "Digite a senha : ";
   char texto3[] = "Dado em formato incorreto. Digite algo.";
   char texto4[] = "1 - Tentar novamente.";
   char texto5[] = "2 - Voltar para a tela inicial.";
@@ -144,9 +141,9 @@ bool CntrApresentacaoAutenticacao::autenticar(Email *email)
   {
 
     CLR_SCR;
-    cout << texto1 << endl;
+    cout << texto1;
     cin >> campo1;
-    cout << texto2 << endl;
+    cout << texto2;
     cin >> campo2;
 
     try
@@ -157,21 +154,21 @@ bool CntrApresentacaoAutenticacao::autenticar(Email *email)
       if (cntr->autenticar(*email, senha))
       {
         cout << texto6 << endl;
-        getch();
+        campo = getch() - 48;
         return true;
       }
       else
       {
         CLR_SCR;                // Limpa janela.
         cout << texto7 << endl; // Informa formato incorreto.
-        getch();
+        campo = getch() - 48;
       }
     }
     catch (invalid_argument &exp)
     {
       CLR_SCR;                // Limpa janela.
       cout << texto3 << endl; // Informa formato incorreto.
-      getch();                // L� caracter digitado.
+      campo = getch() - 48;   // L� caracter digitado.
     }
 
     // CLR_SCR;                                                                            // Limpa janela.
@@ -179,7 +176,7 @@ bool CntrApresentacaoAutenticacao::autenticar(Email *email)
     cout << texto4 << endl;
     cout << texto5 << endl;
 
-    cin >> campo;
+    campo = getch() - 48;
 
     switch (campo)
     {
@@ -249,7 +246,7 @@ void CntrApresentacaoUsuario::cadastrar()
   char texto5[] = "Dados em formato incorreto. Digite algo.";
   char texto6[] = "Sucesso no cadastramento. Digite algo.";
   char texto7[] = "Falha no cadastramento. Digite algo.";
-
+  int campo;
   char campo1[80], campo2[80], campo3[80]; // Cria campos para entrada dos dados.
 
   // Instancia os dom�nios.
@@ -263,12 +260,12 @@ void CntrApresentacaoUsuario::cadastrar()
   CLR_SCR; // Limpa janela.
 
   cout << texto1 << endl; // Imprime nome do campo.
-  cout << texto2 << endl; // Imprime nome do campo.
+  cout << texto2;         // Imprime nome do campo.
   cin.getline(campo1, sizeof(campo1));
-  cout << texto3 << endl; // Imprime nome do campo.
-  cin >> campo2;          // L� valor do campo.
-  cout << texto4 << endl; // Imprime nome do campo.
-  cin >> campo3;          // L� valor do campo.
+  cout << texto3;                      // Imprime nome do campo.
+  cin.getline(campo2, sizeof(campo2)); // L� valor do campo.
+  cout << texto4;                      // Imprime nome do campo.
+  cin.getline(campo3, sizeof(campo3)); // L� valor do campo.
   try
   {
     nome.setNome(string(campo1));
@@ -278,7 +275,7 @@ void CntrApresentacaoUsuario::cadastrar()
   catch (invalid_argument &exp)
   {
     cout << texto5 << endl; // Informa formato incorreto.
-    getch();                // Leitura de caracter digitado.
+    campo = getch() - 48;   // Leitura de caracter digitado.
     return;
   }
 
@@ -293,11 +290,11 @@ void CntrApresentacaoUsuario::cadastrar()
   if (cntrServicoUsuario->cadastrarUsuario(usuario))
   {
     cout << texto6 << endl; // Informa sucesso.
-    getch();
+    campo = getch() - 48;
     return;
   }
   cout << texto7 << endl; // Informa falha.
-  getch();
+  campo = getch() - 48;
   return;
 }
 
@@ -305,13 +302,14 @@ void CntrApresentacaoUsuario::cadastrar()
 
 void CntrApresentacaoUsuario::consultarDadosUsuario(Email)
 {
+  int campo;
 
   // Mensagens a serem apresentadas na tela de apresenta��o de dados pessoais.
 
   char texto[] = "Servico consultar dados pessoais nao implementado. Digite algo."; // Mensagem a ser apresentada.
   CLR_SCR;                                                                          // Limpa janela.
   cout << texto << endl;                                                            // Imprime nome do campo.
-  getch();
+  campo = getch() - 48;
 }
 
 void CntrApresentacaoUsuario::editarUsuario(Email email)
@@ -325,7 +323,7 @@ void CntrApresentacaoUsuario::editarUsuario(Email email)
   char texto4[] = "Dados em formato incorreto. Digite algo.";
   char texto5[] = "Sucesso na alteração. Digite algo.";
   char texto6[] = "Falha na alteração. Digite algo.";
-
+  int campo;
   char campo1[80], campo2[80]; // Cria campos para entrada dos dados.
 
   // Instancia os dom�nios.
@@ -338,10 +336,10 @@ void CntrApresentacaoUsuario::editarUsuario(Email email)
   CLR_SCR; // Limpa janela.
 
   cout << texto1 << endl;              // Imprime nome do campo.
-  cout << texto2 << endl;              // Imprime nome do campo.
+  cout << texto2;                      // Imprime nome do campo.
   cin.getline(campo1, sizeof(campo1)); // L� valor do campo.
-  cout << texto3 << endl;              // Imprime nome do campo.
-  cin >> campo2;                       // L� valor do campo.
+  cout << texto3;                      // Imprime nome do campo.
+  cin.getline(campo2, sizeof(campo2)); // L� valor do campo.
   try
   {
     nome.setNome(string(campo1));
@@ -351,7 +349,7 @@ void CntrApresentacaoUsuario::editarUsuario(Email email)
   {
     cout << texto4 << endl; // Informa formato incorreto.
 
-    getch(); // Leitura de caracter digitado.
+    campo = getch() - 48; // Leitura de caracter digitado.
 
     return;
   }
@@ -368,14 +366,14 @@ void CntrApresentacaoUsuario::editarUsuario(Email email)
   {
     cout << texto5 << endl; // Informa sucesso.
 
-    getch();
+    campo = getch() - 48;
 
     return;
   }
 
-  cin >> texto6; // Informa falha.
+  cout << texto6 << endl; // Informa falha.
 
-  getch();
+  campo = getch() - 48;
 
   return;
 }
@@ -409,7 +407,7 @@ void CntrApresentacaoUsuario::excluirUsuario(Email email)
     case 1:
       cntrServicoUsuario->descadastrarUsuario(email);
       cout << texto4;
-      getch();
+      campo = getch() - 48;
       apresentar = false;
       cntrApresentacaoControle->encerrar();
       break;
@@ -427,7 +425,7 @@ void CntrApresentacaoExcursao::executar()
   // Mensagens a serem apresentadas na tela simplificada de produtos financeiros.
 
   char texto1[] = "Selecione um dos servicos : ";
-  char texto2[] = "1 - Consultar excursões.";
+  char texto2[] = "1 - Listar excursões.";
   char texto3[] = "2 - Retornar.";
 
   int campo; // Campo de entrada.
@@ -467,10 +465,11 @@ void CntrApresentacaoExcursao::executar(Email email)
 
   char texto1[] = "Selecione um dos servicos : ";
   char texto2[] = "1 - Cadastrar Excursão.";
-  char texto3[] = "2 - Consultar Excursão.";
-  char texto4[] = "3 - Editar Excursão.";
-  char texto5[] = "4 - Excluir Excursão.";
-  char texto6[] = "5 - Retornar.";
+  char texto3[] = "2 - Listar Excursões";
+  char texto4[] = "3 - Consultar Excursão.";
+  char texto5[] = "4 - Editar Excursão.";
+  char texto6[] = "5 - Excluir Excursão.";
+  char texto7[] = "6 - Retornar.";
 
   int campo; // Campo de entrada.
 
@@ -488,6 +487,7 @@ void CntrApresentacaoExcursao::executar(Email email)
     cout << texto4 << endl; // Imprime nome do campo.
     cout << texto5 << endl; // Imprime nome do campo.
     cout << texto6 << endl; // Imprime nome do campo.
+    cout << texto7 << endl; // Imprime nome do campo.
 
     campo = getch() - 48; // Leitura do campo de entrada e convers�o de ASCII.
 
@@ -497,15 +497,18 @@ void CntrApresentacaoExcursao::executar(Email email)
       cadastrarExcursao(email);
       break;
     case 2:
-      consultarExcursao(email);
+      listarExcursoes(email);
       break;
     case 3:
-      editarExcursao(email);
+      consultarExcursao(email);
       break;
     case 4:
-      descadastrarExcursao(email);
+      editarExcursao(email);
       break;
     case 5:
+      descadastrarExcursao(email);
+      break;
+    case 6:
       apresentar = false;
       break;
     }
@@ -516,12 +519,12 @@ void CntrApresentacaoExcursao::consultarExcursao(Email email)
 {
 
   char texto1[] = "Informe o seguinte valor: ";
-  char texto2[] = "Código              :";
+  char texto2[] = "Código              : ";
   char texto3[] = "Dados em formato incorreto. Digite algo.";
   char texto4[] = "Sucesso na recuperação. Digite algo.";
   char texto5[] = "Falha na recuperação. Digite algo.";
 
-  char campo0[80];
+  char campo1[80];
   int campo;
 
   Codigo codigo;
@@ -531,51 +534,36 @@ void CntrApresentacaoExcursao::consultarExcursao(Email email)
   while (apresentar)
   {
 
-    cout << texto1 << endl; // Imprime nome do campo.
-    cout << texto2 << endl; // Imprime nome do campo.
-    cin >> campo0;          // L� valor do campo.
+    cout << texto1 << endl;              // Imprime nome do campo.
+    cout << texto2;                      // Imprime nome do campo.
+    cin.getline(campo1, sizeof(campo1)); // L� valor do campo.
 
     try
     {
-      codigo.setCodigo(campo0);
+      codigo.setCodigo(campo1);
     }
     catch (invalid_argument &exp)
     {
       cout << texto3 << endl; // Informa formato incorreto.
-      getch();                // Leitura de caracter digitado.
+      campo = getch() - 48;   // Leitura de caracter digitado.
     }
 
     try
     {
 
       Excursao excursao = cntrServicoExcursao->recuperarExcursao(codigo);
-      CLR_SCR;
-      cout << "Codigo"
-           << "\t"
-           << "Título"
-           << "\t\t"
-           << "Nota"
-           << "\t"
-           << "Cidade"
-           << "\t"
-           << "Duração"
-           << "\t"
-           << "Endereço"
-           << "\t"
-           << "Descrição"
-           << "\t"
-           << "Email do Guia"
-           << "\t"
-           << endl;
-      cout << excursao.getCodigo().getCodigo() << "\t"
-           << excursao.getTitulo().getTitulo() << "\t"
-           << excursao.getNota().getNota() << "\t"
-           << excursao.getCidade().getCidade() << "\t"
-           << excursao.getDuracao().getDuracao() << "\t"
-           << excursao.getEndereco().getEndereco() << "\t"
-           << excursao.getDescricao().getDescricao() << "\t"
-           << excursao.getEmail().getEmail() << "\t"
-           << "\n\n"
+
+      cout << "\n"
+           << "Código        : " << excursao.getCodigo().getCodigo() << endl;
+      cout << "Título        : " << excursao.getTitulo().getTitulo() << endl;
+      if (excursao.getNota().getNota() != -1)
+        cout << "Nota          : " << excursao.getNota().getNota() << endl;
+      else
+        cout << "Nota          : Não há avaliações cadastradas para essa Excursão" << endl;
+      cout << "Cidade        : " << excursao.getCidade().getCidade() << endl;
+      cout << "Duração       : " << excursao.getDuracao().getDuracao() << endl;
+      cout << "Endereço      : " << excursao.getEndereco().getEndereco() << endl;
+      cout << "Email do Guia : " << excursao.getEmail().getEmail() << "\n"
            << endl;
     }
     catch (...)
@@ -584,13 +572,18 @@ void CntrApresentacaoExcursao::consultarExcursao(Email email)
     }
     cout << "1 - Recuperar outra excursão" << endl;
     cout << "2 - Retornar" << endl;
-    getch();
-    cin >> campo;
+    campo = getch() - 48;
+
     switch (campo)
     {
     case 1:
+      CLR_SCR;
       continue;
     case 2:
+      apresentar = false;
+      break;
+    default:
+      CLR_SCR;
       apresentar = false;
       break;
     }
@@ -603,18 +596,18 @@ void CntrApresentacaoExcursao::cadastrarExcursao(Email email)
   // Mensagens a serem apresentadas na tela de cadastramento.
 
   char texto1[] = "Preencha os seguintes campos: ";
-  char texto2[] = "Código          :";
-  char texto3[] = "Título          :";
+  char texto2[] = "Código          : ";
+  char texto3[] = "Título          : ";
   // char texto4[] = "Nota            :";
-  char texto5[] = "Cidade          :";
-  char texto5b[] = "Duração         :";
-  char texto5c[] = "Descrição       :";
-  char texto5d[] = "Endereço        :";
-  char texto6[] = "Dados em formato incorreto. Digite algo.";
-  char texto7[] = "Sucesso no cadastramento. Digite algo.";
-  char texto8[] = "Falha no cadastramento. Digite algo.";
-
-  char campo0[80], campo1[80], /*campo2[80],*/ campo3[80], campo4[80], campo5[80], campo6[80]; // Cria campos para entrada dos dados.
+  char texto5[] = "Cidade          : ";
+  char texto6[] = "Duração         : ";
+  char texto7[] = "Descrição       : ";
+  char texto8[] = "Endereço        : ";
+  char texto9[] = "Dados em formato incorreto. Digite algo.";
+  char texto10[] = "Sucesso no cadastramento. Digite algo.";
+  char texto11[] = "Falha no cadastramento. Digite algo.";
+  int campo;
+  char campo0[80], campo1[80], campo2[80], campo3[80], campo4[80], campo5[80]; // Cria campos para entrada dos dados.
 
   // Instancia os dom�nios.
   // Codigo codigo;
@@ -632,35 +625,35 @@ void CntrApresentacaoExcursao::cadastrarExcursao(Email email)
   cout << texto1 << endl; // Imprime nome do campo.
   // cout << texto2 << endl; // Imprime nome do campo.
   // cin >> campo0;                                    // L� valor do campo.
-  cout << texto3 << endl; // Imprime nome do campo.
-  cin >> campo1;          // L� valor do campo.
+  cout << texto3;                      // Imprime nome do campo.
+  cin.getline(campo1, sizeof(campo1)); // L� valor do campo.
   // cout << texto4 << endl; // Imprime nome do campo.
   // cin >> campo2;                                    // L� valor do campo.
   // int icampo2 = atoi(campo2);
-  cout << texto5 << endl;  // Imprime nome do campo.
-  cin >> campo3;           // L� valor do campo.
-  cout << texto5b << endl; // Imprime nome do campo.
-  cin >> campo4;           // L� valor do campo.
-  cout << texto5c << endl; // Imprime nome do campo.
-  cin >> campo5;           // L� valor do campo.
-  cout << texto5d << endl; // Imprime nome do campo.
-  cin >> campo6;           // L� valor do campo.
+  cout << texto5;
+  cin.getline(campo2, sizeof(campo2));
+  cout << texto6;                      // Imprime nome do campo.
+  cin.getline(campo3, sizeof(campo3)); // L� valor do campo.
+  cout << texto7;                      // Imprime nome do campo.
+  cin.getline(campo4, sizeof(campo4));
+  cout << texto8; // Imprime nome do campo.
+  cin.getline(campo5, sizeof(campo5));
   try
   {
     // codigo.setCodigo(codigo.getDigitoVerificador(nextId));
     // codigo.setCodigo(campo0);
     titulo.setTitulo(campo1);
     // nota.setNota(icampo2);
-    cidade.setCidade(campo3);
-    duracao.setDuracao(campo4);
-    descricao.setDescricao(campo5);
-    endereco.setEndereco(campo6);
+    cidade.setCidade(campo2);
+    duracao.setDuracao(campo3);
+    descricao.setDescricao(campo4);
+    endereco.setEndereco(campo5);
   }
   catch (invalid_argument &exp)
   {
-    cout << texto6 << endl; // Informa formato incorreto.
+    cout << texto9 << endl; // Informa formato incorreto.
 
-    getch(); // Leitura de caracter digitado.
+    campo = getch() - 48; // Leitura de caracter digitado.
 
     return;
   }
@@ -679,16 +672,16 @@ void CntrApresentacaoExcursao::cadastrarExcursao(Email email)
 
   if (cntrServicoExcursao->cadastrarExcursao(excursao, email))
   {
-    cout << texto7 << endl; // Informa sucesso.
+    cout << texto10 << endl; // Informa sucesso.
 
-    getch();
+    campo = getch() - 48;
 
     return;
   }
 
-  cout << texto8 << endl; // Informa falha.
+  cout << texto11 << endl; // Informa falha.
 
-  getch();
+  campo = getch() - 48;
 
   return;
 }
@@ -708,7 +701,7 @@ void CntrApresentacaoExcursao::editarExcursao(Email email)
   char texto9[] = "Dados em formato incorreto. Digite algo.";
   char texto10[] = "Sucesso na alteração. Digite algo.";
   char texto11[] = "Falha na alteração. Digite algo.";
-
+  int campo;
   char campo0[80], campo1[80], /*campo2[80],*/ campo3[80], campo4[80], campo5[80], campo6[80]; // Cria campos para entrada dos dados.
 
   // Instancia os dom�nios.
@@ -724,22 +717,22 @@ void CntrApresentacaoExcursao::editarExcursao(Email email)
 
   CLR_SCR; // Limpa janela.
 
-  cout << texto1 << endl; // Imprime nome do campo.
-  cout << texto2 << endl; // Imprime nome do campo.
-  cin >> campo0;          // L� valor do campo.
-  cout << texto3 << endl; // Imprime nome do campo.
-  cin >> campo1;          // L� valor do campo.
-  // cout << texto4 << endl; // Imprime nome do campo.
+  cout << texto1 << endl;              // Imprime nome do campo.
+  cout << texto2;                      // Imprime nome do campo.
+  cin.getline(campo0, sizeof(campo0)); // L� valor do campo.
+  cout << texto3;                      // Imprime nome do campo.
+  cin.getline(campo1, sizeof(campo1)); // L� valor do campo.
+  // cout << texto4; // Imprime nome do campo.
   // cin >> campo2;                                    // L� valor do campo.
   // int icampo2 = atoi(campo2);
-  cout << texto5 << endl; // Imprime nome do campo.
-  cin >> campo3;          // L� valor do campo.
-  cout << texto6 << endl; // Imprime nome do campo.
-  cin >> campo4;          // L� valor do campo.
-  cout << texto7 << endl; // Imprime nome do campo.
-  cin >> campo5;          // L� valor do campo.
-  cout << texto8 << endl; // Imprime nome do campo.
-  cin >> campo6;          // L� valor do campo.
+  cout << texto5;                      // Imprime nome do campo.
+  cin.getline(campo3, sizeof(campo3)); // L� valor do campo.
+  cout << texto6;                      // Imprime nome do campo.
+  cin.getline(campo4, sizeof(campo4)); // L� valor do campo.
+  cout << texto7;                      // Imprime nome do campo.
+  cin.getline(campo5, sizeof(campo5)); // L� valor do campo.
+  cout << texto8;                      // Imprime nome do campo.
+  cin.getline(campo6, sizeof(campo5)); // L� valor do campo.
   try
   {
     // codigo.setCodigo(codigo.getDigitoVerificador(nextId));
@@ -755,7 +748,7 @@ void CntrApresentacaoExcursao::editarExcursao(Email email)
   {
     cout << texto9 << endl; // Informa formato incorreto.
 
-    getch(); // Leitura de caracter digitado.
+    campo = getch() - 48; // Leitura de caracter digitado.
 
     return;
   }
@@ -776,14 +769,14 @@ void CntrApresentacaoExcursao::editarExcursao(Email email)
   {
     cout << texto10 << endl; // Informa sucesso.
 
-    getch();
+    campo = getch() - 48;
 
     return;
   }
 
   cout << texto11 << endl; // Informa falha.
 
-  getch();
+  campo = getch() - 48;
 
   return;
 }
@@ -797,14 +790,15 @@ void CntrApresentacaoExcursao::descadastrarExcursao(Email email)
   char texto4[] = "Sucesso no descadastramento. Digite algo.";
   char texto5[] = "Falha no descadastramento. Digite algo.";
 
+  int campo;
   char campo1[80];
 
   Codigo codigo;
 
-  CLR_SCR;                // Limpa janela.
-  cout << texto1 << endl; // Imprime nome do campo.
-  cout << texto2 << endl; // Imprime nome do campo.
-  cin >> campo1;          // L� valor do campo.
+  CLR_SCR;                             // Limpa janela.
+  cout << texto1 << endl;              // Imprime nome do campo.
+  cout << texto2;                      // Imprime nome do campo.
+  cin.getline(campo1, sizeof(campo1)); // L� valor do campo.
 
   try
   {
@@ -814,7 +808,7 @@ void CntrApresentacaoExcursao::descadastrarExcursao(Email email)
   {
     cout << texto3 << endl; // Informa falha.
 
-    getch(); // Leitura de caracter digitado.
+    campo = getch() - 48; // Leitura de caracter digitado.
 
     return;
   }
@@ -823,43 +817,66 @@ void CntrApresentacaoExcursao::descadastrarExcursao(Email email)
   {
     cout << texto4 << endl; // Informa sucesso.
 
-    getch();
+    campo = getch() - 48;
 
     return;
   }
 
   cout << texto5 << endl; // Informa falha.
 
-  getch();
+  campo = getch() - 48;
 
   return;
 }
 
 void CntrApresentacaoExcursao::listarExcursoes()
 {
+  int campo;
   list<Excursao> excursoes = cntrServicoExcursao->listarExcursoes();
 
   CLR_SCR;
   for (auto excursao = begin(excursoes); excursao != end(excursoes); ++excursao)
   {
-    cout << "Codigo : " << excursao->getCodigo().getCodigo() << endl;
-    cout << "Título : " << excursao->getTitulo().getTitulo() << endl;
+    cout << "\n"
+         << "Código        : " << excursao->getCodigo().getCodigo() << endl;
+    cout << "Título        : " << excursao->getTitulo().getTitulo() << endl;
     if (excursao->getNota().getNota() != -1)
-      cout << "Nota : " << excursao->getNota().getNota() << endl;
+      cout << "Nota          : " << excursao->getNota().getNota() << endl;
     else
-      cout << "Nota : Não há avaliações cadastradas para essa Excursão" << endl;
-    cout << "Cidade : " << excursao->getCidade().getCidade() << endl;
-    cout << "Duração : " << excursao->getDuracao().getDuracao() << endl;
-    cout << "Endereço : " << excursao->getEndereco().getEndereco() << endl;
+      cout << "Nota          : Não há avaliações cadastradas para essa Excursão" << endl;
+    cout << "Cidade        : " << excursao->getCidade().getCidade() << endl;
+    cout << "Duração       : " << excursao->getDuracao().getDuracao() << endl;
+    cout << "Endereço      : " << excursao->getEndereco().getEndereco() << endl;
     cout << "Email do Guia : " << excursao->getEmail().getEmail() << "\n"
          << endl;
     cout << "--------------------------------------------------------------" << endl;
   }
-  getch();
+  campo = getch() - 48;
   return;
 }
 void CntrApresentacaoExcursao::listarExcursoes(Email email)
 {
+  int campo;
+  list<Excursao> excursoes = cntrServicoExcursao->listarExcursoes();
+
+  CLR_SCR;
+  for (auto excursao = begin(excursoes); excursao != end(excursoes); ++excursao)
+  {
+    cout << "\n"
+         << "Código        : " << excursao->getCodigo().getCodigo() << endl;
+    cout << "Título        : " << excursao->getTitulo().getTitulo() << endl;
+    if (excursao->getNota().getNota() != -1)
+      cout << "Nota          : " << excursao->getNota().getNota() << endl;
+    else
+      cout << "Nota          : Não há avaliações cadastradas para essa Excursão" << endl;
+    cout << "Cidade        : " << excursao->getCidade().getCidade() << endl;
+    cout << "Duração       : " << excursao->getDuracao().getDuracao() << endl;
+    cout << "Endereço      : " << excursao->getEndereco().getEndereco() << endl;
+    cout << "Email do Guia : " << excursao->getEmail().getEmail() << "\n"
+         << endl;
+    cout << "--------------------------------------------------------------" << endl;
+  }
+  campo = getch() - 48;
   return;
 }
 
@@ -869,7 +886,7 @@ void CntrApresentacaoSessao::executar()
 {
 
   char texto1[] = "Selecione um dos servicos : ";
-  char texto2[] = "1 - Consultar sessões.";
+  char texto2[] = "1 - Listar sessões.";
   char texto3[] = "2 - Retornar.";
 
   int campo; // Campo de entrada.
@@ -907,10 +924,11 @@ void CntrApresentacaoSessao::executar(Email email)
 
   char texto1[] = "Selecione um dos servicos : ";
   char texto2[] = "1 - Cadastar sessão.";
-  char texto3[] = "2 - Consultar sessão.";
-  char texto4[] = "3 - Editar sessão.";
-  char texto5[] = "4 - Excluir sessão.";
-  char texto6[] = "5 - Retornar.";
+  char texto3[] = "2 - Listar sessões.";
+  char texto4[] = "3 - Consultar sessão.";
+  char texto5[] = "4 - Editar sessão.";
+  char texto6[] = "5 - Excluir sessão.";
+  char texto7[] = "6 - Retornar.";
 
   int campo; // Campo de entrada.
 
@@ -928,6 +946,7 @@ void CntrApresentacaoSessao::executar(Email email)
     cout << texto4 << endl; // Imprime nome do campo.
     cout << texto5 << endl; // Imprime nome do campo.
     cout << texto6 << endl; // Imprime nome do campo.
+    cout << texto7 << endl; // Imprime nome do campo.
 
     campo = getch() - 48; // Leitura do campo de entrada e convers�o de ASCII.
 
@@ -937,15 +956,18 @@ void CntrApresentacaoSessao::executar(Email email)
       cadastrarSessao(email);
       break;
     case 2:
-      consultarSessao(email);
+      listarSessoes(email);
       break;
     case 3:
-      editarSessao(email);
+      consultarSessao(email);
       break;
     case 4:
-      descadastrarSessao(email);
+      editarSessao(email);
       break;
     case 5:
+      descadastrarSessao(email);
+      break;
+    case 6:
       apresentar = false;
       break;
     }
@@ -954,6 +976,72 @@ void CntrApresentacaoSessao::executar(Email email)
 
 void CntrApresentacaoSessao::consultarSessao(Email email)
 {
+
+  char texto1[] = "Informe o seguinte valor: ";
+  char texto2[] = "Código              : ";
+  char texto3[] = "Dados em formato incorreto. Digite algo.";
+  char texto4[] = "Sucesso na recuperação. Digite algo.";
+  char texto5[] = "Falha na recuperação. Digite algo.";
+
+  char campo1[80];
+  int campo;
+
+  Codigo codigo;
+
+  CLR_SCR; // Limpa janela.
+  bool apresentar = true;
+  while (apresentar)
+  {
+
+    cout << texto1 << endl;              // Imprime nome do campo.
+    cout << texto2;                      // Imprime nome do campo.
+    cin.getline(campo1, sizeof(campo1)); // L� valor do campo.
+
+    try
+    {
+      codigo.setCodigo(campo1);
+    }
+    catch (invalid_argument &exp)
+    {
+      cout << texto3 << endl; // Informa formato incorreto.
+      campo = getch() - 48;   // Leitura de caracter digitado.
+    }
+
+    try
+    {
+
+      Sessao sessao = cntrServicoExcursao->recuperarSessao(codigo);
+
+      cout << "\n"
+           << "Código             : " << sessao.getCodigo().getCodigo() << endl;
+      cout << "Data               : " << sessao.getData().getData() << endl;
+      cout << "Horário            : " << sessao.getHorario().getHorario() << endl;
+      cout << "Idioma             : " << sessao.getIdioma().getIdioma() << endl;
+      cout << "Código da Excursão : " << sessao.getCodigoExcursao().getCodigo() << "\n"
+           << endl;
+    }
+    catch (...)
+    {
+      cout << texto5 << endl; // Informa falha.
+    }
+    cout << "1 - Recuperar outra sessão" << endl;
+    cout << "2 - Retornar" << endl;
+    campo = getch() - 48;
+
+    switch (campo)
+    {
+    case 1:
+      CLR_SCR;
+      continue;
+    case 2:
+      apresentar = false;
+      break;
+    default:
+      CLR_SCR;
+      apresentar = false;
+      break;
+    }
+  }
   return;
 }
 
@@ -984,13 +1072,13 @@ void CntrApresentacaoSessao::cadastrarSessao(Email email)
   CLR_SCR; // Limpa janela.
 
   cout << texto1 << endl;              // Imprime nome do campo.
-  cout << texto2 << endl;              // Imprime nome do campo.
+  cout << texto2;                      // Imprime nome do campo.
   cin.getline(campo1, sizeof(campo1)); // L� valor do campo.
-  cout << texto3 << endl;              // Imprime nome do campo.
+  cout << texto3;                      // Imprime nome do campo.
   cin.getline(campo2, sizeof(campo2)); // L� valor do campo.
-  cout << texto4 << endl;              // Imprime nome do campo.
+  cout << texto4;                      // Imprime nome do campo.
   cin.getline(campo3, sizeof(campo3)); // L� valor do campo.
-  cout << texto5 << endl;              // Imprime nome do campo.
+  cout << texto5;                      // Imprime nome do campo.
   cin.getline(campo4, sizeof(campo4)); // L� valor do campo.
 
   try
@@ -1038,12 +1126,12 @@ void CntrApresentacaoSessao::editarSessao(Email email)
 {
   char texto1[] = "Preencha os seguintes campos: ";
   char texto2[] = "Qual o Código da Sessão que você deseja alterar?  : ";
-  char texto3[] = "Data          : ";
-  char texto4[] = "Horário       : ";
-  char texto42[] = "Idioma          : ";
-  char texto5[] = "Dados em formato incorreto. Digite algo.";
-  char texto6[] = "Sucesso na edição. Digite algo.";
-  char texto7[] = "Falha na edição. Digite algo.";
+  char texto3[] = "Data                                              : ";
+  char texto4[] = "Horário                                           : ";
+  char texto5[] = "Idioma                                            : ";
+  char texto6[] = "Dados em formato incorreto. Digite algo.";
+  char texto7[] = "Sucesso na edição. Digite algo.";
+  char texto8[] = "Falha na edição. Digite algo.";
 
   int campo;
   char campo1[80], campo2[80], campo3[80], campo4[80];
@@ -1063,7 +1151,7 @@ void CntrApresentacaoSessao::editarSessao(Email email)
   cin.getline(campo2, sizeof(campo2));
   cout << texto4;
   cin.getline(campo3, sizeof(campo3));
-  cout << texto42;
+  cout << texto5;
   cin.getline(campo4, sizeof(campo4));
 
   try
@@ -1075,7 +1163,7 @@ void CntrApresentacaoSessao::editarSessao(Email email)
   }
   catch (invalid_argument &exp)
   {
-    cout << texto5 << endl; // Informa formato incorreto.
+    cout << texto6 << endl; // Informa formato incorreto.
     campo = getch() - 48;   // Leitura de caracter digitado.
     return;
   }
@@ -1088,14 +1176,14 @@ void CntrApresentacaoSessao::editarSessao(Email email)
 
   if (cntrServicoExcursao->editarSessao(sessao, email))
   {
-    cout << texto6 << endl; // Informa sucesso.
+    cout << texto7 << endl; // Informa sucesso.
 
     campo = getch() - 48;
 
     return;
   }
 
-  cout << texto7 << endl; // Informa falha.
+  cout << texto8 << endl; // Informa falha.
 
   campo = getch() - 48;
 
@@ -1116,10 +1204,10 @@ void CntrApresentacaoSessao::descadastrarSessao(Email email)
 
   Codigo codigo;
 
-  CLR_SCR;                // Limpa janela.
-  cout << texto1 << endl; // Imprime nome do campo.
-  cout << texto2 << endl; // Imprime nome do campo.
-  cin >> campo1;          // L� valor do campo.
+  CLR_SCR;                             // Limpa janela.
+  cout << texto1 << endl;              // Imprime nome do campo.
+  cout << texto2 << endl;              // Imprime nome do campo.
+  cin.getline(campo1, sizeof(campo1)); // L� valor do campo.
 
   try
   {
@@ -1152,29 +1240,43 @@ void CntrApresentacaoSessao::descadastrarSessao(Email email)
 
 void CntrApresentacaoSessao::listarSessoes()
 {
-  CLR_SCR;
+  int campo;
   list<Sessao> sessoes = cntrServicoExcursao->listarSessoes();
 
-  int count = 0;
-  cout << "Codigo"
-       << "\t"
-       << "Data"
-       << "\t"
-       << "Horario"
-       << "\t"
-       << "Idioma" << endl;
+  CLR_SCR;
   for (auto sessao = begin(sessoes); sessao != end(sessoes); ++sessao)
   {
-    cout << sessao->getCodigo().getCodigo() << "\t" << sessao->getData().getData() << "\t" << sessao->getHorario().getHorario() << "\t" << sessao->getIdioma().getIdioma() << "\n"
+    cout << "\n"
+         << "Código              : " << sessao->getCodigo().getCodigo() << endl;
+    cout << "Data                : " << sessao->getData().getData() << endl;
+    cout << "Horário             : " << sessao->getHorario().getHorario() << endl;
+    cout << "Idioma              : " << sessao->getIdioma().getIdioma() << endl;
+    cout << "Código da Excursão  : " << sessao->getCodigoExcursao().getCodigo() << "\n"
          << endl;
-    count++;
+    cout << "--------------------------------------------------------------" << endl;
   }
-  getch();
+  campo = getch() - 48;
   return;
 }
 
 void CntrApresentacaoSessao::listarSessoes(Email email)
 {
+  int campo;
+  list<Sessao> sessoes = cntrServicoExcursao->listarSessoes();
+
+  CLR_SCR;
+  for (auto sessao = begin(sessoes); sessao != end(sessoes); ++sessao)
+  {
+    cout << "\n"
+         << "Código              : " << sessao->getCodigo().getCodigo() << endl;
+    cout << "Data                : " << sessao->getData().getData() << endl;
+    cout << "Horário             : " << sessao->getHorario().getHorario() << endl;
+    cout << "Idioma              : " << sessao->getIdioma().getIdioma() << endl;
+    cout << "Código da Excursão  : " << sessao->getCodigoExcursao().getCodigo() << "\n"
+         << endl;
+    cout << "--------------------------------------------------------------" << endl;
+  }
+  campo = getch() - 48;
   return;
 }
 
@@ -1186,7 +1288,7 @@ void CntrApresentacaoAvaliacao::executar()
   // Mensagens a serem apresentadas na tela simplificada de produtos financeiros.
 
   char texto1[] = "Selecione um dos servicos : ";
-  char texto2[] = "1 - Consultar avaliações.";
+  char texto2[] = "1 - Listar avaliações.";
   char texto3[] = "2 - Retornar.";
 
   int campo; // Campo de entrada.
@@ -1208,7 +1310,7 @@ void CntrApresentacaoAvaliacao::executar()
     switch (campo)
     {
     case 1:
-      // consultarProdutoInvestimento();
+      listarAvaliacoes();
       break;
     case 2:
       apresentar = false;
@@ -1224,10 +1326,11 @@ void CntrApresentacaoAvaliacao::executar(Email email)
 
   char texto1[] = "Selecione um dos servicos : ";
   char texto2[] = "1 - Cadastrar Avaliação.";
-  char texto3[] = "2 - Consultar Avaliação.";
-  char texto4[] = "3 - Editar Avaliação.";
-  char texto5[] = "4 - Excluir Avaliação.";
-  char texto6[] = "5 - Retornar.";
+  char texto3[] = "2 - Listar Avaliações";
+  char texto4[] = "3 - Consultar Avaliação.";
+  char texto5[] = "4 - Editar Avaliação.";
+  char texto6[] = "5 - Excluir Avaliação.";
+  char texto7[] = "6 - Retornar.";
 
   int campo; // Campo de entrada.
 
@@ -1245,6 +1348,7 @@ void CntrApresentacaoAvaliacao::executar(Email email)
     cout << texto4 << endl; // Imprime nome do campo.
     cout << texto5 << endl; // Imprime nome do campo.
     cout << texto6 << endl; // Imprime nome do campo.
+    cout << texto7 << endl; // Imprime nome do campo.
 
     campo = getch() - 48; // Leitura do campo de entrada e convers�o de ASCII.
 
@@ -1254,15 +1358,18 @@ void CntrApresentacaoAvaliacao::executar(Email email)
       cadastrarAvaliacao(email);
       break;
     case 2:
-      // cadastrarProdutoInvestimento(email);
+      listarAvaliacoes(email);
       break;
     case 3:
-      editarAvaliacao(email);
+      consultarAvaliacao(email);
       break;
     case 4:
-      descadastrarAvaliacao(email);
+      editarAvaliacao(email);
       break;
     case 5:
+      descadastrarAvaliacao(email);
+      break;
+    case 6:
       apresentar = false;
       break;
     }
@@ -1271,18 +1378,81 @@ void CntrApresentacaoAvaliacao::executar(Email email)
 
 void CntrApresentacaoAvaliacao::consultarAvaliacao(Email email)
 {
+
   char texto1[] = "Informe o seguinte valor: ";
   char texto2[] = "Código              :";
+  char texto3[] = "Dados em formato incorreto. Digite algo.";
+  char texto4[] = "Sucesso na recuperação. Digite algo.";
+  char texto5[] = "Falha na recuperação. Digite algo.";
+
+  char campo1[80];
+  int campo;
+
+  Codigo codigo;
+
+  CLR_SCR; // Limpa janela.
+  bool apresentar = true;
+  while (apresentar)
+  {
+
+    cout << texto1 << endl;              // Imprime nome do campo.
+    cout << texto2;                      // Imprime nome do campo.
+    cin.getline(campo1, sizeof(campo1)); // L� valor do campo.
+
+    try
+    {
+      codigo.setCodigo(campo1);
+    }
+    catch (invalid_argument &exp)
+    {
+      cout << texto3 << endl; // Informa formato incorreto.
+      campo = getch() - 48;   // Leitura de caracter digitado.
+    }
+
+    try
+    {
+
+      Avaliacao avaliacao = cntrServicoExcursao->recuperarAvaliacao(codigo);
+
+      cout << "\n"
+           << "Código             : " << avaliacao.getCodigo().getCodigo() << endl;
+      cout << "Título             : " << avaliacao.getNota().getNota() << endl;
+      cout << "Nota               : " << avaliacao.getNota().getNota() << endl;
+      cout << "Descrição          : " << avaliacao.getDescricao().getDescricao() << endl;
+      cout << "Email do Avaliador : " << avaliacao.getEmail().getEmail() << endl;
+      cout << "Código da Excursão : " << avaliacao.getCodigoExcursao().getCodigo() << "\n"
+           << endl;
+    }
+    catch (...)
+    {
+      cout << texto5 << endl; // Informa falha.
+    }
+    cout << "1 - Recuperar outra avaliação" << endl;
+    cout << "2 - Retornar" << endl;
+    campo = getch() - 48;
+
+    switch (campo)
+    {
+    case 1:
+      CLR_SCR;
+      continue;
+    case 2:
+      apresentar = false;
+      break;
+    default:
+      CLR_SCR;
+      apresentar = false;
+      break;
+    }
+  }
   return;
 }
 
 void CntrApresentacaoAvaliacao::cadastrarAvaliacao(Email email)
 {
-  // Mensagens a serem apresentadas na tela de cadastramento.
-
   char texto1[] = "Preencha os seguintes campos: ";
   char texto2[] = "Nota                :";
-  char texto4[] = "Descricao             :";
+  char texto4[] = "Descricao           :";
   char texto5[] = "Código da Excursão  :";
   char texto6[] = "Dados em formato incorreto. Digite algo.";
   char texto7[] = "Sucesso no cadastramento. Digite algo.";
@@ -1299,13 +1469,13 @@ void CntrApresentacaoAvaliacao::cadastrarAvaliacao(Email email)
   CLR_SCR; // Limpa janela.
 
   cout << texto1 << endl;              // Imprime nome do campo.
-  cout << texto2 << endl;              // Imprime nome do campo.
+  cout << texto2;                      // Imprime nome do campo.
   cin.getline(campo1, sizeof(campo1)); // L� valor do campo.
   int icampo2 = atoi(campo1);
 
-  cout << texto4 << endl;              // Imprime nome do campo.
+  cout << texto4;                      // Imprime nome do campo.
   cin.getline(campo2, sizeof(campo2)); // L� valor do campo.
-  cout << texto5 << endl;              // Imprime nome do campo.
+  cout << texto5;                      // Imprime nome do campo.
   cin.getline(campo3, sizeof(campo3)); // L� valor do campo.
 
   try
@@ -1349,7 +1519,7 @@ void CntrApresentacaoAvaliacao::editarAvaliacao(Email email)
 {
   char texto1[] = "Preencha os seguintes campos: ";
   char texto2[] = "Qual o Código da Avaliação que você deseja alterar?  : ";
-  char texto3[] = "Nota          : ";
+  char texto3[] = "Nota               : ";
   char texto4[] = "Descricao          : ";
   char texto5[] = "Dados em formato incorreto. Digite algo.";
   char texto6[] = "Sucesso na edição. Digite algo.";
@@ -1366,11 +1536,11 @@ void CntrApresentacaoAvaliacao::editarAvaliacao(Email email)
 
   cout << texto1 << endl;
 
-  cout << texto2 << endl;
+  cout << texto2;
   cin.getline(campo1, sizeof(campo1));
-  cout << texto3 << endl;
+  cout << texto3;
   cin.getline(campo2, sizeof(campo2));
-  cout << texto4 << endl;
+  cout << texto4;
   cin.getline(campo3, sizeof(campo3));
 
   try
@@ -1421,10 +1591,10 @@ void CntrApresentacaoAvaliacao::descadastrarAvaliacao(Email email)
 
   Codigo codigo;
 
-  CLR_SCR;                // Limpa janela.
-  cout << texto1 << endl; // Imprime nome do campo.
-  cout << texto2;         // Imprime nome do campo.
-  cin >> campo1;          // L� valor do campo.
+  CLR_SCR;                             // Limpa janela.
+  cout << texto1 << endl;              // Imprime nome do campo.
+  cout << texto2;                      // Imprime nome do campo.
+  cin.getline(campo1, sizeof(campo1)); // L� valor do campo.
 
   try
   {
@@ -1455,7 +1625,44 @@ void CntrApresentacaoAvaliacao::descadastrarAvaliacao(Email email)
   return;
 }
 
+void CntrApresentacaoAvaliacao::listarAvaliacoes()
+{
+  int campo;
+  list<Avaliacao> avaliacoes = cntrServicoExcursao->listarAvaliacoes();
+
+  CLR_SCR;
+  for (auto avaliacao = begin(avaliacoes); avaliacao != end(avaliacoes); ++avaliacao)
+  {
+    cout << "\n"
+         << "Código             : " << avaliacao->getCodigo().getCodigo() << endl;
+    cout << "Nota               : " << avaliacao->getNota().getNota() << endl;
+    cout << "Descricao          : " << avaliacao->getDescricao().getDescricao() << endl;
+    cout << "Email do Avaliador : " << avaliacao->getEmail().getEmail() << endl;
+    cout << "Código da Excursão : " << avaliacao->getCodigoExcursao().getCodigo() << "\n"
+         << endl;
+    cout << "--------------------------------------------------------------" << endl;
+  }
+  campo = getch() - 48;
+  return;
+}
+
 void CntrApresentacaoAvaliacao::listarAvaliacoes(Email email)
 {
+  int campo;
+  list<Avaliacao> avaliacoes = cntrServicoExcursao->listarAvaliacoes();
+
+  CLR_SCR;
+  for (auto avaliacao = begin(avaliacoes); avaliacao != end(avaliacoes); ++avaliacao)
+  {
+    cout << "\n"
+         << "Código             : " << avaliacao->getCodigo().getCodigo() << endl;
+    cout << "Nota               : " << avaliacao->getNota().getNota() << endl;
+    cout << "Descricao          : " << avaliacao->getDescricao().getDescricao() << endl;
+    cout << "Email do Avaliador : " << avaliacao->getEmail().getEmail() << endl;
+    cout << "Código da Excursão : " << avaliacao->getCodigoExcursao().getCodigo() << "\n"
+         << endl;
+    cout << "--------------------------------------------------------------" << endl;
+  }
+  campo = getch() - 48;
   return;
 }

@@ -9,7 +9,7 @@
 #include "interfaces.h"
 #include "controladoraServico.h"
 
-#define CLR_SCR system("cls");
+#define CLR_SCR system("clear");
 
 // -------------------------------------------
 // Declaration of controllers of control
@@ -168,7 +168,7 @@ private:
     void editarAvaliacao(Email);
     void descadastrarAvaliacao(Email);
     void listarAvaliacoes(Email);
-    // void listarAvaliacoes();
+    void listarAvaliacoes();
 
 public:
     void executar();

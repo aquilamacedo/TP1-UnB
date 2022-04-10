@@ -281,4 +281,11 @@ public:
   Avaliacao getResultado();
 };
 
+class ComandoListarAvaliacoes : public ComandoSQL
+{
+public:
+  ComandoListarAvaliacoes();
+  list<Avaliacao> getResultado();
+};
+
 #endif // DATABASE_H
