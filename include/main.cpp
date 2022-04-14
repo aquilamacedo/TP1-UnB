@@ -15,6 +15,8 @@ using namespace std;
 
 int main()
 {
+  // setlocale(LC_ALL, "Portuguese");
+  // SetConsoleOutputCP(65001);
   // Declarar poteiros e instanciar controladoras.
 
   CntrApresentacaoControle *cntrApresentacaoControle;
@@ -56,8 +58,8 @@ int main()
   cntrApresentacaoExcursao->setCntrServicoExcursao(cntrServicoExcursao);
   cntrApresentacaoAvaliacao->setCntrServicoExcursao(cntrServicoExcursao);
   cntrApresentacaoSessao->setCntrServicoExcursao(cntrServicoExcursao);
-
+  initscr();
   cntrApresentacaoControle->executar(); // Solicitar servi�o apresentacao.
-
+  endwin();
   return 0;
 }

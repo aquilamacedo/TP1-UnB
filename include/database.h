@@ -116,6 +116,13 @@ public:
   list<string> getResultado();
 };
 
+class ComandoRecuperarUsuario : public ComandoSQL
+{
+public:
+  ComandoRecuperarUsuario(Usuario);
+  Usuario getResultado();
+};
+
 //--------------------------------------------------------------------------------------
 //|                                 Excursão                                           |
 //--------------------------------------------------------------------------------------
@@ -285,6 +292,18 @@ class ComandoListarAvaliacoes : public ComandoSQL
 {
 public:
   ComandoListarAvaliacoes();
+  list<Avaliacao> getResultado();
+};
+class ComandoListarAvaliacoesUsuario : public ComandoSQL
+{
+public:
+  ComandoListarAvaliacoesUsuario(Usuario);
+  list<Avaliacao> getResultado();
+};
+class ComandoListarAvaliacoesExcursao : public ComandoSQL
+{
+public:
+  ComandoListarAvaliacoesExcursao(Excursao);
   list<Avaliacao> getResultado();
 };
 

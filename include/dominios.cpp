@@ -504,6 +504,10 @@ Codigo::Codigo(string codigo)
 
 void Codigo::validar(string codigo)
 {
+  if (codigo == "")
+  {
+    throw invalid_argument("Codigo Invalido. Nao existe esse codigo.");
+  }
   if (codigo == "000000")
   {
     throw invalid_argument("Codigo Invalido. Nao existe esse codigo.");
@@ -581,6 +585,11 @@ int Codigo::getDigitoVerificador(int number)
 
 string Codigo::getCodigoDigitoVerificador(int number)
 {
+  cout << "Teste chamada de função";
+  if (!number)
+  {
+    throw invalid_argument("Informe um valor válido");
+  }
   int n{6};
   int evenSum{};
   int oddSum{};

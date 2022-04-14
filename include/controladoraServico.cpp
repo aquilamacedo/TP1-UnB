@@ -106,6 +106,16 @@ bool CntrServicoUsuario::descadastrarUsuario(Email email)
   }
 }
 
+Usuario CntrServicoUsuario::recuperar(Email email)
+{
+  Usuario usuario;
+  usuario.setEmail(email);
+
+  ComandoRecuperarUsuario recuperarUsuario(usuario);
+  recuperarUsuario.executar();
+  return recuperarUsuario.getResultado();
+}
+
 //--------------------------------------------------------------------------------------
 //|                                     Excursão                                       |
 //--------------------------------------------------------------------------------------
@@ -326,7 +336,7 @@ list<Sessao> CntrServicoExcursao::listarSessoes()
   }
 }
 
-list<Sessao> CntrServicoExcursao::listarSessoes(Excursao excursao)
+list<Sessao> CntrServicoExcursao::listarSessoesExcursao(Excursao excursao)
 {
   ComandoListarSessoes getSessions(excursao);
   try
@@ -479,6 +489,32 @@ Avaliacao CntrServicoExcursao::recuperarAvaliacao(Codigo codigo)
 list<Avaliacao> CntrServicoExcursao::listarAvaliacoes()
 {
   ComandoListarAvaliacoes getExcursions;
+  try
+  {
+    getExcursions.executar();
+    return getExcursions.getResultado();
+  }
+  catch (EErroPersistencia)
+  {
+    throw EErroPersistencia("Erro na execução do comando!");
+  }
+}
+list<Avaliacao> CntrServicoExcursao::listarAvaliacoesExcursao(Excursao excursao)
+{
+  ComandoListarAvaliacoesExcursao getAvaliationsExcursions(excursao);
+  try
+  {
+    getAvaliationsExcursions.executar();
+    return getAvaliationsExcursions.getResultado();
+  }
+  catch (EErroPersistencia)
+  {
+    throw EErroPersistencia("Erro na execução do comando!");
+  }
+}
+list<Avaliacao> CntrServicoExcursao::listarAvaliacoesUsuario(Usuario usuario)
+{
+  ComandoListarAvaliacoesUsuario getExcursions(usuario);
   try
   {
     getExcursions.executar();

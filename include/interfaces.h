@@ -80,7 +80,7 @@ public:
     virtual bool cadastrarUsuario(Usuario) = 0;
     virtual bool editarUsuario(Usuario) = 0;
     virtual bool descadastrarUsuario(Email) = 0;
-    //virtual Usuario recuperar(Email) = 0;
+    virtual Usuario recuperar(Email) = 0;
     virtual ~IServicoUsuario() {}
 };
 
@@ -100,8 +100,8 @@ public:
     virtual bool editarAvaliacao(Avaliacao, Email) = 0;
     virtual Avaliacao recuperarAvaliacao(Codigo) = 0;
     virtual list<Avaliacao> listarAvaliacoes() = 0;
-    // virtual list<Avaliacao> listarAvaliacoes(Excursao) = 0;
-    // virtual list<Avaliacao> listarAvaliacoes(Usuario) = 0;
+    virtual list<Avaliacao> listarAvaliacoesExcursao(Excursao) = 0;
+    virtual list<Avaliacao> listarAvaliacoesUsuario(Usuario) = 0;
 
     // abstract service methods of Session
     virtual bool cadastrarSessao(Sessao, Email) = 0;
@@ -109,7 +109,7 @@ public:
     virtual bool editarSessao(Sessao, Email) = 0;
     virtual Sessao recuperarSessao(Codigo) = 0;
     virtual list<Sessao> listarSessoes() = 0;
-    virtual list<Sessao> listarSessoes(Excursao) = 0;
+    virtual list<Sessao> listarSessoesExcursao(Excursao) = 0; // Implementar isso aqui agora
 
     // virtual ~IServicoExcursao() {}
 };
