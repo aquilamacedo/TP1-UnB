@@ -585,7 +585,6 @@ int Codigo::getDigitoVerificador(int number)
 
 string Codigo::getCodigoDigitoVerificador(int number)
 {
-  cout << "Teste chamada de função";
   if (!number)
   {
     throw invalid_argument("Informe um valor válido");

@@ -1,0 +1,98 @@
+# depslib dependency file v1.0
+1649971747 source:c:\users\admin\desktop\projetos\c++\tp1-unb - copia\include\controladoraapresentacao.cpp
+	"controladoraApresentacao.h"
+	<string>
+
+1649965074 c:\users\admin\desktop\projetos\c++\tp1-unb - copia\include\controladoraapresentacao.h
+	<iostream>
+	<string.h>
+	"curses.h"
+	"dominios.h"
+	"entidades.h"
+	"interfaces.h"
+
+1649337164 c:\users\admin\desktop\projetos\c++\tp1-unb - copia\include\curses.h
+	<stdarg.h>
+	<stddef.h>
+	<stdio.h>
+	<wchar.h>
+	<stdbool.h>
+
+1649794370 c:\users\admin\desktop\projetos\c++\tp1-unb - copia\include\dominios.h
+	<stdexcept>
+	<iostream>
+	<string>
+
+1649794370 c:\users\admin\desktop\projetos\c++\tp1-unb - copia\include\entidades.h
+	<iostream>
+	<iomanip>
+	<math.h>
+	<string>
+	"dominios.h"
+
+1649874231 c:\users\admin\desktop\projetos\c++\tp1-unb - copia\include\interfaces.h
+	"dominios.h"
+	"entidades.h"
+	"list"
+
+1649875152 source:c:\users\admin\desktop\projetos\c++\tp1-unb - copia\include\controladoraservico.cpp
+	"controladoraServico.h"
+	<iostream>
+	<iterator>
+	<algorithm>
+
+1649970346 c:\users\admin\desktop\projetos\c++\tp1-unb - copia\include\controladoraservico.h
+	<string.h>
+	"dominios.h"
+	"entidades.h"
+	"interfaces.h"
+	"database.h"
+
+1649799021 c:\users\admin\desktop\projetos\c++\tp1-unb - copia\include\database.h
+	<list>
+	<stdio.h>
+	<iostream>
+	<string>
+	"sqlite3.h"
+	"entidades.h"
+
+1649794370 c:\users\admin\desktop\projetos\c++\tp1-unb - copia\include\sqlite3.h
+	<stdarg.h>
+
+1649962522 source:c:\users\admin\desktop\projetos\c++\tp1-unb - copia\include\database.cpp
+	"entidades.h"
+	"dominios.h"
+	"sqlite3.h"
+	"database.h"
+	<string>
+	<sstream>
+
+1649809717 source:c:\users\admin\desktop\projetos\c++\tp1-unb - copia\include\dominios.cpp
+	<iostream>
+	<iomanip>
+	<math.h>
+	<string>
+	<stdlib.h>
+	<ctype.h>
+	<string.h>
+	<regex>
+	"dominios.h"
+
+1647550946 source:c:\users\admin\desktop\projetos\c++\tp1-unb - copia\include\entidades.cpp
+	"entidades.h"
+
+1649982891 source:c:\users\admin\desktop\projetos\c++\tp1-unb - copia\include\main.cpp
+	<iostream>
+	<stdexcept>
+	<iomanip>
+	<math.h>
+	<string>
+	"dominios.h"
+	"entidades.h"
+	"interfaces.h"
+	"controladoraApresentacao.h"
+	"controladoraServico.h"
+	<regex>
+
+1649337166 source:c:\users\admin\desktop\projetos\c++\tp1-unb - copia\include\stubs.cpp
+

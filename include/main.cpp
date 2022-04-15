@@ -3,22 +3,19 @@
 #include <iomanip>
 #include <math.h>
 #include <string>
+#include <regex>
 
 #include "dominios.h"
 #include "entidades.h"
 #include "interfaces.h"
 #include "controladoraApresentacao.h"
 #include "controladoraServico.h"
-#include <regex>
 
 using namespace std;
 
 int main()
 {
-  // setlocale(LC_ALL, "Portuguese");
-  // SetConsoleOutputCP(65001);
-  // Declarar poteiros e instanciar controladoras.
-
+  // Declarar ponteiros e instanciar controladoras.
   CntrApresentacaoControle *cntrApresentacaoControle;
   IApresentacaoAutenticacao *cntrApresentacaoAutenticacao;
   IApresentacaoUsuario *cntrApresentacaoUsuario;
@@ -38,8 +35,8 @@ int main()
   IServicoAutenticacao *cntrServicoAutenticacao;
   IServicoUsuario *cntrServicoUsuario;
   IServicoExcursao *cntrServicoExcursao;
-  IServicoAvaliacao *cntrServicoAvaliacao;
-  IServicoSessao *cntrServicoSessao;
+  // IServicoAvaliacao *cntrServicoAvaliacao;
+  // IServicoSessao *cntrServicoSessao;
 
   cntrServicoUsuario = new CntrServicoUsuario();
   cntrServicoAutenticacao = new CntrServicoAutenticacao();
@@ -58,8 +55,10 @@ int main()
   cntrApresentacaoExcursao->setCntrServicoExcursao(cntrServicoExcursao);
   cntrApresentacaoAvaliacao->setCntrServicoExcursao(cntrServicoExcursao);
   cntrApresentacaoSessao->setCntrServicoExcursao(cntrServicoExcursao);
+
   initscr();
   cntrApresentacaoControle->executar(); // Solicitar servi�o apresentacao.
   endwin();
+
   return 0;
 }

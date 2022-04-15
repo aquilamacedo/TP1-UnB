@@ -212,6 +212,7 @@ private:
     IApresentacaoSessao *cntrApresentacaoSessao;
 
 public:
+    void encerrar();
     void executar();
     void executar(Email);
     void setCntrApresentacaoAutenticacao(IApresentacaoAutenticacao *);
@@ -220,6 +221,11 @@ public:
     void setCntrApresentacaoAvaliacao(IApresentacaoAvaliacao *);
     void setCntrApresentacaoSessao(IApresentacaoSessao *);
 };
+inline void CntrApresentacaoControle::encerrar()
+{
+    exit(0);
+    return;
+}
 
 inline void CntrApresentacaoControle::setCntrApresentacaoAutenticacao(IApresentacaoAutenticacao *cntrApresentacaoAutenticacao)
 {
@@ -273,13 +279,13 @@ class CntrApresentacaoUsuario : public IApresentacaoUsuario
 {
 private:
     IServicoUsuario *cntrServicoUsuario;
-    void consultarDadosUsuario();
+    void consultarDadosUsuario(Email);
     void editarUsuario(Email);
-    bool descadastrar(Email);
+    bool descadastrarUsuario(Email);
 
 public:
     void executar(Email);
-    void cadastrar();
+    void cadastrarUsuario();
     void setCntrServicoUsuario(IServicoUsuario *);
 };
 
